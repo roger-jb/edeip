@@ -31,9 +31,9 @@
         </li>
         <li><a href="../vitrine/association_diamant_brut.php">Association &laquo;&nbsp;Diamant Brut&nbsp;&raquo;</a></li>
         <li><a href="../vitrine/tarifs_inscriptions.php">Tarifs et inscription</a></li>
-        <li><a href="../vitrine/activites.php">Activités extra-scolaires</a>
+        <li><a href="../vitrine/ateliers.php">Activités extra-scolaires</a>
             <ul>
-                <li><a href="../vitrine/activites.php">Consolidation des apprentissages</a></li>
+                <!--<li><a href="../vitrine/activites.php">Consolidation des apprentissages</a></li>-->
                 <li><a href="../vitrine/ateliers.php">Ateliers plastiques CAPYBARA</a></li>
             </ul>
         </li>
