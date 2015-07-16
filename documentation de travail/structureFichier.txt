@@ -1,0 +1,17 @@
+Le dossier DTO
+    il comprend l'ensemble des classes en miroir de la BDD
+    chaque classe ne comporte que les accesseurs en lecture et ecriture
+    Tous les attributs sont en protected
+
+Le dossier DAL
+    il comprends les actions sur la BDD
+        -> INSERT, UPDATE, DELETE
+        -> récupération des objets par l'attribut id d'un objet
+
+    chaque classe require_once la classe DAL ainsi que les classes necessaires
+
+    chaque classe comprend :
+        -> getAll()             : récupération de tous les enregistrements
+        -> getById()            : (si id existe) retourne une ligne par l'ID
+        -> autres getBy___      : en fonction des besoins
+        -> getObject(s)         : recupération de l'objet dont on a que l'id (foreign Key)
