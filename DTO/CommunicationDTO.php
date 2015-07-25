@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 16/07/2015
  * Time: 10:55
  */
-
 class CommunicationDTO {
 	protected $idCommunication;
 	protected $contenuCommunication;

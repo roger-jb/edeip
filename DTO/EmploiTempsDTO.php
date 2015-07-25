@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 16/07/2015
  * Time: 15:46
  */
-
 class EmploiTempsDTO {
 	protected $idEdT;
 	protected $idPeriode;

@@ -1,6 +1,11 @@
 <?php
 //en dev ==> localhost
-$ENV = 'dev';
+$__ENV = 'dev';
+$__DB_SRV = 'localhost';
+$__DB_NAME = 'EDEIP';
+$__DB_USER = 'EDEIP';
+$__DB_MDP = 'EDEIP';
+
 
 //en test ==> rPi
 //$ENV = 'tests';

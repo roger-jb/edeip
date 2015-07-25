@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 16/07/2015
  * Time: 11:42
  */
-
 class DomaineCptDTO {
 	protected $idDomaineCpt;
 	protected $libelleDomaineCpt;

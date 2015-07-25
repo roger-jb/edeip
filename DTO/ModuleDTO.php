@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 16/07/2015
  * Time: 11:37
  */
-
 class ModuleDTO {
 	protected $idModule;
 	protected $libelleModule;

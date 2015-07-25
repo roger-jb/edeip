@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 16/07/2015
  * Time: 11:57
  */
-
 class PointCptDTO {
 	protected $idPointCpt;
 	protected $libellePointCpt;

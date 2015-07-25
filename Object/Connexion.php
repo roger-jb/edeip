@@ -1,17 +1,20 @@
 <?php
+
+require_once('/include/db_connect.php');
+require_once('/Object/Utilisateur.php');
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 16/07/2015
  * Time: 10:27
  */
-
-class ConnexionDTO {
+class Connexion {
 	protected $idUtilisateur;
 	protected $loginUtilisateur;
 	protected $mdpUtilisateur;
 
-	function __construct () {
+	public function getUtilisateur(){
+		return Utilisateur::getById($this->idUtilisateur);
 	}
 
 	/**
@@ -53,6 +56,18 @@ class ConnexionDTO {
 	 * @param mixed $mdpUtilisateur
 	 */
 	public function setMdpUtilisateur ($mdpUtilisateur) {
-		$this->mdpUtilisateur = $mdpUtilisateur;
+		$this->mdpUtilisateur = $this->hashMdp($mdpUtilisateur);
 	}
+
+	static public function hashMdp ($mdp) {
+		return hash("sha256", $mdp);
+	}
+
+	public function update () {
+		$db_login = db_connect::escape_string($this->loginUtilisateur);
+		$db_mdp = db_connect::escape_string($this->mdpUtilisateur);
+		$query = "UPDATE UTILISATEUR SET loginUtilisateur = '$db_login', mdpUtilisateur = '$db_mdp' WHERE idUtilisateur = " . $this->idUtilisateur;
+		db_connect::getInstance()->query($query);
+	}
+
 }

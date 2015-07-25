@@ -6,7 +6,20 @@
  * Time: 10:42
  */
 
-class ProfesseurDTO extends UtilisateurDTO{
+require_once('/Object/Utilisateur.php');
+
+class Professeur extends Utilisateur {
+
+	public static function getById($idProfesseur){
+		$parent = parent::getById($idProfesseur);
+		$prof = new Professeur();
+
+		foreach ($parent as $attr => $value){
+			$prof->{'set'.$attr}($value);
+		}
+
+		return $prof;
+	}
 
 	/**
 	 * @return mixed

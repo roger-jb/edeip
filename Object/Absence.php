@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
- * Date: 16/07/2015
- * Time: 10:56
+ * Date: 22/07/2015
+ * Time: 10:37
  */
-
-class AbsenceDTO {
+class Absence {
 	protected $idAbsence;
 	protected $idEleve;
 	protected $dateDebutAbsence;
@@ -15,6 +15,59 @@ class AbsenceDTO {
 	protected $motifAbsence;
 	protected $idRedacteur;
 	protected $dateRedaction;
+
+	public static function getAll () {
+		$query = 'SELECT * FROM ABSENCE ORDER BY dateDebutAbsence DESC';
+		$result = db_connect::getInstance()->query($query);
+
+		$return = array ();
+		while ($info = $result->fetch_object('Absence')) {
+			$return[] = $info;
+		}
+		db_connect::close();
+		return $return;
+	}
+
+	public static function getById ($id) {
+		if (!is_numeric($id)) {
+			return false;
+		}
+
+		$query = "SELECT * FROM ABSENCE WHERE idAbsence = $id ORDER BY dateDebutAbsence DESC";
+
+		$result = db_connect::getInstance()->query($query);
+		if ($result->num_rows ==1) {
+			$return = $result->fetch_object('Absence');
+			db_connect::close();
+			return $return;
+		}
+		else {
+			$result->close();
+			return new Absence();
+		}
+	}
+
+	public static function getByIdEleve ($idEleve) {
+		if (!is_numeric($idEleve)) {
+			return false;
+		}
+
+		$query = "SELECT * FROM ABSENCE WHERE idEleve = $idEleve ORDER BY dateDebutAbsence DESC";
+		$return = array ();
+		$result = db_connect::getInstance()->query($query);
+		while ($info = $result->fetch_object('Absence')) {
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public function getEleve () {
+		return Eleve::getById($this->idEleve);
+	}
+
+	public function getRedacteur () {
+		return Utilisateur::getById($this->idRedacteur);
+	}
 
 	/**
 	 * @return mixed
@@ -127,6 +180,5 @@ class AbsenceDTO {
 	public function setDateRedaction ($dateRedaction) {
 		$this->dateRedaction = $dateRedaction;
 	}
-
 
 }

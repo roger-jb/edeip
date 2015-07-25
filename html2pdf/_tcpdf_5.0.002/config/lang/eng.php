@@ -29,11 +29,11 @@
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
  * @since 2004-03-03
  */
- 
+
 // ENGLISH
 
 global $l;
-$l = Array();
+$l = Array ();
 
 // PAGE META DESCRIPTORS --------------------------------------
 

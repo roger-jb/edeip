@@ -1,13 +1,15 @@
 <?php
-	//include '../ENV.php';
-	//echo "ENV : ".$ENV;
-	//if (isset($ENV)){
-	//	if ($ENV == 'dev'){
-			$bdd = "EDEIP";
-			$db = mysql_connect("localhost", "root", "77ry4df") or die("Impossible de se connecter &agrave; MySQL");
-			mysql_select_db($bdd, $db) or die("Impossible de sélectionner la base de données");
-			mysql_query("SET NAMES UTF8");
-			$URLracine = "localhost/edeip";
+//include '../ENV.php';
+//echo "ENV : ".$ENV;
+//if (isset($ENV)){
+//	if ($ENV == 'dev'){
+
+
+$bdd = "EDEIP";
+$db = mysql_connect("localhost", "EDEIP", "EDEIP") or die("Impossible de se connecter &agrave; MySQL");
+mysql_select_db($bdd, $db) or die("Impossible de sélectionner la base de données");
+mysql_query("SET NAMES UTF8");
+$URLracine = "localhost/edeip";
 /*		}
 		elseif ($ENV == 'tests') {
 			$bdd = "ecoleepledepl_test";
