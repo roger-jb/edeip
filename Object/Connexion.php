@@ -81,7 +81,6 @@ class Connexion {
 					" AND c.idUtilisateur = u.idUtilisateur ".
 					" AND u.actifUtilisateur = 1 ";
 
-echo $query;
 		$result = db_connect::getInstance()->query($query);
 
 		if ($result->num_rows != 1){

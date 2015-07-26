@@ -6,9 +6,29 @@
  * Date: 16/07/2015
  * Time: 11:37
  */
-class ModuleDTO {
+class Module {
 	protected $idModule;
 	protected $libelleModule;
+
+	public static function getAll(){
+		$query = "SELECT * FROM MODULE";
+		$result = db_connect::getInstance()->query($query);
+		$return = array();
+		while ($info = $result->fetch_object('Module')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public static function getById($idModule){
+		$query = "SELECT * FROM MODULE WHERE idModule = $idModule";
+		$result = db_connect::getInstance()->query($query);
+		$return = new Module();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('Module');
+		}
+		return $return;
+	}
 
 	/**
 	 * @return mixed

@@ -6,9 +6,31 @@
  * Date: 16/07/2015
  * Time: 11:38
  */
-class MatiereDTO {
+class Matiere {
 	protected $idMatiere;
 	protected $libelleMatiere;
+
+	public static function getAll(){
+		$query = "SELECT * FROM MATIERE";
+		$result = db_connect::getInstance()->query($query);
+		$return = array();
+		while($info = $result->fetch_object('Matiere')){
+			$return[] = $info;
+		}
+		$result->close();
+		return $return;
+	}
+
+	public static function getById($idMatiere){
+		$query = "SELECT * FROM MATIERE WHERE idMatiere = $idMatiere";
+		$result = db_connect::getInstance()->query($query);
+		$return = new Matiere();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('Matiere');
+		}
+		$result->close();
+		return $return;
+	}
 
 	/**
 	 * @return mixed

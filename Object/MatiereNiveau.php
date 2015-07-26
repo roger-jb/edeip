@@ -6,10 +6,38 @@
  * Date: 16/07/2015
  * Time: 11:39
  */
-class MatiereNiveauDTO {
+class MatiereNiveau {
 	protected $idMatiereNiveau;
 	protected $idMatiere;
 	protected $idNiveau;
+
+	public static function getAll(){
+		$query = "SELECT * FROM MATIERE_NIVEAU";
+		$result = db_connect::getInstance()->query($query);
+		$return = array();
+		while ($info = $result->fetch_object('MatiereNiveau')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public static function getById($idMatiereNiveau){
+		$query = "SELECT * FROM MATIERE NIVEAU WHERE idMatiereNiveau = $idMatiereNiveau";
+		$result = db_connect::getInstance()->query($query);
+		$return = new MatiereNiveau();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('MatiereNiveau');
+		}
+		return $return;
+	}
+
+	public function getMatiere(){
+		return Matiere::getById($this->getIdMatiere());
+	}
+
+	public function getNiveau(){
+		return Niveau::getById($this->getIdNiveau());
+	}
 
 	/**
 	 * @return mixed
