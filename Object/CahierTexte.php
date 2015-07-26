@@ -6,13 +6,43 @@
  * Date: 16/07/2015
  * Time: 10:58
  */
-class CahierTexteDTO {
+class CahierTexte {
 	protected $idCahierTexte;
 	protected $idNiveau;
 	protected $dateRealisation;
 	protected $contenuCahierTexte;
 	protected $idRedacteur;
 	protected $dateRedaction;
+
+	public function getNiveau(){
+		return Niveau::getById($this->getIdNiveau());
+	}
+
+	public function getRedacteur(){
+		return Utilisateur::getById($this->getIdRedacteur());
+	}
+
+	public static function getAll(){
+		$query = "SELECT * FROM CAHIER_TEXTE ORDER BY dateRealisation DESC";
+		$result = db_connect::getInstance()->query($query);
+		$return = array();
+		while ($info = $result->fetch_object('CahierTexte')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public static function getById($idCahierTexte){
+		$query = "SELECT * FROM CAHIER_TEXTE WHERE idCahierTexte = $idCahierTexte";
+
+		$result = db_connect::getInstance()->query($query);
+		$return = new CahierTexte();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('CahierTexte');
+		}
+		$result->close();
+		return $return;
+	}
 
 	/**
 	 * @return mixed

@@ -70,4 +70,25 @@ class Connexion {
 		db_connect::getInstance()->query($query);
 	}
 
+	public static function connecter($login, $mdp){
+		$connexion = new Connexion();
+		$connexion->setLoginUtilisateur($login);
+		$connexion->setMdpUtilisateur($mdp);
+
+		$query =    " SELECT c.* FROM CONNEXION c, UTILISATEUR u ".
+					" WHERE c.loginUtilisateur = '".db_connect::escape_string($connexion->getLoginUtilisateur())."' ".
+					" AND c.mdpUtilisateur = '".$connexion->getMdpUtilisateur()."' ".
+					" AND c.idUtilisateur = u.idUtilisateur ".
+					" AND u.actifUtilisateur = 1 ";
+
+echo $query;
+		$result = db_connect::getInstance()->query($query);
+
+		if ($result->num_rows != 1){
+			return false;
+		}
+		else{
+			return $result->fetch_object('Connexion');
+		}
+	}
 }

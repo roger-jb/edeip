@@ -10,8 +10,6 @@ require_once('/Object/Niveau.php');
 
 /*
  * todo
- *
- * ne prends en compte que le bloc Utilisateur
  * ne prends pas en compte les autres bloc et les jointures de bloc
  *
  */
@@ -20,7 +18,6 @@ require_once('/Object/Niveau.php');
 /**
  * Class Eleve
  */
-
 class Eleve extends Utilisateur {
 	protected $idNiveau;
 
@@ -28,7 +25,7 @@ class Eleve extends Utilisateur {
 		$parents = parent::getAll();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Eleve::getById($parent->getIdEleve());
+			$return[] = Eleve::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -37,7 +34,7 @@ class Eleve extends Utilisateur {
 		$parents = parent::getAllActif();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Eleve::getById($parent->getIdEleve());
+			$return[] = Eleve::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -62,28 +59,26 @@ class Eleve extends Utilisateur {
 	public function getResponsables () {
 		$query = "SELECT * FROM ELEVE_RESPONSABLE WHERE idEleve = " . $this->getIdEleve();
 		$result = db_connect::getInstance()->query($query);
+		$return = array ();
 		if ($result->num_rows > 0) {
-			$return = array ();
 			while ($info = $result->fetch_assoc()) {
 				$return[] = Responsable::getById($info['idResponsable']);
 			}
-			return $return;
 		}
-		else
-			return NULL;
+		return $return;
 	}
 
-	public function setResponsable($idResponsable){
+	public function setResponsable ($idResponsable) {
 		$responsables = $this->getResponsables();
 
 		$exist = FALSE;
-		foreach ($responsables as $resp){
-			if ($resp->getIdResponsable == $idResponsable){
+		foreach ($responsables as $resp) {
+			if ($resp->getIdResponsable == $idResponsable) {
 				$exist = TRUE;
 			}
 		}
-		if (!$exist){
-			$query = "INSERT INTO ELEVE_RESPONSABLE (idEleve, idResponsable) VALUES (".$this->getIdEleve().", $idResponsable)";
+		if (!$exist) {
+			$query = "INSERT INTO ELEVE_RESPONSABLE (idEleve, idResponsable) VALUES (" . $this->getIdEleve() . ", $idResponsable)";
 			db_connect::getInstance()->query($query);
 
 		}

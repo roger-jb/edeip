@@ -9,6 +9,7 @@
 require_once('/Object/Utilisateur.php');
 
 class Administrateur extends Utilisateur{
+
 	public function getIdAdministrateur(){
 		return $this->idUtilisateur;
 	}
@@ -17,14 +18,32 @@ class Administrateur extends Utilisateur{
 		$this->setIdUtilisateur($idAdministrateur);
 	}
 
-	public static function getById($idAdministrateur){
-		$parent = parent::getById($idAdministrateur);
-		$admin = new Administrateur();
-
-		foreach ($parent as $attr => $value){
-			$admin->{'set'.$attr}($value);
+	public static function getAll () {
+		$parents = parent::getAll();
+		$return = array ();
+		foreach ($parents as $parent) {
+			$return[] = Administrateur::getById($parent->getIdUtilisateur());
 		}
-
-		return $admin;
+		return $return;
 	}
+
+	public static function getAllActif () {
+		$parents = parent::getAllActif();
+		$return = array ();
+		foreach ($parents as $parent) {
+			$return[] = Administrateur::getById($parent->getIdUtilisateur());
+		}
+		return $return;
+	}
+
+	public static function getById ($idResponsable) {
+		$parent = parent::getById($idResponsable);
+		$administrateur = new Administrateur();
+
+		foreach ($parent as $attr => $value) {
+			$administrateur->{'set' . $attr}($value);
+		}
+		return $administrateur;
+	}
+
 }

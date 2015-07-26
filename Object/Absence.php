@@ -47,9 +47,9 @@ class Absence {
 		}
 	}
 
-	public static function getByIdEleve ($idEleve) {
+	public static function getAllByIdEleve ($idEleve) {
 		if (!is_numeric($idEleve)) {
-			return false;
+			return array();
 		}
 
 		$query = "SELECT * FROM ABSENCE WHERE idEleve = $idEleve ORDER BY dateDebutAbsence DESC";

@@ -10,18 +10,44 @@ require_once('/Object/Utilisateur.php');
 
 class Responsable extends Utilisateur {
 
+	public static function getAll () {
+		$parents = parent::getAll();
+		$return = array ();
+		foreach ($parents as $parent) {
+			$return[] = Responsable::getById($parent->getIdUtilisateur());
+		}
+		return $return;
+	}
+
+	public static function getAllActif () {
+		$parents = parent::getAllActif();
+		$return = array ();
+		foreach ($parents as $parent) {
+			$return[] = Responsable::getById($parent->getIdUtilisateur());
+		}
+		return $return;
+	}
+
+	public static function getById ($idResponsable) {
+		$parent = parent::getById($idResponsable);
+		$responsable = new Responsable();
+
+		foreach ($parent as $attr => $value) {
+			$responsable->{'set' . $attr}($value);
+		}
+		return $responsable;
+	}
+
 	public function getEleves(){
 		$query = "SELECT * FROM ELEVE_RESPONSABLE WHERE idResponsable = " . $this->getIdResponsable();
 		$result = db_connect::getInstance()->query($query);
+		$return = array ();
 		if ($result->num_rows > 0) {
-			$return = array ();
 			while ($info = $result->fetch_assoc()) {
 				$return[] = Eleve::getById($info['idEleve']);
 			}
-			return $return;
 		}
-		else
-			return NULL;
+		return $return;
 	}
 
 	public function setEleve($idEleve){

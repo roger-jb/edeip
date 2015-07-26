@@ -6,7 +6,22 @@
  * Time: 10:38
  */
 
+/*
+ * TODO
+ *
+ * getCarnetLiaison
+ * getCommunication
+ * getAbsence
+ * getCahierTexte
+ *
+ */
+
 require_once('/include/db_connect.php');
+require_once('/Object/Administrateur.php');
+require_once('/Object/Eleve.php');
+require_once('/Object/Professeur.php');
+require_once('/Object/Responsable.php');
+
 
 class Utilisateur {
 	protected $idUtilisateur;
@@ -20,6 +35,51 @@ class Utilisateur {
 	protected $mailUtilisateur;
 	protected $dateNaissanceUtilisateur;
 	protected $dateInscriptionUtilisateur;
+
+
+	public function estAdministrateur(){
+		$query = "SELECT * FROM ADMINISTRATEUR WHERE idAdministrateur = ".$this->idUtilisateur;
+		$result = db_connect::getInstance()->query($query);
+		if ($result->num_rows ==1){
+			$result->close();
+			return true;
+		}
+		$result->close();
+		return false;
+	}
+
+	public function estEleve(){
+		$query = "SELECT * FROM ELEVE WHERE idEleve = ".$this->idUtilisateur;
+		$result = db_connect::getInstance()->query($query);
+		if ($result->num_rows ==1){
+			$result->close();
+			return true;
+		}
+		$result->close();
+		return false;
+	}
+
+	public function estProfesseur(){
+		$query = "SELECT * FROM PROFESSEUR WHERE idProfesseur = ".$this->idUtilisateur;
+		$result = db_connect::getInstance()->query($query);
+		if ($result->num_rows ==1){
+			$result->close();
+			return true;
+		}
+		$result->close();
+		return false;
+	}
+
+	public function estResponsable(){
+		$query = "SELECT * FROM RESPONSABLE WHERE idResponsable = ".$this->idUtilisateur;
+		$result = db_connect::getInstance()->query($query);
+		if ($result->num_rows ==1){
+			$result->close();
+			return true;
+		}
+		$result->close();
+		return false;
+	}
 
 	public static function getById ($id) {
 		if (!is_numeric($id)) {

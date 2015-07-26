@@ -10,6 +10,24 @@ require_once('/Object/Utilisateur.php');
 
 class Professeur extends Utilisateur {
 
+	public static function getAll () {
+		$parents = parent::getAll();
+		$return = array ();
+		foreach ($parents as $parent) {
+			$return[] = Professeur::getById($parent->getIdUtilisateur());
+		}
+		return $return;
+	}
+
+	public static function getAllActif () {
+		$parents = parent::getAllActif();
+		$return = array ();
+		foreach ($parents as $parent) {
+			$return[] = Professeur::getById($parent->getIdUtilisateur());
+		}
+		return $return;
+	}
+
 	public static function getById($idProfesseur){
 		$parent = parent::getById($idProfesseur);
 		$prof = new Professeur();
