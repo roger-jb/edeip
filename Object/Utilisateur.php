@@ -16,11 +16,11 @@
  *
  */
 
-require_once('/include/db_connect.php');
-require_once('/Object/Administrateur.php');
-require_once('/Object/Eleve.php');
-require_once('/Object/Professeur.php');
-require_once('/Object/Responsable.php');
+require_once('../include/db_connect.php');
+require_once('../Object/Administrateur.php');
+require_once('../Object/Eleve.php');
+require_once('../Object/Professeur.php');
+require_once('../Object/Responsable.php');
 
 
 class Utilisateur {

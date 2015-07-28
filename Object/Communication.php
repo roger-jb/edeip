@@ -1,7 +1,7 @@
 <?php
 
-require_once('/include/db_connect.php');
-require_once('/Obejct/Utiliateur.php');
+require_once('../include/db_connect.php');
+require_once('../Obejct/Utiliateur.php');
 
 /**
  * Created by PhpStorm.

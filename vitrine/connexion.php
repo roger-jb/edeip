@@ -1,9 +1,10 @@
 <?php
 header('content-type: text/html; charset=utf-8');
 session_start();
-include '../include/db.php';
-require_once '../objet/objet.php';
-includeObjet();
+include '../include/db_connect.php';
+require_once '../Object/Utilisateur.php';
+require_once '../Object/Connexion.php';
+require_once '../Object/Eleve.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,26 +34,28 @@ includeObjet();
 			session_destroy();
 		}
 
+		$utilisateur = new Utilisateur();
+
 		if (isset($_POST['co'])) {
 			if (isset($_POST['login']) && !empty($_POST['login']) && isset($_POST['mdp']) && !empty($_POST['mdp'])) {
 				// les champs sont bons, on sécurise
 
-				$login = mysql_real_escape_string(htmlentities($_POST['login'], ENT_QUOTES, 'UTF-8'));
-				$mdp = mysql_real_escape_string(htmlentities($_POST['mdp'], ENT_QUOTES, 'UTF-8'));
-				$mdp = hash("sha256", $mdp);
+				$login = htmlentities($_POST['login'], ENT_QUOTES, 'UTF-8');
+				$mdp = $_POST['mdp'];
 
-				$personne = Personne::getByConnect($login, $mdp);
-				if (!$personne) {
+				$connexion = Connexion::connecter($login, $mdp);
+				$utilisateur = $connexion->getUtilisateur();
+
+				if (!($utilisateur->getIdUtilisateur())) {
 					echo "Le couple Login/Mot de Passe est incorrect<br/>";
 				}
 				else {
-					$_SESSION['id'] = $personne->get_id();
-					if ($personne->get_estParent()) {
-						$parent = new Parents($personne->get_id());
-						$enfants = $parent->get_eleves();
-						foreach ($enfants as $enfant) {
-							$eleve = Personne::getById($enfant->get_id());
-							echo "<p><a href='connexion.php?id=" . $eleve->get_id() . "'>Enfant en classe de " . $enfant->get_niveau()->get_libelle() . " : " . $eleve->get_nom() . " " . $eleve->get_prenom() . "</a></p>";
+					$_SESSION['id'] = $utilisateur->getIdUtilisateur();
+					if ($utilisateur->estResponsable()) {
+						$utilisateur = Responsable::getById($utilisateur->getIdUtilisateur());
+						$eleves = $utilisateur->getEleves();
+						foreach ($eleves as $eleve) {
+							echo "<p><a href='connexion.php?id=" . $eleve->getIdEleve() . "'>Enfant en classe de " . $eleve->getNiveau()->getLibelleNiveau() . " : " . $eleve->getNomUtilisateur() . " " . $eleve->getPrenomUtilisateur() . "</a></p>";
 						}
 					}
 				}
@@ -69,24 +72,17 @@ includeObjet();
 		}
 
 		if (isset($_SESSION['id'])) {
-			$personne = Personne::getById($_SESSION['id']);
+			$utilisateur = Utilisateur::getById($_SESSION['id']);
 		}
-		if ($personne != false) {
-			if (($personne->get_estParent()) && isset($_GET['id']) && !empty($_GET['id'])) {
+		if ($utilisateur->getIdUtilisateur()) {
+			if (($utilisateur->estResponsable()) && isset($_GET['id']) && !empty($_GET['id'])) {
 				$_SESSION['id_enfant'] = $_GET['id'];
+			}
 				$form = false;
-				echo "<p>Bonjour <strong>" . $personne->get_nom() . " " . $personne->get_prenom() . "</strong> !</p>";
+				echo "<p>Bonjour <strong>" . $utilisateur->getNomUtilisateur() . " " . $utilisateur->getPrenomUtilisateur() . "</strong> !</p>";
 				echo "<p><a href='../intranet/intranet.php'>Accéder à l'intranet</a></p>";
 				echo "<p><a href='../intranet/changer_mdp.php'>Changer de mot de passe</a></p>";
 				echo "<p><a href='../vitrine/connexion.php?deco=1'>Deconnexion</a></p>";
-			}
-			else if (!($personne->get_estParent())) {
-				$form = false;
-				echo "<p>Bonjour <strong>" . $personne->get_nom() . " " . $personne->get_prenom() . "</strong> !</p>";
-				echo "<p><a href='../intranet/intranet.php'>Accéder à l'intranet</a></p>";
-				echo "<p><a href='../intranet/changer_mdp.php'>Changer de mot de passe</a></p>";
-				echo "<p><a href='../vitrine/connexion.php?deco=1'>Deconnexion</a></p>";
-			}
 		}
 		else {
 			// sinon on affiche le form de connexion
@@ -121,7 +117,7 @@ includeObjet();
 	</div>
 	<?php
 	include '../include/include_footer.php';
-	mysql_close($db);
+	db_connect::close();
 	?>
 </div>
 </body>

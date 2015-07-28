@@ -7,7 +7,7 @@
  * Time: 11:58
  */
 
-require_once('/include/db_connect.php');
+require_once('../include/db_connect.php');
 
 class Bulletin {
 	protected $idBulletin;

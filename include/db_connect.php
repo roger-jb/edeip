@@ -6,7 +6,7 @@
  * Time: 16:12
  */
 
-require_once('/ENV.php');
+require_once('../ENV.php');
 
 class db_connect {
 	static private $ENV;

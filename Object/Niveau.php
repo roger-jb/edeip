@@ -1,6 +1,6 @@
 <?php
 
-require_once('/Object/Module.php');
+require_once('../Object/Module.php');
 
 /**
  * Created by PhpStorm.

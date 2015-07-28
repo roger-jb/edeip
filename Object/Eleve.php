@@ -5,8 +5,8 @@
  * Date: 16/07/2015
  * Time: 10:45
  */
-require_once('/Object/Utilisateur.php');
-require_once('/Object/Niveau.php');
+require_once('../Object/Utilisateur.php');
+require_once('../Object/Niveau.php');
 
 /*
  * todo
