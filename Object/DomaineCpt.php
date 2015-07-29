@@ -6,10 +6,37 @@
  * Date: 16/07/2015
  * Time: 11:42
  */
-class DomaineCptDTO {
+class DomaineCpt {
 	protected $idDomaineCpt;
 	protected $libelleDomaineCpt;
 	protected $idMatiereNiveau;
+
+    public static function getAll(){
+        $query = "SELECT * FROM DOMAINE_CPT";
+        $result = db_connect::getInstance()->query($query);
+        $return = array();
+        while ($info = $result->fetch_object('DomaineCpt')){
+            $return[] = $info;
+        }
+        $result->close();
+        return $return;
+    }
+
+    public static function getById($idDomaineCpt){
+        $query = "SELECT * FROM DOMAINE_CPT WHERE idDomaineCpt = $idDomaineCpt";
+        $result = db_connect::getInstance()->query($query);
+        if ($result->num_rows == 1){
+            $return = $result->fetch_object('DomaineCpt');
+            $result->close();
+            return $return;
+        }
+        $result->close();
+        return new DomaineCpt();
+    }
+
+    public function getMatiereNiveau(){
+        return MatiereNiveau::getById($this->getIdMatiereNiveau());
+    }
 
 	/**
 	 * @return mixed

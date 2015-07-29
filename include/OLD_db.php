@@ -20,6 +20,7 @@ $URLracine = "localhost/edeip";
 		}
 	}
 	//prod
+	/*
 	else {
 		$bdd = "ecoleepledepl";
 		$db = mysql_connect("mysql5-15.perso", "ecoleepledepl", "xpN7z7xX") or die("Impossible de se connecter à MySQL");

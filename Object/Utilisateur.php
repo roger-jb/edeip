@@ -90,9 +90,9 @@ class Utilisateur {
 		$result = db_connect::getInstance()->query($query);
 
 		if ($result->num_rows == 1) {
-			$test = $result->fetch_object('Utilisateur');
+			$return = $result->fetch_object('Utilisateur');
 			$result->close();
-			return $test;
+			return $return;
 		}
 		else {
 			$result->close();

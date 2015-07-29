@@ -6,10 +6,37 @@
  * Date: 16/07/2015
  * Time: 11:57
  */
-class PointCptDTO {
+class PointCpt {
 	protected $idPointCpt;
 	protected $libellePointCpt;
 	protected $idDomaineCpt;
+
+    public static function getAll(){
+        $query = "SELECT * FROM POINT_CPT";
+        $result = db_connect::getInstance()->query($query);
+        $return = array();
+        while ($info = $result->fetch_object('PointCpt')){
+            $return [] = $info;
+        }
+        $result->close();
+        return $return;
+    }
+
+    public static function getById($idPointCpt){
+        $query = "SELECT * FROM POINT_CPT WHERE idPointCpt = $idPointCpt";
+        $result = db_connect::getInstance()->query($query);
+        if ($result->num_rows == 1){
+            $return = $result->fetch_object('PointCpt');
+            $result->close();
+            return $return;
+        }
+        $result->close();
+        return new PointCpt();
+    }
+
+    public function getDomaineCpt(){
+        return DomaineCpt::getById($this->getIdDomaineCpt());
+    }
 
 	/**
 	 * @return mixed
