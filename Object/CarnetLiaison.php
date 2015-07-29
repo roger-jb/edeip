@@ -6,13 +6,47 @@
  * Date: 16/07/2015
  * Time: 10:53
  */
-class CarnetLiaisonDTO {
+class CarnetLiaison {
 	protected $idCarnetLiaison;
 	protected $contenuCarnetLiason;
 	protected $idReponse;
 	protected $idRedacteur;
 	protected $dateRedaction;
 	protected $idEleve;
+
+    public static function getAll(){
+        $query = "SELECT * FROM CARNET_LIAISON";
+        $result = db_connect::getInstance()->query($query);
+        $return = array();
+        while ($info = $result->fetch_object('CarnetLiaison')){
+            $return[] = $info;
+        }
+        $result->close();
+        return $return;
+    }
+
+    public static function getById($idCarnetLiaison){
+        $query = "SELECT * FROM CARNET_LIAISON WHERE idCarnetLiaison = $idCarnetLiaison";
+        $result = db_connect::getInstance()->query($query);
+        $return = new CarnetLiaison();
+        if ($result->num_rows == 1){
+            $return = $result->fetch_object('CarnetLiaison');
+        }
+        $result->close();
+        return $return;
+    }
+
+    public function getReponse(){
+        return CarnetLiaison::getById($this->getIdReponse());
+    }
+
+    public function getRedacteur(){
+        return Utilisateur::getById($this->getIdRedacteur());
+    }
+
+    public function getEleve(){
+        return Eleve::getById($this->getIdEleve());
+    }
 
 	/**
 	 * @return mixed

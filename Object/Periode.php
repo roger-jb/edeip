@@ -6,12 +6,40 @@
  * Date: 16/07/2015
  * Time: 11:31
  */
-class PeriodeDTO {
+
+require_once('../Object/Trimestre.php');
+class Periode {
 	protected $idPeriode;
 	protected $libellePeriode;
 	protected $dateDebutPeriode;
 	protected $dateFinPeriode;
 	protected $idTrimestre;
+
+    public static function getAll(){
+        $query = "SELECT * FROM PERIODE";
+        $result = db_connect::getInstance()->query($query);
+        $return = array();
+        while ($info = $result->fetch_object('Periode')){
+            $return[] = $info;
+        }
+        $result->close();
+        return $return;
+    }
+
+    public static function getById($idPeriode){
+        $query = "SELECT * FROM PERIODE WHERE idPeriode = $idPeriode";
+        $result = db_connect::getInstance()->query($query);
+        $return = new Periode();
+        if ($result->num_rows == 1){
+            $return = $result->fetch_object('Periode');
+        }
+        $result->close();
+        return $return;
+    }
+
+    public function getTrimestre(){
+        return Trimestre::getById($this->getIdTrimestre());
+    }
 
 	/**
 	 * @return mixed

@@ -6,13 +6,43 @@
  * Date: 16/07/2015
  * Time: 15:46
  */
-class EmploiTempsDTO {
+class EmploiTemps {
 	protected $idEdT;
 	protected $idPeriode;
 	protected $idMatiereNiveau;
 	protected $jourEdT;
 	protected $heureDebEdT;
 	protected $heureFinEdT;
+
+    public static function getAll(){
+        $query = "SELECT * FROM EMPLOI_TEMPS";
+        $result = db_connect::getInstance()->query($query);
+        $return = array();
+        while ($info = $result->fetch_object('EmploiTemps')){
+            $return[] = $info;
+        }
+        $result->close();
+        return $return;
+    }
+
+    public static function getById($idEdT){
+        $query = "SELECT * FROM EMPLOI_TEMPS WHERE idEdT = $idEdT";
+        $result = db_connect::getInstance()->query($query);
+        $return = new EmploiTemps();
+        if ($result->num_rows == 1){
+            $return = $result->fetch_object('EmploiTemps');
+        }
+        $result->close();
+        return $return;
+    }
+
+    public function getPeriode(){
+        return Periode::getById($this->getIdPeriode());
+    }
+
+    public function getMatiereNiveau(){
+        return MatiereNiveau::getById($this->getIdMatiereNiveau());
+    }
 
 	/**
 	 * @return mixed
