@@ -6,7 +6,7 @@
  * Date: 16/07/2015
  * Time: 11:14
  */
-class EvaluationDTO {
+class Evaluation {
 	protected $idEvaluaton;
 	protected $idTypeEvaluation;
 	protected $idMatiereNiveau;
@@ -14,6 +14,36 @@ class EvaluationDTO {
 	protected $titreEvaluation;
 	protected $autreEvaluation;
 	protected $maxEvaluation;
+
+	public static function getAll(){
+		$query = "SELECT * FROM EVALUATION";
+		$result = db_connect::getInstance()->query($query);
+		$return = array();
+		while ($info = $result->fetch_object('Evaluation')){
+			$return[] = $info;
+		}
+		$result->close();
+		return $return;
+	}
+
+	public static function getById($idEvaluation){
+		$query = "SELECT * FROM EVALUATION WHERE idEvaluation = $idEvaluation";
+		$result = db_connect::getInstance()->query($query);
+		$return = new Evaluation();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('Evaluation');
+		}
+		$result->close();
+		return $return;
+	}
+
+	public function getTypeEvaluation(){
+		return TypeEvaluation::getById($this->getIdTypeEvaluation());
+	}
+
+	public function getMatiereNiveau(){
+		return MatiereNiveau::getById($this->getIdMatiereNiveau());
+	}
 
 	/**
 	 * @return mixed
