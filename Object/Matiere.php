@@ -60,4 +60,38 @@ class Matiere {
 		$this->libelleMatiere = $libelleMatiere;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO MATIERE (libelleMatiere) VALUES (".
+			"'".$this->getLibelleMatiere()."' ".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idMatiere FROM MATIERE WHERE ".
+				"libelleMatiere = '".$this->getLibelleMatiere()."'";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdMatiere($info['idMatiere']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
+
+	public function update(){
+		$query = "UPDATE MATIERE SET ".
+			"libelleMatiere = '".$this->getLibelleMatiere()."'".
+			"WHERE idMatiere = ".$this->getIdMatiere();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM MATIERE WHERE idMatiere = ".$this->getIdMatiere();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

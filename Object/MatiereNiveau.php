@@ -81,5 +81,41 @@ class MatiereNiveau {
 		$this->idNiveau = $idNiveau;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO MATIERE_NIVEAU (idMatiere, idNiveau) VALUES (".
+			"".$this->getIdMatiere().", ".
+			"".$this->getIdNiveau()."".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idMatiereNiveau FROM MATIERE_NIVEAU WHERE ".
+				"idMatiere = ".$this->getIdMatiere()." AND ".
+				"idNiveau = ".$this->getIdNiveau();
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdMatiereNiveau($info['idMatiereNiveau']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE MATIERE_NIVEAU SET ".
+			"idMatiere = ".$this->getIdMatiere()." AND ".
+			"idNiveau = ".$this->getIdNiveau()." ".
+			"WHERE idMatiereNiveau = ".$this->getIdMatiereNiveau();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM MATIERE_NIVEAU WHERE idMatiereNiveau = ".$this->getIdMatiereNiveau();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

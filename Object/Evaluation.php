@@ -143,5 +143,54 @@ class Evaluation {
 		$this->maxEvaluation = $maxEvaluation;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO EVALUATION (idTypeEvaluation, idMatiereNiveau, dateEvaluation, titreEvaluation, autreEvaluation, maxEvaluation)".
+			"VALUES (".
+			"".$this->getIdTypeEvaluation().", ".
+			"".$this->getIdMatiereNiveau().", ".
+			"'".$this->getDateEvaluation()."', ".
+			"'".$this->getTitreEvaluation()."', ".
+			"".(empty($this->getAutreEvaluation())?'NULL':$this->getAutreEvaluation()).", ".
+			"".$this->getMaxEvaluation().
+			")";
+		if (db_connect::query($query)){
+			$query2 = "SELECT idEvaluation FROM EVALUATION WHERE ".
+				"idTypeEvaluation = ".$this->getIdTypeEvaluation()." AND ".
+				"idMatiereNiveau = ".$this->getIdMatiereNiveau()." AND ".
+				"dateEvaluation = '".$this->getDateEvaluation()."' AND ".
+				"titreEvaluation = '".$this->getTitreEvaluation()."' AND ".
+				"autreEvaluation = ".(empty($this->getAutreEvaluation())?'NULL':$this->getAutreEvaluation())." AND ".
+				"maxEvaluation = ".$this->getMaxEvaluation();
+			$result = db_connect::query($query2);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdEvaluaton($info['idEvaluation']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE EVALUATION SET ".
+			"idTypeEvaluation = ".$this->getIdTypeEvaluation().", ".
+			"idMatiereNiveau = ".$this->getIdMatiereNiveau().", ".
+			"dateEvaluation = '".$this->getDateEvaluation()."', ".
+			"titreEvaluation = '".$this->getTitreEvaluation()."', ".
+			"autreEvaluation = ".(empty($this->getAutreEvaluation())?'NULL':$this->getAutreEvaluation()).", ".
+			"maxEvaluation = ".$this->getMaxEvaluation()." ".
+			"WHERE idEvaluation = ".$this->getIdEvaluaton();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM EVALUATION WHERE idEvaluation = ".$this->getIdEvaluaton();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

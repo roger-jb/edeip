@@ -58,5 +58,36 @@ class Module {
 		$this->libelleModule = $libelleModule;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO MODULE (libelleModule) VALUES (".
+			"'".db_connect::escape_string($this->getLibelleModule())."'".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idModule WHERE ".
+				"libelleModule = '".$this->getLibelleModule()."'";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdModule($info['idModule']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE MODULE SET libelleModule = '".$this->getLibelleModule()."' WHERE idModule = ".$this->getIdModule();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM MODULE WHERE idModule = ".$this->getIdModule();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

@@ -83,5 +83,37 @@ class EvaluationPointCpt {
 		$this->idPointCpt = $idPointCpt;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO EVALUATION_POINT_CPT (".
+			"idEvaluation, idPointCpt".
+			") VALUES (".
+			$this->getIdEvaluation().", ".
+			$this->getIdPointCpt().
+			")";
+		if (db_connect::query($query)){
+			$query2 = "SELECT idEvaluationPointCpt FROM EVALUATION_POINT_CPT WHERE ".
+				"idEvaluation = ".$this->getIdEvaluation()." AND ".
+				"idPointCpt = ".$this->getIdPointCpt();
+			$result = db_connect::query($query);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdEvaluationPointCpt($info['idEvaluaionPointCpt']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM EVALUATION_POINT_CPT WHERE idEvaluationPointCpt = ".$this->getIdEvaluationPointCpt();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }
