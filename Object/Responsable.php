@@ -77,4 +77,14 @@ class Responsable extends Utilisateur {
 	public function setIdResponsable ($idResponsable) {
 		$this->idUtilisateur = $idResponsable;
 	}
+
+	public function insert(){
+		if (parent::insert()){
+			$query = "INSERT INTO RESPONSABLE (idReponsable) VALUES (".
+				$this->getIdResponsable()
+				.")";
+			return db_connect::getInstance()->query($query);
+		}
+		return false;
+	}
 }

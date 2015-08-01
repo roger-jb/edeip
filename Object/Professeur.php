@@ -53,4 +53,13 @@ class Professeur extends Utilisateur {
 		$this->setIdUtilisateur($idPrfesseur);
 	}
 
+	public function insert(){
+		if (parent::insert()){
+			$query = "INSERT INTO PROFESSEUR (idProfesseur) VALUES (".
+				$this->getIdPrfesseur().
+				")";
+			return db_connect::getInstance()->query($query);
+		}
+		return false;
+	}
 }

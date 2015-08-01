@@ -119,5 +119,41 @@ class Bulletin {
 		$this->dateRedacton = $dateRedacton;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO BULLETIN (".
+			"dateRedaction, contenuBulletin, idEleve, idMatiereNiveau ".
+			")".
+			"VALUES (".
+			"'".$this->getDateRedacton()."',".
+			" '".db_connect::escape_string($this->getContenuBulletin())."', ".
+			$this->getIdEleve().", ".
+			$this->getIdMatiereNiveau().
+			")";
+		if (db_connect::getInstance()->query($query)){
+			return true;
+		}
+		return false;
+	}
 
+	public function delete(){
+		$query = "DELETE FROM BULLETIN WHERE idBulletin = ".$this->getIdBulletin();
+		if (db_connect::getInstance()->query($query)){
+			return true;
+		}
+		return false;
+	}
+
+	public function update(){
+		$query = "UPDATE BULLETIN ".
+			"SET ".
+			"dateRedaction = '".$this->getDateRedacton()."',".
+			"contenuBulletin = '".db_connect::escape_string($this->getContenuBulletin())."', ".
+			"idEleve = ".$this->getIdEleve().", ".
+			"idMatiereNiveau = ".$this->getIdMatiereNiveau().
+			"WHERE idBulletin = ".$this->getIdBulletin();
+		if (db_connect::getInstance()->query($query)){
+			return true;
+		}
+		return false;
+	}
 }

@@ -57,6 +57,10 @@ class db_connect {
 		}
 	}
 
+	public static function query($query){
+		return self::getInstance()->query($query);
+	}
+
 	/**
 	 * connexion a la BDD
 	 */

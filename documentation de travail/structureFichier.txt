@@ -1,9 +1,3 @@
-Le dossier DTO
-    il comprend l'ensemble des classes en miroir de la BDD
-    chaque classe ne comporte que les accesseurs en lecture et ecriture
-    Tous les attributs sont en protected
-
-Le dossier DAL
     il comprends les actions sur la BDD
         -> INSERT, UPDATE, DELETE
         -> récupération des objets par l'attribut id d'un objet

@@ -273,4 +273,65 @@ class Utilisateur {
 	public function setDateInscriptionUtilisateur ($dateInscriptionUtilisateur) {
 		$this->dateInscriptionUtilisateur = $dateInscriptionUtilisateur;
 	}
+
+	public function insert(){
+		$query = "INSERT INTO UTILISATEUR (nomUtilisateur, prenomUtilisateur, adr1Utilisateur, adr2Utilisateur, cpUtilisateur, villeUtilisateur, actifUtilisateur, mailUtilisateur, dateNaissanceUtilisateur, dateInscriptionUtilisateur) VALUES (".
+			"'".db_connect::escape_string($this->getNomUtilisateur())."', ".
+			"'".db_connect::escape_string($this->getPrenomUtilisateur())."', ".
+			"'".db_connect::escape_string($this->getAdr1Utilisateur())."', ".
+			"'".db_connect::escape_string($this->getAdr2Utilisateur())."', ".
+			"'".db_connect::escape_string($this->getCpUtilisateur())."', ".
+			"'".db_connect::escape_string($this->getVilleUtilisateur())."', ".
+			($this->getActifUtilisateur()?'true':'false').", ".
+			"'".db_connect::escape_string($this->getMailUtilisateur()).", ".
+			"'".db_connect::escape_string($this->getDateNaissanceUtilisateur())."', ".
+			"'".db_connect::escape_string($this->getDateInscriptionUtilisateur())."'"
+			.")";
+		if (db_connect::getInstance()->query($query)){
+			$query2 = "SELECT idUtulisateur FROM UTILISATEUR WHERE ".
+				" AND nomUtilisateur = '".db_connect::escape_string($this->getNomUtilisateur())."', ".
+				" AND prenomUtilisateur = '".db_connect::escape_string($this->getPrenomUtilisateur())."', ".
+				" AND adr1Utilisateur = '".db_connect::escape_string($this->getAdr1Utilisateur())."', ".
+				" AND adr2Utilisateur = '".db_connect::escape_string($this->getAdr2Utilisateur())."', ".
+				" AND cpUtilisateur = '".db_connect::escape_string($this->getCpUtilisateur())."', ".
+				" AND villeUtilisateur = '".db_connect::escape_string($this->getVilleUtilisateur())."', ".
+				" AND actifUtilisateur = ".($this->getActifUtilisateur()?'true':'false').", ".
+				" AND mailUtilisateur = '".db_connect::escape_string($this->getMailUtilisateur()).", ".
+				" AND dateNaissanceUtilisateur = '".db_connect::escape_string($this->getDateNaissanceUtilisateur())."', ".
+				" AND dateInscriptionUtilisateur = '".db_connect::escape_string($this->getDateInscriptionUtilisateur())."'";
+			$result = db_connect::getInstance()->query($query);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdUtilisateur($info['idUtilisateur']);
+				$result->close();
+				return true;
+			}
+			$result->close();
+			return false;
+		}
+		return false;
+	}
+
+	public function update(){
+		$query = "UPDATE UTILISATEUR SET ".
+			" nomUtilisateur = '".db_connect::escape_string($this->getNomUtilisateur())."', ".
+			" prenomUtilisateur = '".db_connect::escape_string($this->getPrenomUtilisateur())."', ".
+			" adr1Utilisateur = '".db_connect::escape_string($this->getAdr1Utilisateur())."', '".
+			" adr2Utilisateur = '".db_connect::escape_string($this->getAdr2Utilisateur())."', ".
+			" cpUtilisateur = '".db_connect::escape_string($this->getCpUtilisateur())."', ".
+			" villeUtilisateur = '".db_connect::escape_string($this->getVilleUtilisateur())."', ".
+			" actifUtilisateur = ".($this->getActifUtilisateur()?'true':'false').", ".
+			" mailUtilisateur = '".db_connect::escape_string($this->getMailUtilisateur()).", ".
+			" dateNaissanceUtilisateur = '".db_connect::escape_string($this->getDateNaissanceUtilisateur())."', ".
+			" dateInscriptionUtilisateur = '".db_connect::escape_string($this->getDateInscriptionUtilisateur())."'".
+			" WHERE idUtilisateur = ".$this->getIdUtilisateur();
+		return db_connect::getInstance()->query($query);
+	}
+
+	public function delete(){
+		/*$query = "DELETE FROM UTILISATEUR WHERE idUtilisateur = ".$this->getIdUtilisateur();
+		return db_connect::getInstance()->query($query);*/
+		$this->setActifUtilisateur(false);
+		$this->update();
+	}
 }

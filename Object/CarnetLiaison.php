@@ -132,5 +132,50 @@ class CarnetLiaison {
 		$this->idEleve = $idEleve;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO CARNET_LIAISON (".
+			"contenuCarnetLiaison, idReponse, idRedacteur, dateRedaction, idEleve
+			) VALUES (".
+			"'".db_connect::escape_string($this->getContenuCarnetLiason())."', ".
+			"".($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
+			"".$this->getIdRedacteur().", ".
+			"'".$this->getDateRedaction()."', ".
+			"".$this->getIdEleve().""
+			.")";
+		if (db_connect::query($query)){
+			$query2 = "SELECT idCarnetLiaison FROM CARNET_LIAISON WHERE ".
+				"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiason())."' AND ".
+				"idReponse = ".($this->getIdReponse()?$this->getIdReponse():'NULL')." AND ".
+				"idRedacteur = ".$this->getIdRedacteur()." AND ".
+				"dateRedacation = '".$this->getDateRedaction()."' AND ".
+				"idEleve = ".$this->getIdEleve()."";
+			$result = db_connect::query($query2);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdCarnetLiaison($info['idCarntLiaison']);
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE CARNET_LIAISON SET ".
+			"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiason())."', ".
+			"idReponse = ".($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
+			"idRedacteur = ".$this->getIdRedacteur().", ".
+			"dateRedacation = '".$this->getDateRedaction()."', ".
+			"idEleve = ".$this->getIdEleve()."".
+			"WHERE idCarnetLiaison = ".$this->getIdCarnetLiaison();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM CARNET_LIAISON WHERE idCarnetLiaison = ".$this->getIdCarnetLiaison();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

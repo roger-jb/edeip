@@ -61,8 +61,8 @@ class Eleve extends Utilisateur {
 		$result = db_connect::getInstance()->query($query);
 		$return = array ();
 		if ($result->num_rows > 0) {
-			while ($info = $result->fetch_assoc()) {
-				$return[] = Responsable::getById($info['idResponsable']);
+			while ($info = $result->fetch_object('EleveResponsable')) {
+				$return[] = $info->getResponsable();
 			}
 		}
 		return $return;
@@ -117,5 +117,19 @@ class Eleve extends Utilisateur {
 	 */
 	public function setIdNiveau ($idNiveau) {
 		$this->idNiveau = $idNiveau;
+	}
+
+	public function insert(){
+		if (parent::insert()){
+			$query = "INSERT INTO ELEVE (idEleve, idNiveau) VALUES (".
+				"".$this->getIdEleve().", ".
+				"".$this->getIdNiveau().", ".
+				")";
+			if  (db_connect::getInstance()->query($query)){
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 }

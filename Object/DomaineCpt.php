@@ -80,5 +80,43 @@ class DomaineCpt {
 		$this->idMatiereNiveau = $idMatiereNiveau;
 	}
 
+	public function insert(){
+		$query = "INSRT INTO DOMAINE_CPT (".
+			"libelleDomaineCpt, idMatiereNiveau".
+			") VALUES (".
+			"'".db_connect::escape_string($this->getLibelleDomaineCpt())."', ".
+			"".$this->getIdMatiereNiveau().
+			")";
+		if (db_connect::query($query)){
+			$query2 = "SELECT * FROM DOMAINE_CPT WHERE ".
+				"libelleDomaineCpt = '".db_connect::escape_string($this->getLibelleDomaineCpt())."' AND ".
+				"idMatiereNiveau = ".$this->getIdMatiereNiveau();
+			$result = db_connect::query($query2);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdDomaineCpt($info['idDomaineCpt']);
+				$result->close();
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE DOMAINE_CPT SET ".
+			"libelleDomaineCpt = '".db_connect::escape_string($this->getLibelleDomaineCpt())."', ".
+			"idMatiereNiveau = ".$this->getIdMatiereNiveau().
+			"WHERE idDomaineCpt = ".$this->getIdDomaineCpt();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM DOMAINE_CPT WHERE idDomaineCpt = ".$this->getIdDomaineCpt();
+
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

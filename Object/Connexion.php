@@ -64,10 +64,26 @@ class Connexion {
 	}
 
 	public function update () {
-		$db_login = db_connect::escape_string($this->loginUtilisateur);
-		$db_mdp = db_connect::escape_string($this->mdpUtilisateur);
-		$query = "UPDATE UTILISATEUR SET loginUtilisateur = '$db_login', mdpUtilisateur = '$db_mdp' WHERE idUtilisateur = " . $this->idUtilisateur;
-		db_connect::getInstance()->query($query);
+		$db_login = db_connect::escape_string($this->getLoginUtilisateur());
+		$db_mdp = db_connect::escape_string($this->getMdpUtilisateur());
+		$query = "UPDATE CONNEXION SET ".
+			"loginUtilisateur = '$db_login', mdptilisateur = '$db_mdp' ".
+			"WHERE idUtilisateur = ".$this->getIdUtilisateur();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	// non implementé car gérée par le trigger trg_utilisaeur_after_insert
+	public function insert(){
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM CONNEXION WHERE idUtilisateur = ".$this->getIdUtilisateur();
+		if (db_connect::query($query))
+			return true;
+		return false;
 	}
 
 	public static function connecter($login, $mdp){

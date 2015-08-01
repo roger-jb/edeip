@@ -128,5 +128,51 @@ class CahierTexte {
 		$this->dateRedaction = $dateRedaction;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO CAHIER_TEXTE (".
+			"idNiveau, dateRealisation, contenuCahierTexte, idRedacteur, dateRedaction".
+			") VALUES (".
+			$this->getIdNiveau().", ".
+			"'".$this->dateRealisation."', ".
+			"'".db_connect::escape_string($this->getContenuCahierTexte())."', ".
+			$this->getIdRedacteur().", ".
+			"'".$this->getDateRedaction()."'".
+			")";
+		if (db_connect::query($query)){
+			$query2 = "SELECT idCahierTexte FROM CAHIER_TEXTE WHERE ".
+				"idNiveau = ".$this->getIdNiveau()." AND ".
+				"idRedacteur = ".$this->idRedacteur." AND ".
+				"dateRedaction = '".$this->getDateRedaction()."' AND ".
+				"dateRealisation = '".$this->getDateRealisation()."' AND ".
+				"contenuCahierTexte = '".db_connect::escape_string($this->getContenuCahierTexte())."'";
+			$result = db_connect::query($query2);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdCahierTexte($info['idahierTexte']);
+				$result->close();
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE CAHIER_TEXTE SET ".
+			"idNiveau = ".$this->getIdNiveau()." , ".
+			"idRedacteur = ".$this->idRedacteur." , ".
+			"dateRedaction = '".$this->getDateRedaction()."' , ".
+			"dateRealisation = '".$this->getDateRealisation()."' , ".
+			"contenuCahierTexte = '".db_connect::escape_string($this->getContenuCahierTexte())."' ".
+			"WHERE idCahierTexte = ".$this->getIdCahierTexte();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM CAHIER_TEXTE WHERE idCahierTexte = ".$this->getIdCahierTexte();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

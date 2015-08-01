@@ -97,5 +97,38 @@ class Communication {
 		$this->dateRedaction = $dateRedaction;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO COMMUNICATION (".
+			"contenuCommunication, idRedacteur, dateRedaction"
+			.") VALUES (".
+			"'".db_connect::escape_string($this->getContenuCommunication())."', ".
+			"".$this->getIdRedacteur().", ".
+			"'".$this->getDateRedaction()."'"
+			.")";
+		if (db_connect::query($query)){
+			$query2 = "SELECT idCommunication FROM COMMUNICATION WHERE ".
+				"contenuCommunication = '".db_connect::escape_string($this->getContenuCommunication())."' AND ".
+				"idRedacteur = ".$this->getIdRedacteur()." AND ".
+				"dateRedaction = '".$this->getDateRedaction()."'";
+			$result = db_connect::query($query2);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdCommunication($info['idCommunication']);
+				$result->close();
+				return true;
+			}
+		}
+		//db_connect::getInstance()->rollback();
+		return false;
+	}
 
+	public function update(){
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM COMMUNICATION WHERE idCommunication = ".$this->idCommunication;
+		if (db_connect::query($query))
+			return true;
+	}
 }
