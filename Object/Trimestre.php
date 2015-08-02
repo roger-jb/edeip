@@ -105,5 +105,46 @@ class Trimestre {
 		$this->dateFinCommentaire = $dateFinCommentaire;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO TRIMESTRE (libelleTrimestre, dateDebutTrimestre, dateFinTrimestre, dateFinCommentaires) VALUES (".
+			"'".db_connect::escape_string($this->getLibelleTrimestre())."', ".
+			"'".$this->getDateDebutTrimeste()."', ".
+			"'".$this->getDateFinTrimestre()."', ".
+			"'".$this->getDateFinCommentaire()."'".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idTrimestre FROM TRIMESTRE WHERE ".
+				"libelleTrimestre = '".db_connect::escape_string($this->getLibelleTrimestre())."' AND ".
+				"datDebutTrimestre = '".$this->getDateDebutTrimeste()."' AND ".
+				"dateFinTrimestre = '".$this->getDateFinTrimestre()."' AND ".
+				"datFinCommentaire = '".$this->getDateFinCommentaire()."'";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdTrimestre($info['idTrimestre']);
+				$result->close();
+				return true;
+			}
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE TRIMESTRE SET ".
+			"libelleTrimestre = '".db_connect::escape_string($this->getLibelleTrimestre())."', ".
+			"datDebutTrimestre = '".$this->getDateDebutTrimeste()."', ".
+			"dateFinTrimestre = '".$this->getDateFinTrimestre()."', ".
+			"datFinCommentaire = '".$this->getDateFinCommentaire()."'".
+			"WHERE idTrimestre = ".$this->getIdTrimestre();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM TRIMESTRE WHERE idTrimestre = ".$this->getIdTrimestre();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }
