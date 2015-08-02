@@ -80,5 +80,41 @@ class PointCpt {
 		$this->idDomaineCpt = $idDomaineCpt;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO POINT_CPT (libellePointCpt, idDomaineCpt) VALUES (".
+			"'".db_connect::escape_string($this->getLibellePointCpt())."', ".
+			"".$this->getIdDomaineCpt()."".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idPointCpt FROM POINT_CPT WHERE ".
+				"libellePointCpt = '".db_connect::escape_string($this->getLibellePointCpt())."' AND ".
+				"idDomaineCpt = ".$this->getIdDomaineCpt()."";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdPointCpt($info['idPointCpt']);
+				$result->close();
+				return true;
+			}
+			// db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE POINT_CPT SET ".
+			"libellePointCpt = '".db_connect::escape_string($this->getLibellePointCpt())."', ".
+			"idDomaineCpt = ".$this->getIdDomaineCpt()." ".
+			"WHERE idPointCpt = ".$this->getIdPointCpt();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM POINT_CPT WHERE idPointCpt = ".$this->getIdPointCpt();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

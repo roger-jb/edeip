@@ -86,5 +86,31 @@ class PointCptEleve {
 		$this->idNiveauCpt = $idNiveauCpt;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO POINT_CPT_ELEVE (idPointCpt, idEleve, idNiveauCpt) VALUES (".
+			"".$this->getIdPointCpt().", ".
+			"".$this->getIdEleve().", ".
+			"".$this->getIdNiveauCpt()."".
+			")";
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE POINT_CPT_ELEVE SET ".
+			"idNiveauCpt = ".$this->getIdNiveauCpt()." ".
+			"WHERE idPointCpt = ".$this->getIdPointCpt()." AND ".
+			"idEleve = ".$this->getIdEleve();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM POINT_CPT_ELEVE WHERE idPointCpt = ".$this->getIdPointCpt(). " AND idEleve = ".$this->getIdEleve();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

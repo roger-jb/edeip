@@ -83,5 +83,36 @@ class ProfesseurMatiereNiveau {
 		$this->idMatiereNiveau = $idMatiereNiveau;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO PROFESSEUR_MATIERE_NIVEAU (idProfesseur, idMatiereNiveau) VALUES (".
+			"".$this->getIdProfesseur().", ".
+			"".$this->getIdMatiereNiveau()."".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idProfesseurMatiereNiveau FROM PROFESSEUR_MATIERE_NIVEAU WHERE ".
+				"idProfesseur = ".$this->getIdProfesseur()." AND ".
+				"idMatiereNiveau = ".$this->getIdMatiereNiveau()."";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdProfesseurMatiereNiveau($info['idProfesseurMatiereNiveau']);
+				$result->close();
+				return true;
+			}
+			// db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		// table de jointure, pas d'update
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM PROFESSEUR_MATIERE_NIVEAU WHERE idProfesseurMatiereNiveau = ".$this->getIdProfesseurMatiereNiveau();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

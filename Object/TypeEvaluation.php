@@ -61,5 +61,37 @@ class TypeEvaluation {
 		$this->libelleTypeEvaluation = $libelleTypeEvaluation;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO TYPE_EVALUATION (libelleTypeEvaluation) VALUES (".
+			"'".db_connect::escape_string($this->getLibelleTypeEvaluation())."'".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idTypeEvaluation FROM TYPE_EVALUATION WHERE ".
+				"libelleEvaluation = '".db_connect::escape_string($this->getLibelleTypeEvaluation())."'";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdTypeEvaluation($info['idTypeEvaluation']);
+				$result->close();
+				return true;
+			}
+			// db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE TYPE_EVALUATION SET ".
+			"libelleEvaluation = '".db_connect::escape_string($this->getLibelleTypeEvaluation())."'".
+			"WHERE idTypeEvaluation = ".$this->getIdTypeEvaluation();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+	public function delete(){
+		$query = "DELETE FROM TYPE_EVALUATION WHERE idTypeEvaluation = ".$this->getIdTypeEvaluation();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

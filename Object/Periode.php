@@ -111,5 +111,47 @@ class Periode {
 		$this->idTrimestre = $idTrimestre;
 	}
 
+	public function insert(){
+		$query = "INSERT INTO PERIODE (libellePeriode, dateDebutPeriode, dateFinPeriode, idTrimestre) VALUES (".
+			"'".db_connect::escape_string($this->getLibellePeriode())."', ".
+			"'".$this->getDateDebutPeriode()."', ".
+			"'".$this->getDateFinPeriode()."', ".
+			"".$this->getIdTrimestre()."".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idPeriode FROM PERIODE WHERE ".
+				"libellePeriode = '".db_connect::escape_string($this->getLibellePeriode())."' AND ".
+				"dateDebutPeriode = '".$this->getDateDebutPeriode()."' AND, ".
+				"dateFinPeriode = '".$this->getDateFinPeriode()."' AND ".
+				"idTrimestre = ".$this->getIdTrimestre()."";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdPeriode($info['idPeriode']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
 
+	public function update(){
+		$query = "UPDATE PERIODE SET ".
+			"libellePeriode = '".db_connect::escape_string($this->getLibellePeriode())."', ".
+			"dateDebutPeriode = '".$this->getDateDebutPeriode()."', ".
+			"dateFinPeriode = '".$this->getDateFinPeriode()."', ".
+			"idTrimestre = ".$this->getIdTrimestre()."".
+			"WHERE idPeriode = ".$this->getIdPeriode();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM PERIODE WHERE idPeriode = ".$this->getIdPeriode();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }

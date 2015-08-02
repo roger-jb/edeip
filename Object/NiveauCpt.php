@@ -60,4 +60,36 @@ class NiveauCpt {
 	public function setLibelleNiveauCpt ($libelleNiveauCpt) {
 		$this->libelleNiveauCpt = $libelleNiveauCpt;
 	}
+
+	public function insert(){
+		$query = "INSERT INTO NIVEAU_CPT (libelleNiveauCpt) VALUES (".
+			"'".db_connect::escape_string($this->getLibelleNiveauCpt())."'".
+			")";
+		if (db_connect::query($query)){
+			$select = "SELECT idNiveauCpt FROM NIVEAU_CPT WHERE libelleNiveauCpt = '".db_connect::escape_string($this->getLibelleNiveauCpt())."'";
+			$result = db_connect::query($select);
+			if ($result->num_rows == 1){
+				$info = $result->fetch_assoc();
+				$this->setIdNiveauCpt($info['idNiveauCpt']);
+				$result->close();
+				return true;
+			}
+			//db_connect::getInstance()->rollback();
+		}
+		return false;
+	}
+
+	public function update(){
+		$query = "UPDATE NIVEAU_CPT SET libelleNiveauCpt = '".db_connect::escape_string($this->getLibelleNiveauCpt())."' WHERE idNiveauCpt = ".$this->getIdNiveauCpt();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
+
+	public function delete(){
+		$query = "DELETE FROM NIVEAU_CPT WHERE idNiveauCpt = ".$this->getIdNiveauCpt();
+		if (db_connect::query($query))
+			return true;
+		return false;
+	}
 }
