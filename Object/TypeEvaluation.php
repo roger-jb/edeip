@@ -13,7 +13,7 @@ class TypeEvaluation {
 
 	public static function getAll(){
 		$query = "SELECT * FROM TYPE_EVALUATION";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('TypeEvaluation')){
 			$return[] = $info;
@@ -24,7 +24,7 @@ class TypeEvaluation {
 
 	public static function getById($idTypeEvaluation){
 		$query = "SELECT * FROM TYPE_EVALUATION WHERE idTypeEvaluation = $idTypeEvaluation";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new TypeEvaluation();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('TypeEvaluation');

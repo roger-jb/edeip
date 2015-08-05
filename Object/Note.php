@@ -13,7 +13,7 @@ class Note {
 
 	public static function getAll () {
 		$query = "SELECT * FROM NOTE";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array ();
 		while ($info = $result->fetch_object('Note')) {
 			$return[] = $info;
@@ -24,7 +24,7 @@ class Note {
 
 	public static function getById ($idEleve, $idEvaluation) {
 		$query = "SELECT * FROM NOTE WHERE idEleve = $idEleve AND idEvaluation = $idEvaluation";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new Note();
 		if ($result->num_rows == 1) {
 			$return = $result->fetch_object('Note');

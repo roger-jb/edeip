@@ -5,8 +5,6 @@
  * Date: 16/07/2015
  * Time: 10:45
  */
-require_once('../Object/Utilisateur.php');
-require_once('../Object/Niveau.php');
 
 /*
  * todo
@@ -25,7 +23,8 @@ class Eleve extends Utilisateur {
 		$parents = parent::getAll();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Eleve::getById($parent->getIdUtilisateur());
+			if ($parent->estEleve())
+				$return[] = Eleve::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -34,7 +33,8 @@ class Eleve extends Utilisateur {
 		$parents = parent::getAllActif();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Eleve::getById($parent->getIdUtilisateur());
+			if ($parent->estEleve())
+				$return[] = Eleve::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -48,7 +48,7 @@ class Eleve extends Utilisateur {
 		}
 
 		$query = "SELECT * FROM ELEVE WHERE idEleve = " . $eleve->getIdEleve();
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$info = $result->fetch_assoc();
 
 		$eleve->setIdNiveau($info['idNiveau']);
@@ -58,7 +58,7 @@ class Eleve extends Utilisateur {
 
 	public function getResponsables () {
 		$query = "SELECT * FROM ELEVE_RESPONSABLE WHERE idEleve = " . $this->getIdEleve();
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array ();
 		if ($result->num_rows > 0) {
 			while ($info = $result->fetch_object('EleveResponsable')) {
@@ -79,14 +79,14 @@ class Eleve extends Utilisateur {
 		}
 		if (!$exist) {
 			$query = "INSERT INTO ELEVE_RESPONSABLE (idEleve, idResponsable) VALUES (" . $this->getIdEleve() . ", $idResponsable)";
-			db_connect::getInstance()->query($query);
+			db_connect::query($query);
 
 		}
 	}
 
 	public function getNiveau () {
 		$query = "SELECT n.* FROM NIVEAU n, ELEVE e WHERE n.idNiveau = e.idNiveau AND e.idEleve " . $this->getIdEleve();
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		return $result->fetch_object('Niveau');
 	}
 
@@ -125,7 +125,7 @@ class Eleve extends Utilisateur {
 				"".$this->getIdEleve().", ".
 				"".$this->getIdNiveau().", ".
 				")";
-			if  (db_connect::getInstance()->query($query)){
+			if  (db_connect::query($query)){
 				return true;
 			}
 			return false;

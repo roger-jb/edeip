@@ -16,7 +16,7 @@ class EmploiTemps {
 
     public static function getAll(){
         $query = "SELECT * FROM EMPLOI_TEMPS";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('EmploiTemps')){
             $return[] = $info;
@@ -27,7 +27,7 @@ class EmploiTemps {
 
     public static function getById($idEdT){
         $query = "SELECT * FROM EMPLOI_TEMPS WHERE idEdT = $idEdT";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = new EmploiTemps();
         if ($result->num_rows == 1){
             $return = $result->fetch_object('EmploiTemps');

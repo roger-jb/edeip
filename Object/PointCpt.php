@@ -13,7 +13,7 @@ class PointCpt {
 
     public static function getAll(){
         $query = "SELECT * FROM POINT_CPT";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('PointCpt')){
             $return [] = $info;
@@ -24,7 +24,7 @@ class PointCpt {
 
     public static function getById($idPointCpt){
         $query = "SELECT * FROM POINT_CPT WHERE idPointCpt = $idPointCpt";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         if ($result->num_rows == 1){
             $return = $result->fetch_object('PointCpt');
             $result->close();

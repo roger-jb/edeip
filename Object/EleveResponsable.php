@@ -12,7 +12,7 @@ class EleveResponsable {
 
 	public static function getAll(){
 		$query = "SELECT * FROM ELEVE_RESPONSABLE";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('EleveResponsable')){
 			$return[] = $info;
@@ -23,7 +23,7 @@ class EleveResponsable {
 
 	public static function getById($idEleveResponsable){
 		$query = "SELECT * FROM ELEVE_RESPONSABLE WHERE idEleveResponsable = $idEleveResponsable";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new EleveResponsable();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('EleveResponsable');

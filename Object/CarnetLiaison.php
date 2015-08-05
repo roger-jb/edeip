@@ -16,7 +16,7 @@ class CarnetLiaison {
 
     public static function getAll(){
         $query = "SELECT * FROM CARNET_LIAISON";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('CarnetLiaison')){
             $return[] = $info;
@@ -27,7 +27,7 @@ class CarnetLiaison {
 
     public static function getById($idCarnetLiaison){
         $query = "SELECT * FROM CARNET_LIAISON WHERE idCarnetLiaison = $idCarnetLiaison";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = new CarnetLiaison();
         if ($result->num_rows == 1){
             $return = $result->fetch_object('CarnetLiaison');

@@ -1,7 +1,5 @@
 <?php
 
-require_once('../include/db_connect.php');
-require_once('../Object/Utilisateur.php');
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
@@ -96,7 +94,7 @@ class Connexion {
 					" AND c.mdpUtilisateur = '".$connexion->getMdpUtilisateur()."' ".
 					" AND c.idUtilisateur = u.idUtilisateur ".
 					" AND u.actifUtilisateur = 1 ";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 
 		if ($result->num_rows != 1){
 			return new connexion;

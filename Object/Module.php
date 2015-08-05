@@ -12,7 +12,7 @@ class Module {
 
 	public static function getAll(){
 		$query = "SELECT * FROM MODULE";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('Module')){
 			$return[] = $info;
@@ -22,7 +22,7 @@ class Module {
 
 	public static function getById($idModule){
 		$query = "SELECT * FROM MODULE WHERE idModule = $idModule";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new Module();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('Module');

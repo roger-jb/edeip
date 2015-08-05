@@ -13,7 +13,7 @@ class ProfesseurMatiereNiveau {
 
 	public static function getAll(){
 		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while($info = $result->fetch_object('ProfesseurMatiereNiveau')){
 			$return[] = $info;
@@ -24,7 +24,7 @@ class ProfesseurMatiereNiveau {
 
 	public static function getById($idProfesseurMatiereNiveau){
 		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU WHERE idProfesseurMatiereNiveau = $idProfesseurMatiereNiveau";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new ProfesseurMatiereNiveau();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('ProfesseurMatiereNiveau');

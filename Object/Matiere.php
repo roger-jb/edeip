@@ -12,7 +12,7 @@ class Matiere {
 
 	public static function getAll(){
 		$query = "SELECT * FROM MATIERE";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while($info = $result->fetch_object('Matiere')){
 			$return[] = $info;
@@ -23,7 +23,7 @@ class Matiere {
 
 	public static function getById($idMatiere){
 		$query = "SELECT * FROM MATIERE WHERE idMatiere = $idMatiere";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new Matiere();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('Matiere');

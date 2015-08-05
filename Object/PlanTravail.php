@@ -14,7 +14,7 @@ class PlanTravail {
 
     public static function getAll(){
         $query = "SELECT * FROM PLAN_TRAVAIL";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('PlanTravail')){
             $return[] = $info;
@@ -25,7 +25,7 @@ class PlanTravail {
 
     public static function getById($idPlanTravail){
         $query = "SELECT * FROM PLAN_TRAVAIL WHERE idPlanTravail = $idPlanTravail";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = new PlanTravail();
         if ($result->num_rows == 1){
             $return = $result->fetch_object('PlanTravail');

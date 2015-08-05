@@ -6,15 +6,14 @@
  * Time: 10:43
  */
 
-require_once('../Object/Utilisateur.php');
-
 class Responsable extends Utilisateur {
 
 	public static function getAll () {
 		$parents = parent::getAll();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Responsable::getById($parent->getIdUtilisateur());
+			if ($parent->estResponsable())
+				$return[] = Responsable::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -23,7 +22,8 @@ class Responsable extends Utilisateur {
 		$parents = parent::getAllActif();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Responsable::getById($parent->getIdUtilisateur());
+			if ($parent->estResponsable())
+				$return[] = Responsable::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -40,7 +40,7 @@ class Responsable extends Utilisateur {
 
 	public function getEleves(){
 		$query = "SELECT * FROM ELEVE_RESPONSABLE WHERE idResponsable = " . $this->getIdResponsable();
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array ();
 		if ($result->num_rows > 0) {
 			while ($info = $result->fetch_assoc()) {
@@ -60,7 +60,7 @@ class Responsable extends Utilisateur {
 		}
 		if (!$exist){
 			$query = "INSERT INTO ELEVE_RESPONSABLE (idEleve, idResponsable) VALUES ($idEleve, ".$this->getIdResponsable().")";
-			db_connect::getInstance()->query($query);
+			db_connect::query($query);
 		}
 	}
 
@@ -83,7 +83,7 @@ class Responsable extends Utilisateur {
 			$query = "INSERT INTO RESPONSABLE (idReponsable) VALUES (".
 				$this->getIdResponsable()
 				.")";
-			return db_connect::getInstance()->query($query);
+			return db_connect::query($query);
 		}
 		return false;
 	}

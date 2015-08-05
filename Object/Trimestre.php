@@ -15,7 +15,7 @@ class Trimestre {
 
     public function getAll(){
         $query = "SELECT * FROM TRIMESTRE";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while($info = $result->fetch_object('Trimestre')){
             $return[] =$info;
@@ -26,7 +26,7 @@ class Trimestre {
 
     public function getById($idTrimestre){
         $query = "SELECT * FROM TRIMESTRE WHERE idTrimestre = $idTrimestre";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = new Trimestre();
         if ($result->num_rows == 1){
             $return = $result->fetch_object('Trimestre');

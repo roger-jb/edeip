@@ -18,7 +18,7 @@ class Absence {
 
 	public static function getAll () {
 		$query = 'SELECT * FROM ABSENCE ORDER BY dateDebutAbsence DESC';
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 
 		$return = array ();
 		while ($info = $result->fetch_object('Absence')) {
@@ -35,7 +35,7 @@ class Absence {
 
 		$query = "SELECT * FROM ABSENCE WHERE idAbsence = $id ORDER BY dateDebutAbsence DESC";
 
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		if ($result->num_rows ==1) {
 			$return = $result->fetch_object('Absence');
 			db_connect::close();
@@ -54,7 +54,7 @@ class Absence {
 
 		$query = "SELECT * FROM ABSENCE WHERE idEleve = $idEleve ORDER BY dateDebutAbsence DESC";
 		$return = array ();
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		while ($info = $result->fetch_object('Absence')) {
 			$return[] = $info;
 		}
@@ -191,7 +191,7 @@ class Absence {
 			" dateRedaction = '".$this->getDateRedaction()."' ".
 			" idRedacteur = ".$this->getIdRedacteur().
 			" WHERE idAbsence = ".$this->getIdAbsence();
-		return db_connect::getInstance()->query($query);
+		return db_connect::query($query);
 
 	}
 
@@ -200,10 +200,10 @@ class Absence {
 			$this->getIdEleve().", '".$this->getDateDebutAbsence()."', ".$this->getDateFinAbsence()."', ".
 			($this->getEtatAbsence()?'TRUE':'FALSE').", '".db_connect::escape_string($this->getMotifAbsence())."', '".$this->getDateRedaction()."', ".$this->getIdRedacteur().
 			")";
-		if( db_connect::getInstance()->query($query)){
+		if( db_connect::query($query)){
 			$query2 = "SELECT * FROM ABSENCE WHERE idEleve = ".$this->getIdEleve()." AND dateDebutAbsence = '".$this->getDateDebutAbsence()."' AND dateFinAbsence '".$this->getDateFinAbsence()."' ".
 				"AND etatAbsence = ". ($this->getEtatAbsence()?'TRUE':'FALSE')." and motifAbsence = '".db_connect::escape_string($this->getMotifAbsence())."' AND dateRedaction = '".$this->getDateRedaction()."' AND idRedacteur".$this->getIdRedacteur();
-			$result = db_connect::getInstance()->query($query2);
+			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$return = $result->fetch_object('Absence');
 				$this->setIdAbsence($return->getIdAbsence());
@@ -215,6 +215,6 @@ class Absence {
 
 	public function delete(){
 		$query = "DELETE FROM ABSENCE WHERE idAbsence = ".$this->getIdAbsence();
-		return db_connect::getInstance()->query($query);
+		return db_connect::query($query);
 	}
 }

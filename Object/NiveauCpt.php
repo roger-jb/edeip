@@ -12,7 +12,7 @@ class NiveauCpt {
 
     public static function getAll(){
         $query = "SELECT * FROM NIVEAU_CPT";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('NiveauCpt')){
             $return[] = $info;
@@ -23,7 +23,7 @@ class NiveauCpt {
 
     public static function getById($idNiveauCpt){
         $query = "SELECT * FROM NIVEAU_CPT WHERE idNiveauCpt = $idNiveauCpt";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         if ($result->num_rows == 1){
             $return = $result->fetch_object('NiveauCpt');
             $result->close();

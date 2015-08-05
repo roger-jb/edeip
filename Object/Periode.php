@@ -17,7 +17,7 @@ class Periode {
 
     public static function getAll(){
         $query = "SELECT * FROM PERIODE";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('Periode')){
             $return[] = $info;
@@ -28,7 +28,7 @@ class Periode {
 
     public static function getById($idPeriode){
         $query = "SELECT * FROM PERIODE WHERE idPeriode = $idPeriode";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = new Periode();
         if ($result->num_rows == 1){
             $return = $result->fetch_object('Periode');

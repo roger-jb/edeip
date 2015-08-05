@@ -13,7 +13,7 @@ class DomaineCpt {
 
     public static function getAll(){
         $query = "SELECT * FROM DOMAINE_CPT";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('DomaineCpt')){
             $return[] = $info;
@@ -24,7 +24,7 @@ class DomaineCpt {
 
     public static function getById($idDomaineCpt){
         $query = "SELECT * FROM DOMAINE_CPT WHERE idDomaineCpt = $idDomaineCpt";
-        $result = db_connect::getInstance()->query($query);
+        $result = db_connect::query($query);
         if ($result->num_rows == 1){
             $return = $result->fetch_object('DomaineCpt');
             $result->close();

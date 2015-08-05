@@ -13,7 +13,7 @@ class EleveMatiereNiveau {
 
 	public static function getAll () {
 		$query = "SELECT * FROM ELEVE_MATIERE_NIVEAU";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array ();
 		while ($info = $result->fetch_object('EleveMatiereNiveau')) {
 			$return[] = $info;
@@ -24,7 +24,7 @@ class EleveMatiereNiveau {
 
 	public static function getyId ($idEleveMatiereNiveau) {
 		$query = "SELECT * FROM ELEVE_MATIERE_NIVEAU WHERE idEleveMatiereNiveau = $idEleveMatiereNiveau";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new EleveMatiereNiveau();
 		if ($result->num_rows == 1) {
 			$return = $result->fetch_object('EleveMatiereNiveau');

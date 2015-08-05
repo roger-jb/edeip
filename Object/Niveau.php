@@ -1,7 +1,5 @@
 <?php
 
-require_once('../Object/Module.php');
-
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
@@ -15,7 +13,7 @@ class Niveau {
 
 	public static function getById($idNiveau){
 		$query = "SELECT * FROM NIVEAU WHERE idNiveau = $idNiveau";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new Niveau();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('Niveau');
@@ -26,7 +24,7 @@ class Niveau {
 
 	public static function getAll(){
 		$query = "SELECT * FROM NIVEAU";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('Niveau')){
 			$return[] = $info;

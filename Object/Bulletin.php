@@ -7,8 +7,6 @@
  * Time: 11:58
  */
 
-require_once('../include/db_connect.php');
-
 class Bulletin {
 	protected $idBulletin;
 	protected $contenuBulletin;
@@ -19,7 +17,7 @@ class Bulletin {
 	public static function getById($idBulletin){
 		$query = "SELECT * FROM BULLETIN WHERE idBulletin = $idBulletin";
 
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 
 		if ($result->num_rows != 1){
 			return new Bulletin();
@@ -33,7 +31,7 @@ class Bulletin {
 	public static function getByEleve($idEleve){
 		$query = "SELECT * FROM BULLETIN WHERE idEleve = $idEleve";
 
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$bulletins = array();
 		while($bulletin = $result->fetch_object('Bulletin')){
 			$bulletins[] = $bulletin;
@@ -129,7 +127,7 @@ class Bulletin {
 			$this->getIdEleve().", ".
 			$this->getIdMatiereNiveau().
 			")";
-		if (db_connect::getInstance()->query($query)){
+		if (db_connect::query($query)){
 			return true;
 		}
 		return false;
@@ -137,7 +135,7 @@ class Bulletin {
 
 	public function delete(){
 		$query = "DELETE FROM BULLETIN WHERE idBulletin = ".$this->getIdBulletin();
-		if (db_connect::getInstance()->query($query)){
+		if (db_connect::query($query)){
 			return true;
 		}
 		return false;
@@ -151,7 +149,7 @@ class Bulletin {
 			"idEleve = ".$this->getIdEleve().", ".
 			"idMatiereNiveau = ".$this->getIdMatiereNiveau().
 			"WHERE idBulletin = ".$this->getIdBulletin();
-		if (db_connect::getInstance()->query($query)){
+		if (db_connect::query($query)){
 			return true;
 		}
 		return false;

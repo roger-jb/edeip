@@ -17,7 +17,7 @@ class Evaluation {
 
 	public static function getAll(){
 		$query = "SELECT * FROM EVALUATION";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('Evaluation')){
 			$return[] = $info;
@@ -28,7 +28,7 @@ class Evaluation {
 
 	public static function getById($idEvaluation){
 		$query = "SELECT * FROM EVALUATION WHERE idEvaluation = $idEvaluation";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new Evaluation();
 		if ($result->num_rows == 1){
 			$return = $result->fetch_object('Evaluation');

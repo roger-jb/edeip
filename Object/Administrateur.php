@@ -6,8 +6,6 @@
  * Time: 11:05
  */
 
-require_once('../Object/Utilisateur.php');
-
 class Administrateur extends Utilisateur{
 
 	public function getIdAdministrateur(){
@@ -22,7 +20,8 @@ class Administrateur extends Utilisateur{
 		$parents = parent::getAll();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Administrateur::getById($parent->getIdUtilisateur());
+			if ($parent->estAdministrateur())
+				$return[] = Administrateur::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -31,7 +30,8 @@ class Administrateur extends Utilisateur{
 		$parents = parent::getAllActif();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Administrateur::getById($parent->getIdUtilisateur());
+			if ($parent->estAdministrateur())
+				$return[] = Administrateur::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -49,7 +49,7 @@ class Administrateur extends Utilisateur{
 	public function insert(){
 		if (parent::insert()){
 			$query = "INSERT INTO ADMINISTRATEUR (idAdministrateur) VALUES (".$this->getIdAdministrateur().")";
-			return db_connect::getInstance()->query($query);
+			return db_connect::query($query);
 		}
 		return false;
 	}

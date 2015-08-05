@@ -16,13 +16,6 @@
  *
  */
 
-require_once('../include/db_connect.php');
-require_once('../Object/Administrateur.php');
-require_once('../Object/Eleve.php');
-require_once('../Object/Professeur.php');
-require_once('../Object/Responsable.php');
-
-
 class Utilisateur {
 	protected $idUtilisateur;
 	protected $nomUtilisateur;
@@ -38,8 +31,8 @@ class Utilisateur {
 
 
 	public function estAdministrateur(){
-		$query = "SELECT * FROM ADMINISTRATEUR WHERE idAdministrateur = ".$this->idUtilisateur;
-		$result = db_connect::getInstance()->query($query);
+		$query = "SELECT * FROM ADMINISTRATION WHERE idAdministration = ".$this->idUtilisateur;
+		$result = db_connect::query($query);
 		if ($result->num_rows ==1){
 			$result->close();
 			return true;
@@ -50,7 +43,7 @@ class Utilisateur {
 
 	public function estEleve(){
 		$query = "SELECT * FROM ELEVE WHERE idEleve = ".$this->idUtilisateur;
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		if ($result->num_rows ==1){
 			$result->close();
 			return true;
@@ -61,7 +54,7 @@ class Utilisateur {
 
 	public function estProfesseur(){
 		$query = "SELECT * FROM PROFESSEUR WHERE idProfesseur = ".$this->idUtilisateur;
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		if ($result->num_rows ==1){
 			$result->close();
 			return true;
@@ -72,7 +65,7 @@ class Utilisateur {
 
 	public function estResponsable(){
 		$query = "SELECT * FROM RESPONSABLE WHERE idResponsable = ".$this->idUtilisateur;
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		if ($result->num_rows ==1){
 			$result->close();
 			return true;
@@ -87,7 +80,7 @@ class Utilisateur {
 		}
 		$query = "SELECT * FROM UTILISATEUR WHERE idUtilisateur = $id";
 
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 
 		if ($result->num_rows == 1) {
 			$return = $result->fetch_object('Utilisateur');
@@ -102,7 +95,7 @@ class Utilisateur {
 
 	public static function getAll () {
 		$query = "SELECT * FROM UTILISATEUR";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array ();
 		while ($info = $result->fetch_object('Utilisateur')) {
 			$return[] = $info;
@@ -112,7 +105,7 @@ class Utilisateur {
 
 	public static function getAllActif () {
 		$query = "SELECT * FROM UTILISATEUR WHERE actifUtilisateur = 1";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array ();
 		while ($info = $result->fetch_object('Utilisateur')) {
 			$return[] = $info;
@@ -287,7 +280,7 @@ class Utilisateur {
 			"'".db_connect::escape_string($this->getDateNaissanceUtilisateur())."', ".
 			"'".db_connect::escape_string($this->getDateInscriptionUtilisateur())."'"
 			.")";
-		if (db_connect::getInstance()->query($query)){
+		if (db_connect::query($query)){
 			$query2 = "SELECT idUtulisateur FROM UTILISATEUR WHERE ".
 				" AND nomUtilisateur = '".db_connect::escape_string($this->getNomUtilisateur())."', ".
 				" AND prenomUtilisateur = '".db_connect::escape_string($this->getPrenomUtilisateur())."', ".
@@ -296,10 +289,10 @@ class Utilisateur {
 				" AND cpUtilisateur = '".db_connect::escape_string($this->getCpUtilisateur())."', ".
 				" AND villeUtilisateur = '".db_connect::escape_string($this->getVilleUtilisateur())."', ".
 				" AND actifUtilisateur = ".($this->getActifUtilisateur()?'true':'false').", ".
-				" AND mailUtilisateur = '".db_connect::escape_string($this->getMailUtilisateur()).", ".
+				" AND mailUtilisateur = '".db_connect::escape_string($this->getMailUtilisateur())."', ".
 				" AND dateNaissanceUtilisateur = '".db_connect::escape_string($this->getDateNaissanceUtilisateur())."', ".
 				" AND dateInscriptionUtilisateur = '".db_connect::escape_string($this->getDateInscriptionUtilisateur())."'";
-			$result = db_connect::getInstance()->query($query);
+			$result = db_connect::query($query);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
 				$this->setIdUtilisateur($info['idUtilisateur']);
@@ -325,12 +318,12 @@ class Utilisateur {
 			" dateNaissanceUtilisateur = '".db_connect::escape_string($this->getDateNaissanceUtilisateur())."', ".
 			" dateInscriptionUtilisateur = '".db_connect::escape_string($this->getDateInscriptionUtilisateur())."'".
 			" WHERE idUtilisateur = ".$this->getIdUtilisateur();
-		return db_connect::getInstance()->query($query);
+		return db_connect::query($query);
 	}
 
 	public function delete(){
 		/*$query = "DELETE FROM UTILISATEUR WHERE idUtilisateur = ".$this->getIdUtilisateur();
-		return db_connect::getInstance()->query($query);*/
+		return db_connect::query($query);*/
 		$this->setActifUtilisateur(false);
 		$this->update();
 	}

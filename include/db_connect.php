@@ -58,7 +58,10 @@ class db_connect {
 	}
 
 	public static function query($query){
-		return self::getInstance()->query($query);
+		$return = self::getInstance()->query($query);
+		if ($return === false)
+			echo '<br/>Pb dans le requete <br/>'.$query.'<br/>';
+		return $return;
 	}
 
 	/**

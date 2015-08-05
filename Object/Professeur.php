@@ -6,15 +6,14 @@
  * Time: 10:42
  */
 
-require_once('../Object/Utilisateur.php');
-
 class Professeur extends Utilisateur {
 
 	public static function getAll () {
 		$parents = parent::getAll();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Professeur::getById($parent->getIdUtilisateur());
+			if ($parent->estProfesseur())
+				$return[] = Professeur::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -23,7 +22,8 @@ class Professeur extends Utilisateur {
 		$parents = parent::getAllActif();
 		$return = array ();
 		foreach ($parents as $parent) {
-			$return[] = Professeur::getById($parent->getIdUtilisateur());
+			if ($parent->estProfesseur())
+				$return[] = Professeur::getById($parent->getIdUtilisateur());
 		}
 		return $return;
 	}
@@ -58,7 +58,7 @@ class Professeur extends Utilisateur {
 			$query = "INSERT INTO PROFESSEUR (idProfesseur) VALUES (".
 				$this->getIdPrfesseur().
 				")";
-			return db_connect::getInstance()->query($query);
+			return db_connect::query($query);
 		}
 		return false;
 	}

@@ -1,8 +1,5 @@
 <?php
 
-require_once('../include/db_connect.php');
-require_once('../Obejct/Utiliateur.php');
-
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
@@ -17,7 +14,7 @@ class Communication {
 
 	public static function getAll(){
 		$query = "SELECT * FROM COMMUNICATION ORDER BY dateRedaction DESC";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('Communication')){
 			$return[] = $info;
@@ -28,7 +25,7 @@ class Communication {
 
 	public static function getById($idCommunication){
 		$query = "SELECT * FROM COMMUNICATION WHERE idCommunication = $idCommunication";
-		$result = db_connect::getInstance()->query($query);
+		$result = db_connect::query($query);
 		$return = new Communication();
 		if ($result->num_rows ==1){
 			$return = $result->fetch_object('Communication');
