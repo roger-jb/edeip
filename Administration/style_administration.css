@@ -197,18 +197,39 @@ body {
     letter-spacing:1px;
 }
 
-.corps {
+#content #corps {
+    float: left;
+    width: 724px;
     font-family: Arial, sans-serif;
     font-size:14px;
     color:#871641;
     text-align: justify;
-    margin-top:75px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 60px;
-    padding-right: 60px;
     background:url(../images/main_bg.png) repeat-x left top;
 }
+#content #menuLeft{
+    float: left;
+    width: 280px;
+    padding: 10px;
+
+}
+
+#reduction{
+    font-size: 40px;
+}
+
+#content.close #menuLeft{
+    width: 40px;
+}
+
+#content.close #corps{
+    width: 964px;
+}
+
+#content.close #menuContent{
+    display: none;
+}
+
+
 
 .footer {
     margin-left: auto;

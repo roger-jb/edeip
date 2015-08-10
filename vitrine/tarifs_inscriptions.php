@@ -27,10 +27,10 @@ header('content-type: text/html; charset=utf-8');
 		<table id="tarif">
 			<tr>
 				<td></td>
-				<td>Module 1 <br>(CP &agrave; CE2)</td>
-				<td>Module 2 <br>(CM1 &agrave; 6ieme)</td>
-				<td>Module 3 <br>(5ieme &agrave; 3ieme)</td>
-				<td>Module 4 <br>(2nde &agrave; 1iere)</td>
+				<td>CP &agrave; CE2</td>
+				<td>CM1 &agrave; 6ieme</td>
+				<td>5ieme &agrave; 3ieme</td>
+				<td>2nde &agrave; 1iere</td>
 			</tr>
 			<tr>
 				<td>Frais de dossier</td>

@@ -1,3 +1,3 @@
 <?php
-header ('Location: http://'.$URLracine.'/vitrine/accueil.php');
+header ('Location: ../vitrine/accueil.php');
 ?>
