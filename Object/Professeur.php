@@ -62,4 +62,11 @@ class Professeur extends Utilisateur {
 		}
 		return false;
 	}
+
+    public function insertOnly(){
+        $query = "INSERT INTO PROFESSEUR (idProfesseur) VALUES (".
+            $this->getIdPrfesseur().
+            ")";
+        return db_connect::query($query);
+    }
 }

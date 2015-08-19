@@ -87,4 +87,11 @@ class Responsable extends Utilisateur {
 		}
 		return false;
 	}
+
+    public function insertOnly(){
+        $query = "INSERT INTO RESPONSABLE (idReponsable) VALUES (".
+            $this->getIdResponsable()
+            .")";
+        return db_connect::query($query);
+    }
 }

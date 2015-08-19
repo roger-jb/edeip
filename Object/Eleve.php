@@ -6,13 +6,6 @@
  * Time: 10:45
  */
 
-/*
- * todo
- * ne prends pas en compte les autres bloc et les jointures de bloc
- *
- */
-
-
 /**
  * Class Eleve
  */
@@ -125,11 +118,16 @@ class Eleve extends Utilisateur {
 				"".$this->getIdEleve().", ".
 				"".$this->getIdNiveau().", ".
 				")";
-			if  (db_connect::query($query)){
-				return true;
-			}
-			return false;
+			return db_connect::query($query);
 		}
 		return false;
 	}
+
+    public function insertOnly(){
+        $query = "INSERT INTO ELEVE (idEleve, idNiveau) VALUES (".
+            "".$this->getIdEleve().", ".
+            "".$this->getIdNiveau().", ".
+            ")";
+        return db_connect::query($query);
+    }
 }

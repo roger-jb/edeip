@@ -37,27 +37,47 @@ if (isset($_POST['btSubmit'])) {
     if (!empty(trim($_POST['dateInscriptionUtilisateur'])))
         $personne->setDateInscriptionUtilisateur($_POST['dateInscriptionUtilisateur']);
 
-    $fonction = array('Administrateur'=>FALSE, 'Responsable'=>FALSE, 'Professeur'=>FALSE, 'Eleve'=>FALSE);
-    foreach ($_POST['fonction'] as $fct){
-        $fonction[$fct]=TRUE;
-    }
-    if (!empty(trim($personne->getNomUtilisateur())))
-    if (empty($personne->getIdUtilisateur()))
-        $personne->insert();
-    else
-        $personne->update();
+    $fonction = array('Administrateur' => FALSE, 'Responsable' => FALSE, 'Professeur' => FALSE, 'Eleve' => FALSE);
+    if (isset($_POST['fonction']))
+        foreach ($_POST['fonction'] as $fct) {
+            $fonction[$fct] = TRUE;
+        }
 
-    foreach($fonction as $class => $value){
-        $attr = 'est'.$class;
-        if ($personne->$attr() && !$value){
-            $user = new $class();
-            $user->setIdUtilisateur($personne->getIdUtilisateur());
-            $user->insert();
+    $maj = FALSE;
+    if (!empty(trim($personne->getNomUtilisateur())))
+        if (empty($personne->getIdUtilisateur())) {
+            if (!empty(trim($personne->getNomUtilisateur())))
+                $maj = $personne->insert();
+        } else
+            $maj = $personne->update();
+
+    if ($maj){
+        if ($fonction['Administrateur'] && !$personne->estAdministrateur()){
+            $admin = new Administrateur();
+            $admin->setIdAdministrateur($personne->getIdUtilisateur());
+            $admin->insertOnly();
+        }
+        if ($fonction['Professeur'] && !$personne->estProfesseur()){
+            $prof = new Professeur();
+            $prof->setIdPrfesseur($personne->getIdUtilisateur());
+            $prof->insertOnly();
+        }
+        if ($fonction['Responsable'] && !$personne->estResponsable()){
+            $resp = new Responsable();
+            $resp->setIdResponsable($personne->getIdUtilisateur());
+            $resp->insertOnly();
+        }
+        if ($fonction['Eleve'] && !$personne->estEleve()){
+            $eleve = new Eleve();
+            $eleve->setIdEleve($personne->getIdUtilisateur());
+            $eleve->setIdNiveau($_POST['niveauEleve']);
+            $eleve->insertOnly();
         }
     }
+
 }
 
-if (isset($_POST['btActive'])){
+if (isset($_POST['btActive'])) {
     $personne = Utilisateur::getById($_POST['idUtilisateur']);
     if ($personne->getActifUtilisateur())
         $personne->desactiver();
@@ -101,24 +121,24 @@ if (isset($_POST['btActive'])){
                         <span id="newUser">Nouvel Utilisateur</span>
                     </td>
                     <td>
-                        <div >
+                        <div>
                             nom Utilisateur :
                             <select id="selectUtilisateur" size="1" style="min-width: 200px">
                                 <option value=""></option>
                                 <optgroup label="Utilisateur Actif"></optgroup>
                                 <?php
                                 $utilisateurActifs = Utilisateur::getAllActif();
-                                foreach($utilisateurActifs as $user){
+                                foreach ($utilisateurActifs as $user) {
                                     //$user = new Utilisateur();
-                                    echo '<option value="'.$user->getIdUtilisateur().'">'.$user->getNomUtilisateur().' '.$user->getPrenomUtilisateur().'</option>';
+                                    echo '<option value="' . $user->getIdUtilisateur() . '">' . $user->getNomUtilisateur() . ' ' . $user->getPrenomUtilisateur() . '</option>';
                                 }
                                 ?>
                                 <optgroup label="Utilisateur Inactif"></optgroup>
                                 <?php
                                 $utilisateurInactifs = Utilisateur::getAllInactif();
-                                foreach($utilisateurInactifs as $user){
+                                foreach ($utilisateurInactifs as $user) {
                                     //$user = new Utilisateur();
-                                    echo '<option value="'.$user->getIdUtilisateur().'">'.$user->getNomUtilisateur().' '.$user->getPrenomUtilisateur().'</option>';
+                                    echo '<option value="' . $user->getIdUtilisateur() . '">' . $user->getNomUtilisateur() . ' ' . $user->getPrenomUtilisateur() . '</option>';
                                 }
                                 ?>
                             </select>
@@ -129,7 +149,7 @@ if (isset($_POST['btActive'])){
             </table>
             </br>
             <fieldset style="width: 70%; margin: auto;">
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?id=2">
+                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <table>
                         <tr>
                             <td><input id="inputId" type="hidden" name="idUtilisateur"
@@ -203,7 +223,8 @@ if (isset($_POST['btActive'])){
                         </tr>
                         <tr>
                             <td>Date de Inscription :</td>
-                            <td><input type="text" id="dateInscriptionUtilisateur" name="dateInscriptionUtilisateur"></td>
+                            <td><input type="text" id="dateInscriptionUtilisateur" name="dateInscriptionUtilisateur">
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="2">Les champs suivis d'un * sont obligatoires</td>

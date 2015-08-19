@@ -9,7 +9,7 @@
 ?>
 <i id="reduction" class="fa fa-arrow-circle-o-left"></i>
 <div id="menuContent">
-    <a href="">Modifier mes informations</a><br/><br/>
+    <a href="../Intranet/MesInformations.php">Modifier mes informations</a><br/><br/>
     <?php
     if ($utilisateur->estResponsable()) {
         $utilisateur = Responsable::getById($utilisateur->getIdUtilisateur());
@@ -43,22 +43,22 @@
         ?>
         <h3 id="adminReduc"><i class="fa fa-arrow-circle-o-up"></i> Administration</h3>
         <ul id="adminMenu">
-            <li><a href="../Intranet/Utilisateur.php">gérer les utilisateur</a></li>
-            <li><a href="">gérer les matières</a></li>
-            <li><a href="">gérer les niveaux</a></li>
-            <li><a href="">gérer les modules</a></li>
+            <li><a href="../Intranet/Utilisateur.php">gérer les utilisateurs</a></li>
+            <li><a href="../Intranet/Matiere.php">gérer les matières</a></li>
+            <li><a href="../Intranet/Niveau.php">gérer les niveaux</a></li>
+            <li><a href="../Intranet/Module.php">gérer les modules</a></li>
             <li id="adminCptReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les compétences
                 <ul id="adminCptMenu">
-                    <li><a href="">domaines de compétences</a></li>
-                    <li><a href="">points de compétences</a></li>
-                    <li><a href="">niveaux de compétences</a></li>
+                    <li><a href="../Intranet/DomaineCpt.php">domaines de compétences</a></li>
+                    <li><a href="../Intranet/PointCpt.php">points de compétences</a></li>
+                    <li><a href="../Intranet/NiveauCpt.php">niveaux de compétences</a></li>
                 </ul>
             </li>
             <li id="adminPlanningReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer la plannification
                 <ul id="adminPlanningMenu">
                     <li><a href="">Emploi du temps</a></li>
-                    <li><a href="">Définir les Périodes</a></li>
-                    <li><a href="">Définir les trimestres</a></li>
+                    <li><a href="../Intranet/Periodes.php">Définir les Périodes</a></li>
+                    <li><a href="../Intranet/Trimestre.php">Définir les trimestres</a></li>
                 </ul>
             </li>
         </ul>

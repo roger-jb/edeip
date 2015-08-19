@@ -30,6 +30,13 @@ class Module {
 		return $return;
 	}
 
+    public function toArray(){
+        $return = array();
+        $return['idModule'] = $this->getIdModule();
+        $return['libelleModule'] = $this->getLibelleModule();
+        return $return;
+    }
+
 	/**
 	 * @return mixed
 	 */
@@ -63,7 +70,7 @@ class Module {
 			"'".db_connect::escape_string($this->getLibelleModule())."'".
 			")";
 		if (db_connect::query($query)){
-			$select = "SELECT idModule WHERE ".
+			$select = "SELECT idModule FROM MODULE WHERE ".
 				"libelleModule = '".$this->getLibelleModule()."'";
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){

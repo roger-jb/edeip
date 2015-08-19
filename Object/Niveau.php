@@ -36,6 +36,14 @@ class Niveau {
 		return Module::getById($this->getIdModule());
 	}
 
+    public function toArray(){
+        $return = array();
+        $return['idNiveau'] = $this->getIdNiveau();
+        $return['libelleNiveau'] = $this->getLibelleNiveau();
+        $return['idModule'] = $this->getIdModule();
+        return $return;
+    }
+
 	/**
 	 * @return mixed
 	 */

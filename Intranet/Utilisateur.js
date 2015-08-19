@@ -7,6 +7,11 @@ $.ready(
 
 $("#selectUtilisateur").change(function () {
     var idUtilisateur = $("#selectUtilisateur option:selected").val();
+    $("#inputFonctionAdministrateur").prop( "checked", false);
+    $("#inputFonctionProfesseur").prop( "checked", false);
+    $("#inputFonctionResponsable").prop( "checked", false);
+    $("#inputFonctionEleve").prop( "checked", false);
+
     $.ajax({
         url: '../WebService/adminUtilisateur.php',
         type: 'POST',
@@ -32,6 +37,8 @@ $("#selectUtilisateur").change(function () {
             else {
                 $("#activeButton").val("Activer")
             }
+
+
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
@@ -46,18 +53,21 @@ $("#selectUtilisateur").change(function () {
         data: {idUtilisateur: idUtilisateur, action: 'getFonctionUtiisateur'}
     })
         .success(function (data) {
+            console.log(data);
             $("#inputNiveau").val('');
             if (data['administrateur'] == 'TRUE') {
-                $('#inputFonctionAdministrateur').prop('checked', !$('#inputFonctionAdministrateur').is(':checked'));
+                $('#inputFonctionAdministrateur').prop('checked', true);
             }
             if (data['professeur'] == 'TRUE') {
-                $('#inputFonctionProfesseur').prop('checked', !$('#inputFonctionProfesseur').is(':checked'));
+                $('#inputFonctionProfesseur').prop('checked', true);
             }
             if (data['responsable'] == 'TRUE') {
-                $('#inputFonctionResponsable').prop('checked', !$('#inputFonctionResponsable').is(':checked'));
+                $('#inputFonctionResponsable').prop('checked', true);
             }
             if (data['eleve'] == 'TRUE') {
-                $('#inputFonctionEleve').prop('checked', !$('#inputFonctionEleve').is(':checked'));
+                $('#inputFonctionEleve').prop('checked', true);
+                $("#inputNiveau option[value='"+data['niveau']+"']").attr('selected', 'selected');
+
             }
         })
         .error(function (xhr, ajaxOptions, thrownError) {
@@ -69,6 +79,13 @@ $("#selectUtilisateur").change(function () {
 });
 
 $("#newUser").click(function () {
+    $("#inputNiveau option[value='']").attr('selected', 'selected');
+
+    $("#inputFonctionAdministrateur").prop( "checked", false);
+    $("#inputFonctionProfesseur").prop( "checked", false);
+    $("#inputFonctionResponsable").prop( "checked", false);
+    $("#inputFonctionEleve").prop( "checked", false);
+
     $("#inputId").val("");
     $("#inputActive").val("");
     $("#inputNom").val("");
