@@ -9,11 +9,7 @@ header('content-type: text/html; charset=utf-8');
 session_start();
 require_once('../Require/Objects.php');
 switch ($_POST['action']) {
-    case 'getUtilisateurById' :
-        $utilisateur = Utilisateur::getById($_POST['idUtilisateur']);
-        echo json_encode($utilisateur->toArray());
-        break;
-    case 'getFonctionUtiisateur':
+    case 'getFonctionUtilisateur':
         $utilisateur = Utilisateur::getById($_POST['idUtilisateur']);
         $return = array();
         $return['niveau'] = '';

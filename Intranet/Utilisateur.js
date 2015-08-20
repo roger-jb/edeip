@@ -7,50 +7,45 @@ $.ready(
 
 $("#selectUtilisateur").change(function () {
     var idUtilisateur = $("#selectUtilisateur option:selected").val();
-    $("#inputFonctionAdministrateur").prop( "checked", false);
-    $("#inputFonctionProfesseur").prop( "checked", false);
-    $("#inputFonctionResponsable").prop( "checked", false);
-    $("#inputFonctionEleve").prop( "checked", false);
+    $("#newUser").click();
 
     $.ajax({
-        url: '../WebService/adminUtilisateur.php',
+        url: '../WebService/getById.php',
         type: 'POST',
         dataType: 'json',
-        data: {idUtilisateur: idUtilisateur, action: 'getUtilisateurById'}
+        data: {idUtilisateur: idUtilisateur, action: 'Utilisateur'}
+    }).success(function (data) {
+        $("#inputId").val(data['idUtilisateur']);
+        $("#inputActive").val(data['actifUtilisateur']);
+        $("#inputNom").val(data['nomUtilisateur']);
+        $("#inputPrenom").val(data['prenomUtilisateur']);
+        $("#inputAdr1").val(data['adr1Utilisateur']);
+        $("#inputAdr2").val(data['adr2Utilisateur']);
+        $("#inputCp").val(data['cpUtilisateur']);
+        $("#inputVille").val(data['villeUtilisateur']);
+        $("#inputMail").val(data['mailUtilisateur']);
+        $("#dateNaissanceUtilisateur").val(data['dateNaissanceUtilisateur']);
+        $("#dateInscriptionUtilisateur").val(data['dateInscriptionUtilisateur']);
+        $("#activeButton").show();
+        if (data['actifUtilisateur'] == 1) {
+            $("#activeButton").val('Inactiver');
+        }
+        else {
+            $("#activeButton").val("Activer")
+        }
+
+
+    }).error(function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr.status);
+        console.log(thrownError);
+        console.log('Erreur dans la récupération des info de l\'utilisateur.');
     })
-        .success(function (data) {
-            $("#inputId").val(data['idUtilisateur']);
-            $("#inputActive").val(data['actifUtilisateur']);
-            $("#inputNom").val(data['nomUtilisateur']);
-            $("#inputPrenom").val(data['prenomUtilisateur']);
-            $("#inputAdr1").val(data['adr1Utilisateur']);
-            $("#inputAdr2").val(data['adr2Utilisateur']);
-            $("#inputCp").val(data['cpUtilisateur']);
-            $("#inputVille").val(data['villeUtilisateur']);
-            $("#inputMail").val(data['mailUtilisateur']);
-            $("#dateNaissanceUtilisateur").val(data['dateNaissanceUtilisateur']);
-            $("#dateInscriptionUtilisateur").val(data['dateInscriptionUtilisateur']);
-            $("#activeButton").show();
-            if (data['actifUtilisateur'] == 1) {
-                $("#activeButton").val('Inactiver');
-            }
-            else {
-                $("#activeButton").val("Activer")
-            }
-
-
-        })
-        .error(function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-            console.log('Erreur dans la récupération des info de l\'utilisateur.');
-        })
 
     $.ajax({
         url: '../WebService/adminUtilisateur.php',
         type: 'POST',
         dataType: 'json',
-        data: {idUtilisateur: idUtilisateur, action: 'getFonctionUtiisateur'}
+        data: {idUtilisateur: idUtilisateur, action: 'getFonctionUtilisateur'}
     })
         .success(function (data) {
             console.log(data);
@@ -66,7 +61,7 @@ $("#selectUtilisateur").change(function () {
             }
             if (data['eleve'] == 'TRUE') {
                 $('#inputFonctionEleve').prop('checked', true);
-                $("#inputNiveau option[value='"+data['niveau']+"']").attr('selected', 'selected');
+                $("#inputNiveau option[value='" + data['niveau'] + "']").attr('selected', 'selected');
 
             }
         })
@@ -81,10 +76,10 @@ $("#selectUtilisateur").change(function () {
 $("#newUser").click(function () {
     $("#inputNiveau option[value='']").attr('selected', 'selected');
 
-    $("#inputFonctionAdministrateur").prop( "checked", false);
-    $("#inputFonctionProfesseur").prop( "checked", false);
-    $("#inputFonctionResponsable").prop( "checked", false);
-    $("#inputFonctionEleve").prop( "checked", false);
+    $("#inputFonctionAdministrateur").prop("checked", false);
+    $("#inputFonctionProfesseur").prop("checked", false);
+    $("#inputFonctionResponsable").prop("checked", false);
+    $("#inputFonctionEleve").prop("checked", false);
 
     $("#inputId").val("");
     $("#inputActive").val("");

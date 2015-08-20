@@ -12,6 +12,11 @@ $("#adminReduc").click(function(){
     $("#adminReduc i").toggleClass("fa-arrow-circle-o-down").toggleClass("fa-arrow-circle-o-up");
 });
 
+$("#adminMatiereReduc").click(function(){
+    $("#adminMatiere").toggle();
+    $("#adminMatiereReduc i").toggleClass("fa-arrow-circle-o-down").toggleClass("fa-arrow-circle-o-up");
+});
+
 $("#adminCptReduc").click(function(){
     $("#adminCptMenu").toggle();
     $("#adminCptReduc i").toggleClass("fa-arrow-circle-o-down").toggleClass("fa-arrow-circle-o-up");
@@ -48,6 +53,7 @@ function start(){
     $("#evalReduc").click();
     $("#publiReduc").click();
     $("#bulletinReduc").click();
+    $("#adminMatiereReduc").click();
 }
 
 $( "#choixEnfant" ).change(function() {

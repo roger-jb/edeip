@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
- * Date: 17/08/2015
+ * Date: 20/08/2015
  * Time: 10:40
  */
 header('content-type: text/html; charset=utf-8');
@@ -18,7 +18,8 @@ if (isset($_SESSION['id'])) {
     header('location: ../Intranet/Connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
-    $niveau = new Niveau();
+    var_dump($_POST);
+    /*$niveau = new Niveau();
     if (!empty($_POST['idNiveau']))
         $niveau = Niveau::getById($_POST['idNiveau']);
 
@@ -29,14 +30,14 @@ if (isset($_POST['btSubmit'])) {
             if (!empty(trim($niveau->getLibelleNiveau())))
                 $niveau->insert();
         } else
-            $niveau->update();
+            $niveau->update();*/
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>EDEIP : Gestion des Niveaux</title>
+    <title>EDEIP : Assignation des Mati&egrave;res</title>
     <link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../Require/jQuery-ui.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
@@ -58,14 +59,11 @@ if (isset($_POST['btSubmit'])) {
         </div>
         <div id="corps">
             <div class="titre_corps">
-                <h3 class="centrer">Gestion des Niveaux</h3>
+                <h3 class="centrer">Assignation des Mati&egrave;res</h3>
             </div>
 
             <table id="selectAction" style="width: 100%">
                 <tr>
-                    <td>
-                        <span id="newNiveau">Nouveau Niveau</span>
-                    </td>
                     <td>
                         <div>
                             Niveau :
@@ -86,32 +84,36 @@ if (isset($_POST['btSubmit'])) {
             </br>
             <fieldset style="width: 70%; margin: auto;">
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <table>
+                    <table style="width: 90%; margin: auto;">
                         <tr>
-                            <td><input id="inputId" type="hidden" name="idNiveau"
-                                       value=""></td>
+                            <td style="width: 10%;">Enseigner</td>
+                            <td style="width: 45%;">Mati&egrave;re</td>
+                            <td style="width: 45%;">Professeur</td>
                         </tr>
-                        <tr>
-                            <td>Libell&eacute; * :</td>
-                            <td><input id="inputLibelle" type="text" required name="libelleNiveau"
-                                       value=""></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Module de rattachement :
-                            </td>
-                            <td>
-                                <select id="inputModule" name="module" size="1">
-                                    <option value=""></option>
-                                    <?php
-                                    $modules = Module::getAll();
-                                    foreach ($modules as $module) {
-                                        echo "<option value='" . $module->getIdModule() . "'>" . $module->getLibelleModule() . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </td>
-                        </tr>
+                        <?php
+                        $matieres = Matiere::getAll();
+                        foreach ($matieres as $matiere){
+                            ?>
+                            <tr>
+                                <td style="width: 0%; text-align: center;">
+                                    <input id="inputFonctionAdministrateur" type="checkbox" multiple name="Assigner[]"
+                                           value="<?php echo $matiere->getIdMatiere(); ?>"/>
+                                </td>
+                                <td style="width: 50%;"><?php echo $matiere->getLibelleMatiere(); ?></td>
+                                <td style="width: 50%;"><select>
+                                        <option value=""></option>
+                                        <?php
+                                        $professeurs = Professeur::getAllActif();
+                                        foreach($professeurs as $prof){
+                                            echo '<option value="'.$prof->getIdUtilisateur().'">'.$prof->getNomUtilisateur().' '.$prof->getPrenomUtilisateur().'</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
                         <tr>
                             <td><input type="submit" id="submitButton" name="btSubmit" value="Valider"></td>
                         </tr>

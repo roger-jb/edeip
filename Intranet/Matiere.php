@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jean-Baptiste
  * Date: 19/08/2015
- * Time: 15:05
+ * Time: 18:47
  */
-
 header('content-type: text/html; charset=utf-8');
 session_start();
 require_once '../Require/Objects.php';
@@ -19,27 +18,25 @@ if (isset($_SESSION['id'])) {
     header('location: ../Intranet/Connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
-    $niveauCpt = new NiveauCpt();
-    if (!empty($_POST['idNiveauCpt']))
-        $niveauCpt = NiveauCpt::getById($_POST['idNiveauCpt']);
+    $matiere = new Matiere();
+    if (!empty($_POST['idMatiere']))
+        $matiere = Matiere::getById($_POST['idMatiere']);
 
-    if (!empty(trim($_POST['libelleNiveauCpt'])))
-        $niveauCpt->setLibelleNiveauCpt($_POST['libelleNiveauCpt']);
-    if (!empty(trim($_POST['codeNiveauCpt'])))
-        $niveauCpt->setCodeNiveauCpt($_POST['codeNiveauCpt']);
-    if (!empty(trim($niveauCpt->getLibelleNiveauCpt())))
-        if (empty($niveauCpt->getIdNiveauCpt())) {
-            if (!empty(trim($niveauCpt->getLibelleNiveauCpt())))
-                $niveauCpt->insert();
+    if (!empty(trim($_POST['libelleMatiere'])))
+        $matiere->setLibelleMatiere($_POST['libelleMatiere']);
+    if (!empty(trim($matiere->getLibelleMatiere())))
+        if (empty($matiere->getIdMatiere())) {
+            if (!empty(trim($matiere->getLibelleMatiere())))
+                $matiere->insert();
         } else
-            $niveauCpt->update();
+            $matiere->update();
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>EDEIP : Gestion des Niveaux de Comp&eacute;tence</title>
+    <title>EDEIP : Gestion des Mati&egrave;res</title>
     <link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../Require/jQuery-ui.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
@@ -61,46 +58,42 @@ if (isset($_POST['btSubmit'])) {
         </div>
         <div id="corps">
             <div class="titre_corps">
-                <h3 class="centrer">Gestion des Niveaux de Comp&eacute;tence</h3>
+                <h3 class="centrer">Gestion des Mati&egrave;res</h3>
             </div>
 
             <table id="selectAction" style="width: 100%">
                 <tr>
                     <td>
-                        <span id="newNiveauCpt">Nouveau Niveau de Comp&eacute;tence</span>
+                        <span id="newMatiere">Nouvelle Mati&egrave;res</span>
                     </td>
                     <td>
                         <div>
-                            Niveau :
-                            <select id="selectNiveauCpt" size="1" style="min-width: 200px">
+                            Mati&egrave;re :
+                            <select id="selectMatiere" size="1" style="min-width: 200px">
                                 <option value=""></option>
                                 <?php
-                                $niveauxCpt = NiveauCpt::getAll();
-                                foreach ($niveauxCpt as $niveauCpt) {
-                                    echo '<option value="' . $niveauCpt->getIdNiveauCpt() . '">' . $niveauCpt->getLibelleNiveauCpt() . '</option>';
+                                $matieres = Matiere::getAll();
+                                foreach ($matieres as $matiere) {
+                                    echo '<option value="' . $matiere->getIdMatiere() . '">' . $matiere->getLibelleMatiere() . '</option>';
                                 }
                                 ?>
                             </select>
                         </div>
                     </td>
                 </tr>
+
             </table>
             </br>
             <fieldset style="width: 70%; margin: auto;">
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <table>
                         <tr>
-                            <td><input id="inputId" type="hidden" name="idNiveauCpt"
+                            <td><input id="inputId" type="hidden" name="idMatiere"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td><label for="inputCode">Code * :</label></td>
-                            <td><input id="inputCode" type="text" required name="codeNiveauCpt"
-                                       value=""></td>
-                        </tr>
-                        <tr>
-                            <td><label for="inputLibelle">Libell&eacute; * :</label></td>
-                            <td><input id="inputLibelle" type="text" required name="libelleNiveauCpt"
+                            <td><label for="inputLibelle"> Libell&eacute; * :</label></td>
+                            <td><input id="inputLibelle" type="text" required name="libelleMatiere"
                                        value=""></td>
                         </tr>
                         <tr>
@@ -118,6 +111,6 @@ if (isset($_POST['btSubmit'])) {
     db_connect::close();
     ?>
 </div>
-<script src="NiveauCpt.js"></script>
+<script src="Matiere.js"></script>
 </body>
 </html>

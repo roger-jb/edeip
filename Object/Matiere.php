@@ -10,8 +10,15 @@ class Matiere {
 	protected $idMatiere;
 	protected $libelleMatiere;
 
+    public function toArray(){
+        $return = array();
+        $return['idMatiere'] = $this->getIdMatiere();
+        $return['libelleMatiere'] = $this->getLibelleMatiere();
+        return $return;
+    }
+
 	public static function getAll(){
-		$query = "SELECT * FROM MATIERE";
+		$query = "SELECT * FROM MATIERE ORDER BY libelleMatiere ASC";
 		$result = db_connect::query($query);
 		$return = array();
 		while($info = $result->fetch_object('Matiere')){

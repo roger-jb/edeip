@@ -1,9 +1,9 @@
 /**
- * Created by Jean-Baptiste on 17/08/2015.
+ * Created by Jean-Baptiste on 20/08/2015.
  */
 $("#selectNiveau").change(function () {
     var idNiveau = $("#selectNiveau option:selected").val();
-    $("#newNiveau").click();
+    clear();
     if (!idNiveau == '') {
         $.ajax({
             url: '../WebService/getById.php',
@@ -22,8 +22,8 @@ $("#selectNiveau").change(function () {
     }
 });
 
-$("#newNiveau").click(function () {
+function clear() {
     $("#inputId").val("");
     $("#inputLibelle").val("");
     $("#inputModule").val('');
-});
+};

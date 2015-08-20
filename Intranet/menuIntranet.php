@@ -44,7 +44,11 @@
         <h3 id="adminReduc"><i class="fa fa-arrow-circle-o-up"></i> Administration</h3>
         <ul id="adminMenu">
             <li><a href="../Intranet/Utilisateur.php">gérer les utilisateurs</a></li>
-            <li><a href="../Intranet/Matiere.php">gérer les matières</a></li>
+            <li id="adminMatiereReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les matières</li>
+            <ul id="adminMatiere">
+                <li><a href="../Intranet/Matiere.php">gérer les matières</a></li>
+                <li><a href="../Intranet/MatiereProf.php">assigner les matières</a></li>
+            </ul>
             <li><a href="../Intranet/Niveau.php">gérer les niveaux</a></li>
             <li><a href="../Intranet/Module.php">gérer les modules</a></li>
             <li id="adminCptReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les compétences
