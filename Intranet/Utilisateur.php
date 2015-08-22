@@ -118,7 +118,7 @@ if (isset($_POST['btActive'])) {
             <table id="selectAction" style="width: 100%">
                 <tr>
                     <td>
-                        <span id="newUser">Nouvel Utilisateur</span>
+                        <span id="newUser"><i class="fa fa-plus-square-o" style="font-size: 20px;"></i> Nouvel Utilisateur</span>
                     </td>
                     <td>
                         <div>

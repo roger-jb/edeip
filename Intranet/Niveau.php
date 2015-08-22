@@ -64,7 +64,7 @@ if (isset($_POST['btSubmit'])) {
             <table id="selectAction" style="width: 100%">
                 <tr>
                     <td>
-                        <span id="newNiveau">Nouveau Niveau</span>
+                        <span id="newNiveau"><i class="fa fa-plus-square-o" style="font-size: 20px;"></i> Nouveau Niveau</span>
                     </td>
                     <td>
                         <div>

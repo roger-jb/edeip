@@ -15,7 +15,7 @@ $("#selectNiveauCpt").change(function () {
     }).error(function (xhr, ajaxOptions, thrownError) {
         console.log(xhr.status);
         console.log(thrownError);
-        console.log('Erreur dans la récupération du Niveau de competence.');
+        console.log('Erreur dans la rÃ©cupÃ©ration du Niveau de competence.');
     })
 });
 
@@ -23,4 +23,11 @@ $("#newNiveauCpt").click(function () {
     $("#inputId").val("");
     $("#inputLibelle").val("");
     $("#inputCode").val("");
+});
+
+$('#inputCode').change(function(){
+    var code = $('#inputCode').val();
+    if (code.length > 0){
+        $('#inputCode').val(code.substr(0, 1));
+    }
 });

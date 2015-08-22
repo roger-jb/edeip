@@ -34,7 +34,7 @@ class NiveauCpt
      */
     public function setCodeNiveauCpt($codeNiveauCpt)
     {
-        $this->codeNiveauCpt = $codeNiveauCpt;
+        $this->codeNiveauCpt = strtoupper(substr($codeNiveauCpt, 0, 1));
     }
 
     public static function getAll()

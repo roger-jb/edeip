@@ -67,7 +67,7 @@ if (isset($_POST['btSubmit'])) {
             <table id="selectAction" style="width: 100%">
                 <tr>
                     <td>
-                        <span id="newNiveauCpt">Nouveau Niveau de Comp&eacute;tence</span>
+                        <span id="newNiveauCpt"><i class="fa fa-plus-square-o" style="font-size: 20px;"></i> Nouveau Niveau de Comp&eacute;tence</span>
                     </td>
                     <td>
                         <div>
@@ -96,7 +96,7 @@ if (isset($_POST['btSubmit'])) {
                         <tr>
                             <td><label for="inputCode">Code * :</label></td>
                             <td><input id="inputCode" type="text" required name="codeNiveauCpt"
-                                       value=""></td>
+                                       value="">&nbsp;&nbsp;(1 seul caract&egrave;re)</td>
                         </tr>
                         <tr>
                             <td><label for="inputLibelle">Libell&eacute; * :</label></td>
