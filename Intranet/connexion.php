@@ -48,14 +48,14 @@ if (!empty($utilisateur->getIdUtilisateur())) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Connexion &agrave; l'Intranet</title>
-        <link rel="stylesheet" href="../vitrine/style.css" type="text/css" media="screen"/>
-        <link rel="shortcut icon" href="../images/Logo32.ico"/>
-        <link rel="icon" href="../images/logo32.png" type="image/png"/>
+        <link rel="stylesheet" href="../Vitrine/style.css" type="text/css" media="screen"/>
+        <link rel="shortcut icon" href="../Images/Logo32.ico"/>
+        <link rel="icon" href="../Images/logo32.png" type="image/png"/>
     </head>
     <body>
     <div id='angle_rond'>
         <?php
-        include '../include/include_header.php';
+        include '../Include/include_header.php';
         ?>
         <div id="corps">
             <div class="titre_corps">
@@ -90,7 +90,7 @@ if (!empty($utilisateur->getIdUtilisateur())) {
             </p>
         </div>
         <?php
-        include '../include/include_footer.php';
+        include '../Include/include_footer.php';
         ?>
     </div>
 
