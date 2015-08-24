@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
         header('location: ../Intranet/mesInformations.php');
     }
 } else {
-    header('location: ../Intranet/Connexion.php');
+    header('location: ../Intranet/connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
     $niveau = new Niveau();

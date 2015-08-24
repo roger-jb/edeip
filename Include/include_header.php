@@ -43,12 +43,12 @@
         <?php
         if (!isset($utilisateur) || empty($utilisateur->getIdUtilisateur())) {
             ?>
-            <li style='border-right:1px solid rgba(0,0,0,0.5);'><a href="../Intranet/Connexion.php">Intranet</a></li>
+            <li style='border-right:1px solid rgba(0,0,0,0.5);'><a href="../Intranet/connexion.php">Intranet</a></li>
             <?php
         }
         else {
             ?>
-            <li style='border-right:1px solid rgba(0,0,0,0.5);'><a href="../Intranet/Connexion.php?deco">Quitter</a></li>
+            <li style='border-right:1px solid rgba(0,0,0,0.5);'><a href="../Intranet/connexion.php?deco">Quitter</a></li>
         <?php
         }
         ?>
