@@ -8,14 +8,14 @@
  */
 class CarnetLiaison {
 	protected $idCarnetLiaison;
-	protected $contenuCarnetLiason;
+	protected $contenuCarnetLiaison;
 	protected $idReponse;
 	protected $idRedacteur;
 	protected $dateRedaction;
 	protected $idEleve;
 
     public static function getAll(){
-        $query = "SELECT * FROM CARNET_LIAISON";
+        $query = "SELECT * FROM CARNET_LIAISON ORDER BY dateRedaction DESC";
         $result = db_connect::query($query);
         $return = array();
         while ($info = $result->fetch_object('CarnetLiaison')){
@@ -36,9 +36,57 @@ class CarnetLiaison {
         return $return;
     }
 
+	public static function getByIdRedacteur($idRedacteur){
+		$query = "SELECT * FROM CARNET_LIAISON WHERE idRedacteur = $idRedacteur OR idReponse IN (SELECT idCarnetLiaison FROM CARNET_LIAISON WHERE idRedacteur = $idRedacteur) ORDER BY dateRedaction DESC";
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('CarnetLiaison')){
+			$return[] = $info;
+		}
+		$result->close();
+		return $return;
+	}
+
+	public function estReponse(){
+		if (empty($this->getIdReponse())){
+			return false;
+		}
+		return true;
+	}
+
+	public function toArray(){
+		$return = array();
+		$return['idCarnetLiaison'] = $this->getIdCarnetLiaison();
+		$return['contenuCarnetLiaison'] = $this->getContenuCarnetLiaison();
+		$return['idReponse'] = $this->getIdReponse();
+		$return['idRedacteur'] = $this->getIdRedacteur();
+		$return['dateRedaction'] = $this->getDateRedaction();
+		$return['idEleve'] =  $this->getIdEleve();
+		return $return;
+	}
+
     public function getReponse(){
         return CarnetLiaison::getById($this->getIdReponse());
     }
+
+	public function afficheDateRedaction(){
+		$date = $this->getDateRedaction();
+		if (strlen($date)>10){
+			$date = explode('-', substr($date, 0, (strpos($date, ' ')>0?strpos($date, ' '):strlen($date))));
+			return substr($date[2], 0, 2).'/'.$date[1].'/'.$date[0];
+		}
+		return substr($date, 0, (strpos(' ', $date)>0?strpos(' ', $date):strlen($date)));
+	}
+
+	private function sqlDateRedaction(){
+		$date = $this->getDateRedaction();
+		if (strpos($date, '/') > 0){
+			$date = explode('/', $date);
+			return $date[2].'-'.$date[1].'-'.$date[0];
+		}
+		return $date;
+
+	}
 
     public function getRedacteur(){
         return Utilisateur::getById($this->getIdRedacteur());
@@ -65,15 +113,15 @@ class CarnetLiaison {
 	/**
 	 * @return mixed
 	 */
-	public function getContenuCarnetLiason () {
-		return $this->contenuCarnetLiason;
+	public function getContenuCarnetLiaison () {
+		return $this->contenuCarnetLiaison;
 	}
 
 	/**
-	 * @param mixed $contenuCarnetLiason
+	 * @param mixed $contenuCarnetLiaison
 	 */
-	public function setContenuCarnetLiason ($contenuCarnetLiason) {
-		$this->contenuCarnetLiason = $contenuCarnetLiason;
+	public function setContenuCarnetLiaison ($contenuCarnetLiaison) {
+		$this->contenuCarnetLiaison = $contenuCarnetLiaison;
 	}
 
 	/**
@@ -136,23 +184,23 @@ class CarnetLiaison {
 		$query = "INSERT INTO CARNET_LIAISON (".
 			"contenuCarnetLiaison, idReponse, idRedacteur, dateRedaction, idEleve
 			) VALUES (".
-			"'".db_connect::escape_string($this->getContenuCarnetLiason())."', ".
+			"'".db_connect::escape_string($this->getContenuCarnetLiaison())."', ".
 			"".($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
 			"".$this->getIdRedacteur().", ".
-			"'".$this->getDateRedaction()."', ".
+			"'".$this->sqlDateRedaction()."', ".
 			"".$this->getIdEleve().""
 			.")";
 		if (db_connect::query($query)){
 			$query2 = "SELECT idCarnetLiaison FROM CARNET_LIAISON WHERE ".
-				"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiason())."' AND ".
+				"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiaison())."' AND ".
 				"idReponse = ".($this->getIdReponse()?$this->getIdReponse():'NULL')." AND ".
 				"idRedacteur = ".$this->getIdRedacteur()." AND ".
-				"dateRedacation = '".$this->getDateRedaction()."' AND ".
+				"dateRedaction = '".$this->sqlDateRedaction()."' AND ".
 				"idEleve = ".$this->getIdEleve()."";
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
-				$this->setIdCarnetLiaison($info['idCarntLiaison']);
+				$this->setIdCarnetLiaison($info['idCarnetLiaison']);
 				return true;
 			}
 		}
@@ -161,10 +209,10 @@ class CarnetLiaison {
 
 	public function update(){
 		$query = "UPDATE CARNET_LIAISON SET ".
-			"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiason())."', ".
+			"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiaison())."', ".
 			"idReponse = ".($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
 			"idRedacteur = ".$this->getIdRedacteur().", ".
-			"dateRedacation = '".$this->getDateRedaction()."', ".
+			"dateRedacation = '".$this->sqlDateRedaction()."', ".
 			"idEleve = ".$this->getIdEleve()."".
 			"WHERE idCarnetLiaison = ".$this->getIdCarnetLiaison();
 		if (db_connect::query($query))

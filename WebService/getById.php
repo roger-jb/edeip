@@ -9,6 +9,10 @@ header('content-type: text/html; charset=utf-8');
 session_start();
 require_once('../Require/Objects.php');
 switch ($_POST['action']) {
+	case 'CarnetLiaison' :
+		$carnetLiaison = CarnetLiaison::getById($_POST['idCarnetLiaison']);
+		echo json_encode($carnetLiaison->toArray());
+		break;
     case 'Matiere' :
         $matiere = Matiere::getById($_POST['idMatiere']);
         echo json_encode($matiere->toArray());
