@@ -7,13 +7,13 @@ header('content-type: text/html; charset=utf-8');
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP - Modalités didactiques</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-	<link rel="shortcut icon" href="../images/Logo32.ico"/>
-	<link rel="icon" href="../images/logo32.png" type="image/png"/>
+	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
+	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Include/include_header.php';
 	?>
 	<div class="corps">
 		<br/>
@@ -59,11 +59,11 @@ header('content-type: text/html; charset=utf-8');
 			néanmoins dans le respect du cadre mis en place par l’enseignant qui s’assure que les compétences visées
 			sont bien traitées et acquises.</p>
 
-		<p style='text-align: center;'><a href="../vitrine/modalites_pratiques.php">Modalités pratiques &lt;&lt;</a>
-			&#8211; <a href="../vitrine/modalites_operationnelles.php">&gt;&gt; Modalites opérationnelles</a></p>
+		<p style='text-align: center;'><a href="/modalites_pratiques.php">Modalités pratiques &lt;&lt;</a>
+			&#8211; <a href="/modalites_operationnelles.php">&gt;&gt; Modalites opérationnelles</a></p>
 	</div>
 	<?php
-	include '../include/include_footer.php';
+	include '../Include/include_footer.php';
 	?>
 </div>
 </body>

@@ -7,13 +7,13 @@ header('content-type: text/html; charset=utf-8');
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP - Attentes Pédagogiques</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-	<link rel="shortcut icon" href="../images/Logo32.ico"/>
-	<link rel="icon" href="../images/logo32.png" type="image/png"/>
+	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
+	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Include/include_header.php';
 	?>
 	<div class="corps">
 		<br/>
@@ -32,7 +32,7 @@ header('content-type: text/html; charset=utf-8');
 			de réintégrer un cursus scolaire.</p>
 
 		<div style='width:300px; margin-left:50px; float:right;'>
-			<img src="../images/DSC07013-300x200.jpg" alt="fille souriante" width="300" height="200"/>
+			<img src="../Images/DSC07013-300x200.jpg" alt="fille souriante" width="300" height="200"/>
 		</div>
 		<p>A fonctionnement atypique, réponse éducative atypique :</p>
 
@@ -58,7 +58,7 @@ header('content-type: text/html; charset=utf-8');
 				particulièrement au niveau du collège, qui constitue l’étape de tous les dangers. » Jean-Charles
 				Terrassier</em></p>
 
-		<p style="text-align: center;"><img src="../images/Photo0018.jpg" alt="enfant qui travaille" width="300"
+		<p style="text-align: center;"><img src="../Images/Photo0018.jpg" alt="enfant qui travaille" width="300"
 		                                    height="225"/></p>
 
 		<div class="sous_titre_corps">
@@ -92,11 +92,11 @@ header('content-type: text/html; charset=utf-8');
 			<li><strong>approfondir</strong> et complexifier les contenus en fonction des besoins et attentes</li>
 			<li><strong>accélérer</strong> les acquisitions au rythme de chacun.</li>
 		</ul>
-		<p style='text-align: center;'><a href="../vitrine/enfant_precoce.php">Enfant précoce &lt;&lt;</a> &#8211; <a
-				href="../vitrine/objectifs_ecole.php">&gt;&gt; Objectifs de l&#8217;Ecole</a></p>
+		<p style='text-align: center;'><a href="/enfant_precoce.php">Enfant précoce &lt;&lt;</a> &#8211; <a
+				href="/objectifs_ecole.php">&gt;&gt; Objectifs de l&#8217;Ecole</a></p>
 	</div>
 	<?php
-	include '../include/include_footer.php';
+	include '../Include/include_footer.php';
 	?>
 </div>
 </body>

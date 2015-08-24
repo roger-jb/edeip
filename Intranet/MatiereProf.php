@@ -41,15 +41,15 @@ if (isset($_POST['btSubmit'])) {
     <link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../Require/jQuery-ui.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
-    <link rel="shortcut icon" href="../images/Logo32.ico"/>
-    <link rel="icon" href="../images/logo32.png" type="image/png"/>
+    <link rel="shortcut icon" href="../Images/Logo32.ico"/>
+    <link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
-<script src="../Require/jQuery.js"></script>
-<script src="../Require/jQuery-ui.js"></script>
+<script src="../Require/jquery.js"></script>
+<script src="../Require/jquery-ui.js"></script>
 <div id='angle_rond'>
     <?php
-    include '../include/include_header.php';
+    include '../Include/include_header.php';
     ?>
     <div id="content">
         <div id="menuLeft">
@@ -125,7 +125,7 @@ if (isset($_POST['btSubmit'])) {
         <div style="clear: both"></div>
     </div>
     <?php
-    include '../include/include_footer.php';
+    include '../Include/include_footer.php';
     db_connect::close();
     ?>
 </div>

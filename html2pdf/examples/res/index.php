@@ -1,3 +1,3 @@
 <?php
-header('Location: http://edeip-lyon.fr/vitrine/accueil.php');
+header('Location: http://edeip-lyon.fr/Vitrine/accueil.php');
 ?>

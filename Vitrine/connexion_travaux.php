@@ -6,15 +6,15 @@ session_start();
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EDEIP - </title>
+	<title>EDEIP - en travaux</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-	<link rel="shortcut icon" href="../images/Logo32.ico"/>
-	<link rel="icon" href="../images/logo32.png" type="image/png"/>
+	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
+	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Include/include_header.php';
 	?>
 	<div class="corps">
 		</br>
@@ -24,7 +24,7 @@ session_start();
 
 	</div>
 	<?php
-	include '../include/include_footer.php';
+	include '../Include/include_footer.php';
 	?>
 </div>
 </body>

@@ -7,13 +7,13 @@ header('content-type: text/html; charset=utf-8');
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP - Structure d'accueil</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-	<link rel="shortcut icon" href="../images/Logo32.ico"/>
-	<link rel="icon" href="../images/logo32.png" type="image/png"/>
+	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
+	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Include/include_header.php';
 	?>
 	<div class="corps">
 		<br/>
@@ -48,10 +48,10 @@ header('content-type: text/html; charset=utf-8');
 		<p><strong>Repas de midi</strong> : apporté par chaque élève, il est pris à l’école. Les activités pendant la
 			pause sont libres : sieste, jeux, lecture, …
 
-		<p style='text-align: center;'><a href="../vitrine/equipe_pedagogique.php">&gt;&gt; Equipe Pédagogique</a></p>
+		<p style='text-align: center;'><a href="/equipe_pedagogique.php">&gt;&gt; Equipe Pédagogique</a></p>
 	</div>
 	<?php
-	include '../include/include_footer.php';
+	include '../Include/include_footer.php';
 	?>
 </div>
 </body>

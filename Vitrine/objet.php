@@ -28,7 +28,7 @@ function includeObjet ($cheminRacine = "..") {
 	require_once $cheminRacine . '/objet/Professeur.php';
 	require_once $cheminRacine . '/objet/Publication.php';
 	require_once $cheminRacine . '/objet/TypeEval.php';
-	require_once $cheminRacine . '/objet/connexion.php';
+	require_once $cheminRacine . '/objet/Connexion.php';
 
 	return TRUE;
 

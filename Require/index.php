@@ -1,3 +1,3 @@
 <?php
-header ('location: ../vitrine/accueil.php');
+header ('location: ../Vitrine/accueil.php');
 ?>

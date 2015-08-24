@@ -7,13 +7,13 @@ header('content-type: text/html; charset=utf-8');
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP - Pédagogie - Généralités</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-	<link rel="shortcut icon" href="../images/Logo32.ico"/>
-	<link rel="icon" href="../images/logo32.png" type="image/png"/>
+	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
+	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Include/include_header.php';
 	?>
 	<div class="corps">
 		<br/>
@@ -68,10 +68,10 @@ header('content-type: text/html; charset=utf-8');
 		<p>Sans oublier de veiller à l&#8217;acquisition des compétences dans lesquelles les enfants précoces sont
 			parfois moins performants : motricité, raisonnement, présentation par exemple.</p>
 
-		<p style='text-align: center;'><a href="../vitrine/modalites_pratiques.php">&gt;&gt; Modalités pratiques</a></p>
+		<p style='text-align: center;'><a href="/modalites_pratiques.php">&gt;&gt; Modalités pratiques</a></p>
 	</div>
 	<?php
-	include '../include/include_footer.php';
+	include '../Include/include_footer.php';
 	?>
 </div>
 </body>

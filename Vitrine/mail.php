@@ -4,7 +4,7 @@ header('content-type: text/html; charset=utf-8');
 <!DOCTYPE html>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Iinclude/include_header.php';
 	?>
 	<div class='corps'>
 		<br/>

@@ -43,7 +43,7 @@ if (isset($_POST['update'])) {
         if ((isset($_POST['mdpUtilisateur']) && !empty($_POST['mdpUtilisateur'])) && (isset($_POST['mdpUtilisateurConfirm']) && !empty($_POST['mdpUtilisateurConfirm'])) && ($_POST['mdpUtilisateur'] == $_POST['mdpUtilisateurConfirm'])) {
             $connexion->setMdpUtilisateur($_POST['mdpUtilisateur']);
             if (!$connexion->update()) {
-                $msg .= "Le mot de Passe n'a pas pu être changé";
+                $msg .= "Le mot de Passe n'a pas pu ï¿½tre changï¿½";
             }
         }
     }
@@ -64,14 +64,14 @@ if ($check->getMdpUtilisateur() == $connect->getMdpUtilisateur())
     <title>EDEIP : Mes Informations</title>
     <link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
-    <link rel="shortcut icon" href="../images/Logo32.ico"/>
-    <link rel="icon" href="../images/logo32.png" type="image/png"/>
+    <link rel="shortcut icon" href="../Images/Logo32.ico"/>
+    <link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <script src="../Require/jQuery.js"></script>
 <div id='angle_rond'>
     <?php
-    include '../include/include_header.php';
+    include '../Include/include_header.php';
     ?>
     <div id="content">
         <div id="menuLeft">
@@ -160,7 +160,7 @@ if ($check->getMdpUtilisateur() == $connect->getMdpUtilisateur())
         <div style="clear: both"></div>
     </div>
     <?php
-    include '../include/include_footer.php';
+    include '../Include/include_footer.php';
     db_connect::close();
     ?>
 </div>

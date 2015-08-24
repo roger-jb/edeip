@@ -7,13 +7,13 @@ header('content-type: text/html; charset=utf-8');
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP - Objectifs de l'école</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-	<link rel="shortcut icon" href="../images/Logo32.ico"/>
-	<link rel="icon" href="../images/logo32.png" type="image/png"/>
+	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
+	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
 <div id='angle_rond'>
 	<?php
-	include '../include/include_header.php';
+	include '../Include/include_header.php';
 	?>
 	<div class="corps">
 		<br/>
@@ -29,7 +29,7 @@ header('content-type: text/html; charset=utf-8');
 			<li>Une réelle prise en compte des particularités de ces enfants</li>
 		</ul>
 		<div style='width:300px; margin-left:50px; float:right;'>
-			<img src="../images/DSC03195-1024x7681-200x300.jpg" alt="enfant souriant" width="200" height="300"/>
+			<img src="../Images/DSC03195-1024x7681-200x300.jpg" alt="enfant souriant" width="200" height="300"/>
 		</div>
 		<div class="sous_titre_corps">
 			<h4>Proposer aux enfants concernés</h4>
@@ -51,12 +51,12 @@ header('content-type: text/html; charset=utf-8');
 		</div>
 		<p>qui prenne en compte les différentes facettes des enfants précoces et leur environnement.</p>
 
-		<p style='text-align: center;'><a href="../vitrine/attentes_pedagogiques.php">Attentes pédagogiques &lt;&lt;</a>
+		<p style='text-align: center;'><a href="/attentes_pedagogiques.php">Attentes pédagogiques &lt;&lt;</a>
 		</p>
 	</div>
 </div>
 <?php
-include '../include/include_footer.php';
+include '../Include/include_footer.php';
 ?>
 </div>
 </body>
