@@ -12,7 +12,7 @@ class TypeEvaluation {
 	protected $libelleTypeEvaluation;
 
 	public static function getAll(){
-		$query = "SELECT * FROM TYPE_EVALUATION";
+		$query = "SELECT * FROM TYPE_EVALUATION ORDER BY libelleTypeEvaluation DESC";
 		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('TypeEvaluation')){

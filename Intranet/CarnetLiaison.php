@@ -11,11 +11,10 @@ session_start();
 require_once '../Require/Objects.php';
 $utilisateur = new Utilisateur();
 
-$caL = CarnetLiaison::getAll();
 
 if (isset($_SESSION['id'])) {
 	$utilisateur = Utilisateur::getById($_SESSION['id']);
-	if (!$utilisateur->estAdministrateur()) {
+	if (!$utilisateur->estAdministrateur() && !$utilisateur->estProfesseur() && !$utilisateur->estResponsable() ) {
 		header('location: ../Intranet/mesInformations.php');
 	}
 }
@@ -42,13 +41,13 @@ if (isset($_POST['btSubmit'])) {
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP : Carnet de Liaison</title>
 	<link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="../Require/jQuery-ui.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="../Require/jquery-ui.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
 	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
 	<link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
-<script src="../Require/jquery.js"></script>
+<script src="../Require/jQuery.js"></script>
 <script src="../Require/jquery-ui.js"></script>
 <div id='angle_rond'>
 	<?php
@@ -78,7 +77,7 @@ if (isset($_POST['btSubmit'])) {
 
 			</table>
 			</br>
-			<fieldset style="width: 70%; margin: auto; display: none;" id="newMessage">
+			<fieldset style="width: 70%; margin: auto; display: none;" id="newEvaluation">
 				<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 					<table>
 						<tr>

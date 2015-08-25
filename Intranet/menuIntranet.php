@@ -75,7 +75,7 @@
 		?>
 		<h3 id="evalReduc"><i class="fa fa-arrow-circle-o-up"></i> Evaluation</h3>
 		<ul id="evalMenu">
-			<li><a href="">Créer Evaluation</a></li>
+			<li><a href="../Intranet/CreateEvaluation.php">Créer Evaluation</a></li>
 			<li><a href="">Affecter Note à une évaluation</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur()) {

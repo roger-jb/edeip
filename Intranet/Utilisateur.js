@@ -8,47 +8,46 @@ $.ready(
 $("#selectUtilisateur").change(function () {
     var idUtilisateur = $("#selectUtilisateur option:selected").val();
     $("#newUser").click();
+    if (idUtilisateur != '') {
+        $("#selectUtilisateur option[value='" + idUtilisateur + "']").attr('selected', 'selected');
+        $.ajax({
+            url: '../WebService/getById.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {idUtilisateur: idUtilisateur, action: 'Utilisateur'}
+        }).success(function (data) {
+            $("#inputId").val(data['idUtilisateur']);
+            $("#inputActive").val(data['actifUtilisateur']);
+            $("#inputNom").val(data['nomUtilisateur']);
+            $("#inputPrenom").val(data['prenomUtilisateur']);
+            $("#inputAdr1").val(data['adr1Utilisateur']);
+            $("#inputAdr2").val(data['adr2Utilisateur']);
+            $("#inputCp").val(data['cpUtilisateur']);
+            $("#inputVille").val(data['villeUtilisateur']);
+            $("#inputMail").val(data['mailUtilisateur']);
+            $("#dateNaissanceUtilisateur").val(data['dateNaissanceUtilisateur']);
+            $("#dateInscriptionUtilisateur").val(data['dateInscriptionUtilisateur']);
+            $("#activeButton").show();
+            if (data['actifUtilisateur'] == 1) {
+                $("#activeButton").val('Inactiver');
+            }
+            else {
+                $("#activeButton").val("Activer")
+            }
 
-    $.ajax({
-        url: '../WebService/getById.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {idUtilisateur: idUtilisateur, action: 'Utilisateur'}
-    }).success(function (data) {
-        $("#inputId").val(data['idUtilisateur']);
-        $("#inputActive").val(data['actifUtilisateur']);
-        $("#inputNom").val(data['nomUtilisateur']);
-        $("#inputPrenom").val(data['prenomUtilisateur']);
-        $("#inputAdr1").val(data['adr1Utilisateur']);
-        $("#inputAdr2").val(data['adr2Utilisateur']);
-        $("#inputCp").val(data['cpUtilisateur']);
-        $("#inputVille").val(data['villeUtilisateur']);
-        $("#inputMail").val(data['mailUtilisateur']);
-        $("#dateNaissanceUtilisateur").val(data['dateNaissanceUtilisateur']);
-        $("#dateInscriptionUtilisateur").val(data['dateInscriptionUtilisateur']);
-        $("#activeButton").show();
-        if (data['actifUtilisateur'] == 1) {
-            $("#activeButton").val('Inactiver');
-        }
-        else {
-            $("#activeButton").val("Activer")
-        }
 
+        }).error(function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+            console.log('Erreur dans la rï¿½cupï¿½ration des info de l\'utilisateur.');
+        })
 
-    }).error(function (xhr, ajaxOptions, thrownError) {
-        console.log(xhr.status);
-        console.log(thrownError);
-        console.log('Erreur dans la récupération des info de l\'utilisateur.');
-    })
-
-    $.ajax({
-        url: '../WebService/adminUtilisateur.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {idUtilisateur: idUtilisateur, action: 'getFonctionUtilisateur'}
-    })
-        .success(function (data) {
-            console.log(data);
+        $.ajax({
+            url: '../WebService/adminUtilisateur.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {idUtilisateur: idUtilisateur, action: 'getFonctionUtilisateur'}
+        }).success(function (data) {
             $("#inputNiveau").val('');
             if (data['administrateur'] == 'TRUE') {
                 $('#inputFonctionAdministrateur').prop('checked', true);
@@ -64,13 +63,12 @@ $("#selectUtilisateur").change(function () {
                 $("#inputNiveau option[value='" + data['niveau'] + "']").attr('selected', 'selected');
 
             }
-        })
-        .error(function (xhr, ajaxOptions, thrownError) {
+        }).error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
             console.log(thrownError);
-            console.log('Erreur dans la récupération des info de l\'utilisateur.');
+            console.log('Erreur dans la rï¿½cupï¿½ration des info de l\'utilisateur.');
         })
-
+    }
 });
 
 $("#newUser").click(function () {
@@ -80,6 +78,8 @@ $("#newUser").click(function () {
     $("#inputFonctionProfesseur").prop("checked", false);
     $("#inputFonctionResponsable").prop("checked", false);
     $("#inputFonctionEleve").prop("checked", false);
+
+    $("#selectUtilisateur option[value='']").attr('selected', 'selected');
 
     $("#inputId").val("");
     $("#inputActive").val("");
@@ -97,7 +97,7 @@ $("#newUser").click(function () {
 
 $("#updateUser").click(function () {
     $("#activeButton").show();
-    // appel WS pour récupérer le user selectionné
+    // appel WS pour rï¿½cupï¿½rer le user selectionnï¿½
 
     if ($("#inputActive").val() == "1")
         $("#activeButton").val("D&eacute;sactiver")
@@ -127,7 +127,7 @@ $(function () {
         monthNames: ['janvier', 'f&eacute;vrier', 'mars', 'avril', 'mai', 'juin',
             'juillet', 'ao&ucirc;t', 'septembre', 'octobre', 'novembre', 'd&eacute;cembre'],
         monthNamesShort: ['janv.', 'f&eacute;vr.', 'mars', 'avril', 'mai', 'juin',
-            'juil.', 'août', 'sept.', 'oct.', 'nov.', 'd&eacute;c.'],
+            'juil.', 'aoï¿½t', 'sept.', 'oct.', 'nov.', 'd&eacute;c.'],
         dayNames: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
         dayNamesShort: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'],
         dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],

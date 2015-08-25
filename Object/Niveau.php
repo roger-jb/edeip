@@ -92,7 +92,7 @@ class Niveau {
 			"".$this->getIdModule()."".
 			")";
 		if (db_connect::query($query)){
-			$select = "SELECT idNiveau WHERE ".
+			$select = "SELECT idNiveau FROM NIVEAU WHERE ".
 				"libelleNiveau = '".db_connect::escape_string($this->getLibelleNiveau())."' AND ".
 				"idModule = ".$this->getIdModule()."";
 			$result = db_connect::query($select);

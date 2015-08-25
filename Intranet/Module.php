@@ -39,13 +39,13 @@ if (isset($_POST['btSubmit'])) {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>EDEIP : Gestion des Modules</title>
     <link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../Require/jQuery-ui.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="../Require/jquery-ui.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
     <link rel="shortcut icon" href="../Images/Logo32.ico"/>
     <link rel="icon" href="../Images/logo32.png" type="image/png"/>
 </head>
 <body>
-<script src="../Require/jquery.js"></script>
+<script src="../Require/jQuery.js"></script>
 <script src="../Require/jquery-ui.js"></script>
 <div id='angle_rond'>
     <?php

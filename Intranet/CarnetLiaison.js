@@ -13,7 +13,6 @@ $("#newMessageClick").click(function(){
 $(".repondre").click(function(){
     var idReponse = this.getAttribute('idcarnetliaison');
     $("#newMessageClick").click();
-    console.log(idReponse);
     $("#inputIdReponse").val(idReponse);
 
     if (!idReponse == '') {
@@ -23,7 +22,6 @@ $(".repondre").click(function(){
             dataType: 'json',
             data: {idCarnetLiaison: idReponse, action: 'CarnetLiaison'}
         }).success(function (data) {
-            console.log(data);
             $("#selectEleve option[value='" + data['idEleve'] + "']").attr('selected', 'selected');
         }).error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);

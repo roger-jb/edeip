@@ -330,6 +330,12 @@ class Utilisateur {
 				$this->setIdUtilisateur($info['idUtilisateur']);
 				$result->close();
 				return true;
+
+				$connexion = new Connexion();
+				$connexion->setIdUtilisateur($this->getIdUtilisateur());
+				$connexion->setLoginUtilisateur($this->getNomUtilisateur().'.'.$this->getPrenomUtilisateur());
+				$connexion->setMdpUtilisateur('123Soleil');
+
 			}
 			$result->close();
 			return false;
@@ -350,7 +356,14 @@ class Utilisateur {
 			" dateNaissanceUtilisateur = '".db_connect::escape_string(trim($this->getDateNaissanceUtilisateur()))."', ".
 			" dateInscriptionUtilisateur = '".db_connect::escape_string(trim($this->getDateInscriptionUtilisateur()))."'".
 			" WHERE idUtilisateur = ".$this->getIdUtilisateur();
-		return db_connect::query($query);
+		if (db_connect::query($query)) {
+			$connexion = Connexion::getById($this->getIdUtilisateur());
+			if (empty($connexion->getIdUtilisateur()))
+				$connexion->setIdUtilisateur($this->getIdUtilisateur());
+			$connexion->setLoginUtilisateur($this->getNomUtilisateur().'.'.$this->getPrenomUtilisateur());
+			return $connexion->update();
+		}
+		return false;
 	}
 
 	public function delete(){
