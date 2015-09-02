@@ -9,12 +9,24 @@
 header('content-type: text/html; charset=utf-8');
 session_start();
 require_once('../Require/Objects.php');
-switch ($_POST['action']) {
-	case 'listeMatiere' :
-		$Matieres = Matiere::getByNiveauProfesseur($_POST['idNiveau'], $_POST['idUtilisateur']);
-		$return = array();
-		foreach ($Matieres as $mat){
+switch ($_GET['action']) {
+	case 'listeMatiereByNiveauUtilisateur' :
+		$utilisateur = Utilisateur::getById($_GET['idUtilisateur']);
+		$Matieres = Matiere::getByNiveauProfesseur($_GET['idNiveau'], $_GET['idUtilisateur']);
+		if ($utilisateur->estAdministrateur()) $Matieres = Matiere::getByNiveau($_GET['idNiveau']);
+		$return = array ();
+		foreach ($Matieres as $mat) {
 			$return[] = $mat->toArray();
+		}
+
+		echo json_encode($return);
+		break;
+	case 'listeEvaluationByMatiereNiveau':
+		$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_GET['idMatiere'], $_GET['idNiveau']);
+		$evaluations = Evaluation::getByMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
+		$return = array ();
+		foreach ($evaluations as $eval) {
+			$return[] = $eval->toArray();
 		}
 
 		echo json_encode($return);

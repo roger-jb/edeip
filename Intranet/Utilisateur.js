@@ -12,7 +12,7 @@ $("#selectUtilisateur").change(function () {
         $("#selectUtilisateur option[value='" + idUtilisateur + "']").attr('selected', 'selected');
         $.ajax({
             url: '../WebService/getById.php',
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             data: {idUtilisateur: idUtilisateur, action: 'Utilisateur'}
         }).success(function (data) {
@@ -44,7 +44,7 @@ $("#selectUtilisateur").change(function () {
 
         $.ajax({
             url: '../WebService/adminUtilisateur.php',
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             data: {idUtilisateur: idUtilisateur, action: 'getFonctionUtilisateur'}
         }).success(function (data) {

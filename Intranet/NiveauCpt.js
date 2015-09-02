@@ -5,7 +5,7 @@ $("#selectNiveauCpt").change(function () {
     var idNiveauCpt = $("#selectNiveauCpt option:selected").val();
     $.ajax({
         url: '../WebService/getById.php',
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
         data: {idNiveauCpt: idNiveauCpt, action: 'NiveauCpt'}
     }).success(function (data) {

@@ -80,7 +80,7 @@ class Responsable extends Utilisateur {
 
 	public function insert(){
 		if (parent::insert()){
-			$query = "INSERT INTO RESPONSABLE (idReponsable) VALUES (".
+			$query = "INSERT INTO RESPONSABLE (idResponsable) VALUES (".
 				$this->getIdResponsable()
 				.")";
 			return db_connect::query($query);
@@ -89,7 +89,7 @@ class Responsable extends Utilisateur {
 	}
 
     public function insertOnly(){
-        $query = "INSERT INTO RESPONSABLE (idReponsable) VALUES (".
+        $query = "INSERT INTO RESPONSABLE (idResponsable) VALUES (".
             $this->getIdResponsable()
             .")";
         return db_connect::query($query);

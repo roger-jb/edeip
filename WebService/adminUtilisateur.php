@@ -8,9 +8,9 @@
 header('content-type: text/html; charset=utf-8');
 session_start();
 require_once('../Require/Objects.php');
-switch ($_POST['action']) {
+switch ($_GET['action']) {
     case 'getFonctionUtilisateur':
-        $utilisateur = Utilisateur::getById($_POST['idUtilisateur']);
+        $utilisateur = Utilisateur::getById($_GET['idUtilisateur']);
         $return = array();
         $return['niveau'] = '';
         if ($utilisateur->estAdministrateur())

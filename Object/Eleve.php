@@ -116,7 +116,7 @@ class Eleve extends Utilisateur {
 		if (parent::insert()){
 			$query = "INSERT INTO ELEVE (idEleve, idNiveau) VALUES (".
 				"".$this->getIdEleve().", ".
-				"".$this->getIdNiveau().", ".
+				"".$this->getIdNiveau()." ".
 				")";
 			return db_connect::query($query);
 		}
@@ -126,7 +126,7 @@ class Eleve extends Utilisateur {
     public function insertOnly(){
         $query = "INSERT INTO ELEVE (idEleve, idNiveau) VALUES (".
             "".$this->getIdEleve().", ".
-            "".$this->getIdNiveau().", ".
+            "".$this->getIdNiveau()." ".
             ")";
         return db_connect::query($query);
     }

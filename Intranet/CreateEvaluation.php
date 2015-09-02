@@ -21,18 +21,37 @@ else {
 	header('location: ../Intranet/connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
-	$msg = TRUE;
-	$carnetLiaison = new CarnetLiaison();
-	if (!empty(trim($_POST['contenuCarnetLiaison'])) && !empty(trim($_POST['idEleve']))) {
-		$carnetLiaison->setIdRedacteur($utilisateur->getIdUtilisateur());
-		$carnetLiaison->setDateRedaction(date('Y-m-d H:i:s'));
-		$carnetLiaison->setIdEleve($_POST['idEleve']);
-		if (!empty($_POST['idReponse'])) $carnetLiaison->setIdReponse($_POST['idReponse']);
-		$carnetLiaison->setContenuCarnetLiaison($_POST['contenuCarnetLiaison']);
-		$msg = $carnetLiaison->insert();
+	$idEvaluation = $_POST['idEvaluation'];
+	$idNiveau = $_POST['idNiveau'];
+	$idMatiere = $_POST['idMatiere'];
+	$idType = $_POST['idType'];
+	$autreEvaluation = $_POST['autreEvaluation'];
+	$titreEvaluation = $_POST['titreEvaluation'];
+	$dateEvaluation = $_POST['dateEvaluation'];
+	$maxEvaluation = $_POST['maxEvaluation'];
+
+	$evaluation = new Evaluation();
+
+	echo 'idEvaluation : '.$idEvaluation;
+
+	if (!empty($idEvaluation))
+		$evaluation = Evaluation::getById($idEvaluation);
+	$evaluation->setAutreEvaluation($autreEvaluation);
+	$evaluation->setDateEvaluation($dateEvaluation);
+	$evaluation->setIdTypeEvaluation($idType);
+	$evaluation->setMaxEvaluation($maxEvaluation);
+	$evaluation->setTitreEvaluation($titreEvaluation);
+	$matiereNiveau = MatiereNiveau::getByMatiereNiveau($idMatiere, $idNiveau);
+	$evaluation->setIdMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
+
+	if (empty($evaluation->getIdEvaluation())){
+		$evaluation->insert();
+	}
+	else{
+		$evaluation->update();
 	}
 }
-if (isset($_POST['btSubmitAll'])){
+if (isset($_POST['btSubmitAll'])) {
 
 }
 ?>
@@ -108,7 +127,7 @@ if (isset($_POST['btSubmitAll'])){
 					<fieldset style="width: 90%; margin: auto;" id="newEvaluation">
 						<table style="width: 100%;">
 							<tr>
-								<td><input id="newInputIdEvaluation" type="hidden" name="idEvaluation"
+								<td><input id="newInputIdEvaluation" type="text" name="idEvaluation"
 								           value=""></td>
 							</tr>
 							<tr>
@@ -147,7 +166,7 @@ if (isset($_POST['btSubmitAll'])){
 									</select>
 								</td>
 							</tr>
-							<tr id="autreType" style="display: none;">
+							<tr id="autreType" >
 								<td>Autre * :</td>
 								<td>
 									<input id="newInputAutre" type="text" name="autreEvaluation"
@@ -204,15 +223,17 @@ if (isset($_POST['btSubmitAll'])){
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2"><span id="ajoutCpt"><i class="fa fa-plus-square-o" style="font-size: 20px;"> Ajouter la compétence</span></td>
+								<td colspan="2"><span id="ajoutCpt"><i class="fa fa-plus-square-o"
+								                                       style="font-size: 20px;"> Ajouter la
+											compétence</span></td>
 							</tr>
 						</table>
 						<br>
 						<table style="width: 100%;">
 							<thead>
-								<td>Domaine</td>
-								<td>Competence</td>
-								<td><span hidden id="nbCpt">0</span></td>
+							<td>Domaine</td>
+							<td>Competence</td>
+							<td><span hidden id="nbCpt">0</span></td>
 							</thead>
 							<tbody id="listeCpt">
 							</tbody>

@@ -44,6 +44,20 @@ class Matiere {
 		return $return;
 	}
 
+	public static function getByNiveau($idNiveau){
+		$query = "SELECT M.* FROM MATIERE M, MATIERE_NIVEAU MN
+					WHERE M.idMatiere = MN.idMatiere
+					AND MN.idNiveau = $idNiveau
+					ORDER BY M.libelleMatiere ASC";
+		$result = db_connect::query($query);
+		$return = array ();
+		while ($info = $result->fetch_object('Matiere')) {
+			$return[] = $info;
+		}
+		$result->close();
+		return $return;
+	}
+
 	public static function getById ($idMatiere) {
 		$query = "SELECT * FROM MATIERE WHERE idMatiere = $idMatiere";
 		$result = db_connect::query($query);

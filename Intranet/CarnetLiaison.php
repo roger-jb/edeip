@@ -77,7 +77,7 @@ if (isset($_POST['btSubmit'])) {
 
 			</table>
 			</br>
-			<fieldset style="width: 70%; margin: auto; display: none;" id="newEvaluation">
+			<fieldset style="width: 70%; margin: auto; display: none;" id="newMessage">
 				<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 					<table>
 						<tr>

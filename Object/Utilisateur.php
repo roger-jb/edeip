@@ -329,13 +329,13 @@ class Utilisateur {
 				$info = $result->fetch_assoc();
 				$this->setIdUtilisateur($info['idUtilisateur']);
 				$result->close();
-				return true;
 
 				$connexion = new Connexion();
 				$connexion->setIdUtilisateur($this->getIdUtilisateur());
 				$connexion->setLoginUtilisateur($this->getNomUtilisateur().'.'.$this->getPrenomUtilisateur());
 				$connexion->setMdpUtilisateur('123Soleil');
-
+				$connexion->insert();
+				return true;
 			}
 			$result->close();
 			return false;
@@ -361,6 +361,8 @@ class Utilisateur {
 			if (empty($connexion->getIdUtilisateur()))
 				$connexion->setIdUtilisateur($this->getIdUtilisateur());
 			$connexion->setLoginUtilisateur($this->getNomUtilisateur().'.'.$this->getPrenomUtilisateur());
+			if (empty($connexion->getMdpUtilisateur()))
+				$connexion->setMdpUtilisateur('123Soleil');
 			return $connexion->update();
 		}
 		return false;

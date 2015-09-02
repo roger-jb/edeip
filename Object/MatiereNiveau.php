@@ -21,8 +21,18 @@ class MatiereNiveau {
 		return $return;
 	}
 
+	public static function getByMatiereNiveau($idMatiere, $idNiveau){
+		$query = "SELECT * FROM MATIERE_NIVEAU WHERE idMatiere = $idMatiere AND idNiveau = $idNiveau";
+		$result = db_connect::query($query);
+		$return = new MatiereNiveau();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('MatiereNiveau');
+		}
+		return $return;
+	}
+
 	public static function getById($idMatiereNiveau){
-		$query = "SELECT * FROM MATIERE NIVEAU WHERE idMatiereNiveau = $idMatiereNiveau";
+		$query = "SELECT * FROM MATIERE_NIVEAU WHERE idMatiereNiveau = $idMatiereNiveau";
 		$result = db_connect::query($query);
 		$return = new MatiereNiveau();
 		if ($result->num_rows == 1){

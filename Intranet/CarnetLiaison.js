@@ -18,7 +18,7 @@ $(".repondre").click(function(){
     if (!idReponse == '') {
         $.ajax({
             url: '../WebService/getById.php',
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             data: {idCarnetLiaison: idReponse, action: 'CarnetLiaison'}
         }).success(function (data) {

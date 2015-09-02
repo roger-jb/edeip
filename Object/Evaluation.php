@@ -7,7 +7,7 @@
  * Time: 11:14
  */
 class Evaluation {
-	protected $idEvaluaton;
+	protected $idEvaluation;
 	protected $idTypeEvaluation;
 	protected $idMatiereNiveau;
 	protected $dateEvaluation;
@@ -15,48 +15,89 @@ class Evaluation {
 	protected $autreEvaluation;
 	protected $maxEvaluation;
 
-	public static function getAll(){
+	public function toArray () {
+		$return = array ();
+		$return['idEvaluation'] = $this->getIdEvaluation();
+		$return['idTypeEvaluation'] = $this->getIdTypeEvaluation();
+		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
+		$return['dateEvaluation'] = $this->afficheDateEvaluation();
+		$return['titreEvaluation'] = $this->getTitreEvaluation();
+		$return['autreEvaluation'] = $this->getAutreEvaluation();
+		$return['maxEvaluation'] = $this->getMaxEvaluation();
+		$return['libelleEvaluation'] = $this->getLibelleEvaluation();
+
+
+		if (!empty($this->getIdMatiereNiveau())){
+			$matiereNiveau = MatiereNiveau::getById($this->getIdMatiereNiveau());
+			if (!empty($matiereNiveau->getIdMatiereNiveau())){
+				$return['idMatiere'] = $matiereNiveau->getIdMatiere();
+				$return['idNiveau'] = $matiereNiveau->getIdNiveau();
+			}
+			else {
+				$return['idMatiere'] = '';
+				$return['idNiveau'] = '';
+			}
+		}
+		else {
+			$return['idMatiere'] = '';
+			$return['idNiveau'] = '';
+		}
+		return $return;
+	}
+
+	public static function getAll () {
 		$query = "SELECT * FROM EVALUATION";
 		$result = db_connect::query($query);
-		$return = array();
-		while ($info = $result->fetch_object('Evaluation')){
+		$return = array ();
+		while ($info = $result->fetch_object('Evaluation')) {
 			$return[] = $info;
 		}
 		$result->close();
 		return $return;
 	}
 
-	public static function getById($idEvaluation){
+	public static function getByMatiereNiveau ($idMatiereNiveau) {
+		$query = "SELECT * FROM EVALUATION WHERE idMatiereNiveau = $idMatiereNiveau";
+		$result = db_connect::query($query);
+		$return = array ();
+		while ($info = $result->fetch_object('Evaluation')) {
+			$return[] = $info;
+		}
+		$result->close();
+		return $return;
+	}
+
+	public static function getById ($idEvaluation) {
 		$query = "SELECT * FROM EVALUATION WHERE idEvaluation = $idEvaluation";
 		$result = db_connect::query($query);
 		$return = new Evaluation();
-		if ($result->num_rows == 1){
+		if ($result->num_rows == 1) {
 			$return = $result->fetch_object('Evaluation');
 		}
 		$result->close();
 		return $return;
 	}
 
-	public function getTypeEvaluation(){
+	public function getTypeEvaluation () {
 		return TypeEvaluation::getById($this->getIdTypeEvaluation());
 	}
 
-	public function getMatiereNiveau(){
+	public function getMatiereNiveau () {
 		return MatiereNiveau::getById($this->getIdMatiereNiveau());
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIdEvaluaton () {
-		return $this->idEvaluaton;
+	public function getIdEvaluation () {
+		return $this->idEvaluation;
 	}
 
 	/**
-	 * @param mixed $idEvaluaton
+	 * @param mixed $idEvaluation
 	 */
-	public function setIdEvaluaton ($idEvaluaton) {
-		$this->idEvaluaton = $idEvaluaton;
+	public function setIdEvaluaton ($idEvaluation) {
+		$this->idEvaluation = $idEvaluation;
 	}
 
 	/**
@@ -143,26 +184,67 @@ class Evaluation {
 		$this->maxEvaluation = $maxEvaluation;
 	}
 
-	public function insert(){
-		$query = "INSERT INTO EVALUATION (idTypeEvaluation, idMatiereNiveau, dateEvaluation, titreEvaluation, autreEvaluation, maxEvaluation)".
-			"VALUES (".
-			"".$this->getIdTypeEvaluation().", ".
-			"".$this->getIdMatiereNiveau().", ".
-			"'".$this->getDateEvaluation()."', ".
-			"'".$this->getTitreEvaluation()."', ".
-			"".(empty($this->getAutreEvaluation())?'NULL':$this->getAutreEvaluation()).", ".
-			"".$this->getMaxEvaluation().
-			")";
-		if (db_connect::query($query)){
-			$query2 = "SELECT idEvaluation FROM EVALUATION WHERE ".
-				"idTypeEvaluation = ".$this->getIdTypeEvaluation()." AND ".
-				"idMatiereNiveau = ".$this->getIdMatiereNiveau()." AND ".
-				"dateEvaluation = '".$this->getDateEvaluation()."' AND ".
-				"titreEvaluation = '".$this->getTitreEvaluation()."' AND ".
-				"autreEvaluation = ".(empty($this->getAutreEvaluation())?'NULL':$this->getAutreEvaluation())." AND ".
-				"maxEvaluation = ".$this->getMaxEvaluation();
+	public function getLibelleEvaluation () {
+		$return = '';
+		$typeEval = TypeEvaluation::getById($this->getIdTypeEvaluation());
+		if (strtoupper($typeEval->getLibelleTypeEvaluation()) == 'AUTRE') $return .= $this->getAutreEvaluation();
+		else
+			$return .= $typeEval->getLibelleTypeEvaluation();
+		$return .= ' du : ' . $this->afficheDateEvaluation();
+		if (!empty($this->getTitreEvaluation())) ' (' . $this->getTitreEvaluation() . ')';
+		return $return;
+	}
+
+	public function afficheDateEvaluation () {
+		if (!empty($this->getDateEvaluation())) {
+			if (strpos($this->getDateEvaluation(), '-')) {
+				$explode = '-';
+				$date = explode($explode, $this->getDateEvaluation());
+				if (strpos($date[2], ' ')) {
+					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
+				}
+				return $date[2] . '/' . $date[1] . '/' . $date[0];
+			}
+			else {
+				$explode = '/';
+				$date = explode($explode, $this->getDateEvaluation());
+				if (strpos($date[2], ' ')) {
+					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
+				}
+				return $date[0] . '/' . $date[1] . '/' . $date[2];
+			}
+		}
+		return '';
+	}
+
+	public function sqlDateEvaluation () {
+		if (!empty($this->getDateEvaluation())) {
+			if (strpos($this->getDateEvaluation(), '/')) {
+				$explode = '/';
+				$date = explode($explode, $this->getDateEvaluation());
+				if (strpos($date[2], ' ')) {
+					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
+				}
+				return $date[2] . '-' . $date[1] . '-' . $date[0];
+			}
+			else {
+				$explode = '-';
+				$date = explode($explode, $this->getDateEvaluation());
+				if (strpos($date[2], ' ')) {
+					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
+				}
+				return $date[0] . '-' . $date[1] . '-' . $date[2];
+			}
+		}
+		return '';
+	}
+
+	public function insert () {
+		$query = "INSERT INTO EVALUATION (idTypeEvaluation, idMatiereNiveau, dateEvaluation, titreEvaluation, autreEvaluation, maxEvaluation)" . "VALUES (" . "" . $this->getIdTypeEvaluation() . ", " . "" . $this->getIdMatiereNiveau() . ", " . "'" . $this->sqlDateEvaluation() . "', " . "'" . $this->getTitreEvaluation() . "', " . "" . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . ", " . "" . $this->getMaxEvaluation() . ")";
+		if (db_connect::query($query)) {
+			$query2 = "SELECT idEvaluation FROM EVALUATION WHERE " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . " AND " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . " AND " . "dateEvaluation = '" . $this->getDateEvaluation() . "' AND " . "titreEvaluation = '" . $this->getTitreEvaluation() . "' AND " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . " AND " . "maxEvaluation = " . $this->getMaxEvaluation();
 			$result = db_connect::query($query2);
-			if ($result->num_rows == 1){
+			if ($result->num_rows == 1) {
 				$info = $result->fetch_assoc();
 				$this->setIdEvaluaton($info['idEvaluation']);
 				$result->close();
@@ -173,24 +255,15 @@ class Evaluation {
 		return false;
 	}
 
-	public function update(){
-		$query = "UPDATE EVALUATION SET ".
-			"idTypeEvaluation = ".$this->getIdTypeEvaluation().", ".
-			"idMatiereNiveau = ".$this->getIdMatiereNiveau().", ".
-			"dateEvaluation = '".$this->getDateEvaluation()."', ".
-			"titreEvaluation = '".$this->getTitreEvaluation()."', ".
-			"autreEvaluation = ".(empty($this->getAutreEvaluation())?'NULL':$this->getAutreEvaluation()).", ".
-			"maxEvaluation = ".$this->getMaxEvaluation()." ".
-			"WHERE idEvaluation = ".$this->getIdEvaluaton();
-		if (db_connect::query($query))
-			return true;
+	public function update () {
+		$query = "UPDATE EVALUATION SET " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . ", " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . ", " . "dateEvaluation = '" . $this->sqlDateEvaluation() . "', " . "titreEvaluation = '" . $this->getTitreEvaluation() . "', " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . ", " . "maxEvaluation = " . $this->getMaxEvaluation() . " " . "WHERE idEvaluation = " . $this->getIdEvaluation();
+		if (db_connect::query($query)) return true;
 		return false;
 	}
 
-	public function delete(){
-		$query = "DELETE FROM EVALUATION WHERE idEvaluation = ".$this->getIdEvaluaton();
-		if (db_connect::query($query))
-			return true;
+	public function delete () {
+		$query = "DELETE FROM EVALUATION WHERE idEvaluation = " . $this->getIdEvaluation();
+		if (db_connect::query($query)) return true;
 		return false;
 	}
 }

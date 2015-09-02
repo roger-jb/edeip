@@ -5,7 +5,7 @@ $("#selectModule").change(function () {
     var idModule = $("#selectModule option:selected").val();
     $.ajax({
         url: '../WebService/getById.php',
-        type: 'POST',
+        type: 'GET',
         dataType: 'json',
         data: {idModule: idModule, action: 'Module'}
     }).success(function (data) {
@@ -14,7 +14,7 @@ $("#selectModule").change(function () {
     }).error(function (xhr, ajaxOptions, thrownError) {
         console.log(xhr.status);
         console.log(thrownError);
-        console.log('Erreur dans la récupération des info de l\'utilisateur.');
+        console.log('Erreur dans la rï¿½cupï¿½ration des info de l\'utilisateur.');
     })
 });
 

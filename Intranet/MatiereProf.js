@@ -7,7 +7,7 @@ $("#selectNiveau").change(function () {
     if (!idNiveau == '') {
         $.ajax({
             url: '../WebService/getById.php',
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             data: {idNiveau: idNiveau, action: 'Niveau'}
         }).success(function (data) {
@@ -17,7 +17,7 @@ $("#selectNiveau").change(function () {
         }).error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
             console.log(thrownError);
-            console.log('Erreur dans la récupération des info du niveau.');
+            console.log('Erreur dans la rï¿½cupï¿½ration des info du niveau.');
         })
     }
 });
