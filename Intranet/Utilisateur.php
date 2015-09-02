@@ -100,6 +100,7 @@ if (isset($_POST['btActive'])) {
 <body>
 <script src="../Require/jQuery.js"></script>
 <script src="../Require/jquery-ui.js"></script>
+<script src="../Require/DatePickerFr.js"></script>
 <div id='angle_rond'>
     <?php
     include '../Include/include_header.php';

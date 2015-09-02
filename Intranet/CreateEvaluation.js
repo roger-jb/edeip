@@ -1,7 +1,7 @@
 /**
  * Created by Jean-Baptiste on 24/08/2015.
  */
-$("#newEvaluationClick").click(function(){
+$("#newEvaluationClick").click(function () {
     //$("#newEvaluation").show();
     //$('html,body').animate({scrollTop: $("#pageTitle").offset().top}, 200);
     $("#newInputIdEvaluation").val("");
@@ -13,6 +13,9 @@ $("#newEvaluationClick").click(function(){
     $("#newInputTitre").val("");
     $("#newDateEvaluation").val("");
     $("#newMaxEvaluation").val("20");
+    $("#selectNiveau").val("");
+    $("#selectMatiere").val("");
+    $("#selectEvaluation").val("");
 });
 
 $(function () {
@@ -20,8 +23,8 @@ $(function () {
     $("#autreType").hide()
 });
 
-$("#newSelectNiveau").change(function(){
-    var idNiveau =$("#newSelectNiveau option:selected").val();
+$("#newSelectNiveau").change(function () {
+    var idNiveau = $("#newSelectNiveau option:selected").val();
     var idUtilisateur = $("#idUtilisateur").val();
 
     if (!idNiveau == '') {
@@ -32,10 +35,10 @@ $("#newSelectNiveau").change(function(){
             data: {idNiveau: idNiveau, idUtilisateur: idUtilisateur, action: 'listeMatiereByNiveauUtilisateur'}
         }).success(function (data) {
             var html = "";
-            if(data.length){
+            if (data.length) {
                 var html = '<option value=""></option>';
-                $.each(data, function(i, item) {
-                    html += '<option value="'+item['idMatiere']+'">'+item['libelleMatiere']+'</option>';
+                $.each(data, function (i, item) {
+                    html += '<option value="' + item['idMatiere'] + '">' + item['libelleMatiere'] + '</option>';
                 });
             }
             $("#newSelectMatiere").html(html);
@@ -46,10 +49,14 @@ $("#newSelectNiveau").change(function(){
         })
     }
 });
-
-$("#selectNiveau").change(function(){
-    var idNiveau =$("#selectNiveau option:selected").val();
+$("#newSelectNiveau").change(function () {
+    $("#selectNiveau").val($("#newSelectNiveau option:selected").val());
+    $("#selectNiveau").change()
+});
+$("#selectNiveau").change(function () {
+    var idNiveau = $("#selectNiveau option:selected").val();
     var idUtilisateur = $("#idUtilisateur").val();
+    $("#newSelectNiveau").val(idNiveau);
 
     if (!idNiveau == '') {
         $.ajax({
@@ -59,10 +66,10 @@ $("#selectNiveau").change(function(){
             data: {idNiveau: idNiveau, idUtilisateur: idUtilisateur, action: 'listeMatiereByNiveauUtilisateur'}
         }).success(function (data) {
             var html = "";
-            if(data.length){
+            if (data.length) {
                 var html = '<option value=""></option>';
-                $.each(data, function(i, item) {
-                    html += '<option value="'+item['idMatiere']+'">'+item['libelleMatiere']+'</option>';
+                $.each(data, function (i, item) {
+                    html += '<option value="' + item['idMatiere'] + '">' + item['libelleMatiere'] + '</option>';
                 });
             }
             $("#selectMatiere").html(html);
@@ -75,7 +82,7 @@ $("#selectNiveau").change(function(){
     }
 });
 
-$("#selectMatiere").click(function(){
+$("#selectMatiere").click(function () {
     var idNiveau = $("#selectNiveau option:selected").val();
     var idMatiere = $("#selectMatiere option:selected").val();
     var action = 'listeEvaluationByMatiereNiveau';
@@ -87,10 +94,10 @@ $("#selectMatiere").click(function(){
             data: {idNiveau: idNiveau, idMatiere: idMatiere, action: action}
         }).success(function (data) {
             var html = "";
-            if(data.length){
+            if (data.length) {
                 var html = '<option value=""></option>';
-                $.each(data, function(i, item) {
-                    html += '<option value="'+item['idEvaluation']+'">'+item['libelleEvaluation']+'</option>';
+                $.each(data, function (i, item) {
+                    html += '<option value="' + item['idEvaluation'] + '">' + item['libelleEvaluation'] + '</option>';
                 });
             }
             $("#selectEvaluation").html(html);
@@ -106,7 +113,7 @@ $("#selectMatiere").click(function(){
     }
 });
 
-$("#selectEvaluation").click(function(){
+$("#selectEvaluation").click(function () {
     console.log($("#selectEvaluation option:selected").val())
     var idEvaluation = $("#selectEvaluation option:selected").val();
     var action = 'Evaluation';
@@ -135,58 +142,67 @@ $("#selectEvaluation").click(function(){
     }
 });
 
-$("#ajoutCpt").click(function(){
+$("#ajoutCpt").click(function () {
     var nbCpt = $("#nbCpt").html();
     nbCpt = parseInt(nbCpt);
-    nbCpt ++;
+
+    console.log(nbCpt);
     var idDomaine = $("#idDomaineCpt").val();
     var libDomaine = $("#libDomaineCpt").val();
     var idPointCpt = $("#idPointCpt").val();
     var libPointCpt = $("#libPointCpt").val();
-    console.log(idDomaine+' : '+ libDomaine);
-    console.log(idPointCpt+ ' : '+libPointCpt);
+    var idNiveau = $("#newSelectNiveau option:selected").val();
+    var idMatiere = $("#newSelectMatiere option:selected").val();
+
     var listeCpt = $("#listeCpt").html();
-    console.log(listeCpt);
-    var ajoutCpt;
-    ajoutCpt = '<tr><td><input type="hidden" name="idDomaine'+nbCpt+'" value="'+idDomaine+'">'+libDomaine+'</td><td><input type="hidden" name="idPoint'+nbCpt+'" value="'+idPointCpt+'">'+libPointCpt+'</td></tr>';
-    $("#listeCpt").html(listeCpt+ajoutCpt);
+    var ajoutCpt = '';
+
+    if (libDomaine != '' && libPointCpt != '') {
+        console.log('idDomaine : ' + libDomaine);
+        console.log('idPointCpt : ' + libPointCpt);
+        var action = 'insertDomaine';
+        $.ajax({
+            url: '../WebService/Evaluation.php',
+            type: 'GET',
+            dataType: 'json',
+            data: {libDomaineCpt: libDomaine, idNiveau: idNiveau, idMatiere: idMatiere, action: action}
+        }).success(function (data) {
+            console.log(data);
+            idDomaine = data.idDomaineCpt;
+        }).error(function (xhr, ajaxOptions, thrownError) {
+            console.log(action);
+            console.log(xhr.status);
+            console.log(thrownError);
+            console.log('Erreur dans l ajout du domaine de compétence ' + libDomaine + '.');
+        });
+
+        if (idDomaine != ''){
+            action2 = 'insertCompetence';
+            $.ajax({
+                url: '../WebService/Evaluation.php',
+                type: 'GET',
+                dataType: 'json',
+                data: {libPointCpt: libPointCpt, idDomaine: idDomaine, action: action2}
+            }).success(function (data) {
+                idPointCpt = data['idPointCpt'];
+            }).error(function (xhr, ajaxOptions, thrownError) {
+                console.log(action2);
+                console.log(xhr.status);
+                console.log(thrownError);
+                console.log('Erreur dans l ajout du point de compétence ' + libPointCpt + '.');
+            });
+            console.log('nbCpt = '+nbCpt);
+            nbCpt++;
+            ajoutCpt = '<tr><td><input type="hidden" name="idDomaine' + nbCpt + '" value="' + idDomaine + '">' + libDomaine + '</td><td><input type="hidden" name="idPoint' + nbCpt + '" value="' + idPointCpt + '">' + libPointCpt + '</td></tr>';
+        }
+        $("#nbCpt").html(nbCpt);
+        $("#listeCpt").html(listeCpt + ajoutCpt);
+    }
 });
 
-$("#newSelectType").change(function(){
+$("#newSelectType").change(function () {
     $("#autreType").hide();
-    if ($('#newSelectType').val() == '3'){
+    if ($('#newSelectType').val() == '3') {
         $("#autreType").show();
     }
 });
-
-(function (factory) {
-    if (typeof define === "function" && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(["../jquery.ui.datepicker"], factory);
-    } else {
-        // Browser globals
-        factory(jQuery.datepicker);
-    }
-}(function (datepicker) {
-    datepicker.regional['fr'] = {
-        closeText: 'Fermer',
-        prevText: 'Pr&eacute;c&eacute;dent',
-        nextText: 'Suivant',
-        currentText: 'Aujourd\'hui',
-        monthNames: ['janvier', 'f&eacute;vrier', 'mars', 'avril', 'mai', 'juin',
-            'juillet', 'ao&ucirc;t', 'septembre', 'octobre', 'novembre', 'd&eacute;cembre'],
-        monthNamesShort: ['janv.', 'f&eacute;vr.', 'mars', 'avril', 'mai', 'juin',
-            'juil.', 'ao�t', 'sept.', 'oct.', 'nov.', 'd&eacute;c.'],
-        dayNames: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
-        dayNamesShort: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'],
-        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-        weekHeader: 'Sem.',
-        dateFormat: 'dd/mm/yy',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ''
-    };
-    datepicker.setDefaults(datepicker.regional['fr']);
-    return datepicker.regional['fr'];
-}));

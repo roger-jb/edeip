@@ -1,5 +1,5 @@
 <?php
-require_once 'ENVIRONNEMENT.php';
+require_once '../ENVIRONNEMENT.php';
 //en dev ==> localhost
 /*$__ENV = 'dev';
 

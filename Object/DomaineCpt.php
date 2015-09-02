@@ -11,6 +11,26 @@ class DomaineCpt {
 	protected $libelleDomaineCpt;
 	protected $idMatiereNiveau;
 
+	public function toArray(){
+		$return = array();
+		$return['idDomaineCpt'] = $this->getIdDomaineCpt();
+		$return['libelleDomaineCpt'] = $this->getLibelleDomaineCpt();
+		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
+		return $return;
+	}
+
+	public function exist(){
+		$query = "SELECT * FROM DOMAINE_CPT WHERE libelleDomaineCpt LIKE '".$this->getLibelleDomaineCpt()."'";
+		$result = db_connect::query($query);
+		if ($result->num_rows != 1)
+			return false;
+		$info = $result->fetch_object('DomaineCpt');
+		$this->setIdDomaineCpt($info->getIdDomaineCpt());
+		$this->setIdMatiereNiveau($info->getIdMatiereNiveau());
+		$this->setLibelleDomaineCpt($info->getLibelleDomaineCpt());
+		return true;
+	}
+
     public static function getAll(){
         $query = "SELECT * FROM DOMAINE_CPT";
         $result = db_connect::query($query);
@@ -81,7 +101,7 @@ class DomaineCpt {
 	}
 
 	public function insert(){
-		$query = "INSRT INTO DOMAINE_CPT (".
+		$query = "INSERT INTO DOMAINE_CPT (".
 			"libelleDomaineCpt, idMatiereNiveau".
 			") VALUES (".
 			"'".db_connect::escape_string($this->getLibelleDomaineCpt())."', ".

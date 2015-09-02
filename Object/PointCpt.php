@@ -11,6 +11,26 @@ class PointCpt {
 	protected $libellePointCpt;
 	protected $idDomaineCpt;
 
+	public function toArray(){
+		$return = array();
+		$return['idPointCpt'] = $this->getIdPointCpt();
+		$return['libellePointCpt'] = $this->getLibellePointCpt();
+		$return['idDomaineCpt'] = $this->getIdDomaineCpt();
+		return $return;
+	}
+
+	public function exist(){
+		$query = "SELECT * FROM POINT_CPT WHERE libellePointCpt LIKE '".$this->getLibelleDomaineCpt()."' AND idDomaineCpt = ".$this->getIdDomaineCpt();
+		$result = db_connect::query($query);
+		if ($result->num_rows != 1)
+			return false;
+		$info = $result->fetch_object('PointCpt');
+		$this->setIdDomaineCpt($info->getIdDomaineCpt());
+		$this->setIdPointCpt($info->getIdPointCpt());
+		$this->setLibellePointCpt($info->getLibellePointCpt());
+		return true;
+	}
+
     public static function getAll(){
         $query = "SELECT * FROM POINT_CPT";
         $result = db_connect::query($query);
