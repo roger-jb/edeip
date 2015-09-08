@@ -14,8 +14,8 @@ $utilisateur = new Utilisateur();
 
 if (isset($_SESSION['id'])) {
 	$utilisateur = Utilisateur::getById($_SESSION['id']);
-	if (!$utilisateur->estAdministrateur() && !$utilisateur->estProfesseur() && !$utilisateur->estResponsable() ) {
-		header('location: ../Intranet/mesInformations.php');
+	if (!($utilisateur->estAdministrateur() || $utilisateur->estProfesseur() || $utilisateur->estResponsable() )) {
+		header('location: ../Intranet/MesInformations.php');
 	}
 }
 else {
@@ -76,7 +76,7 @@ if (isset($_POST['btSubmit'])) {
 				</tr>
 
 			</table>
-			</br>
+			<br/>
 			<fieldset style="width: 70%; margin: auto; display: none;" id="newMessage">
 				<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 					<table>
@@ -142,10 +142,10 @@ if (isset($_POST['btSubmit'])) {
 				<?php
 				}
 				?>
-				</br>
+				<br/>
 				<input type='submit' class="repondre" idcarnetliaison="<?php echo $carnetLiaison->getIdCarnetLiaison(); ?>" name='repondre' value='R&eacute;pondre'/>
 			</fieldset>
-				</br>
+				<br/>
 			<?php
 			}
 			?>

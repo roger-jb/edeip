@@ -7,8 +7,8 @@
  * Time: 11:31
  */
 
-require_once('../Object/Trimestre.php');
-class Periode {
+require_once('../Require/Objects.php');
+class Periode extends FormatDate{
 	protected $idPeriode;
 	protected $libellePeriode;
 	protected $dateDebutPeriode;
@@ -25,6 +25,17 @@ class Periode {
         $result->close();
         return $return;
     }
+
+	public function toArray(){
+		$return = array();
+		$return['idPeriode'] = $this->getIdPeriode();
+		$return['libellePeriode'] = $this->getLibellePeriode();
+		$return['dateDebutPeriode'] = $this->afficheDateDebutPeriode();
+		$return['dateFinPeriode'] = $this->afficheDateFinPeriode();
+		$return['idTrimestre'] = $this->getIdTrimestre();
+		$return['Trimestre'] = $this->getTrimestre()->toArray();
+		return $return;
+	}
 
     public static function getById($idPeriode){
         $query = "SELECT * FROM PERIODE WHERE idPeriode = $idPeriode";
@@ -83,6 +94,14 @@ class Periode {
 		$this->dateDebutPeriode = $dateDebutPeriode;
 	}
 
+	public function afficheDateDebutPeriode(){
+		return $this->affiche($this->getDateDebutPeriode());
+	}
+
+	public function SQLdateDebutperiode(){
+		return $this->SQL($this->getDateDebutPeriode());
+	}
+
 	/**
 	 * @return mixed
 	 */
@@ -95,6 +114,14 @@ class Periode {
 	 */
 	public function setDateFinPeriode ($dateFinPeriode) {
 		$this->dateFinPeriode = $dateFinPeriode;
+	}
+
+	public function afficheDateFinPeriode(){
+		return $this->affiche($this->getDateFinPeriode());
+	}
+
+	public function SQLdateFinPeriode(){
+		return $this->SQL($this->getDateFinPeriode());
 	}
 
 	/**
@@ -114,15 +141,15 @@ class Periode {
 	public function insert(){
 		$query = "INSERT INTO PERIODE (libellePeriode, dateDebutPeriode, dateFinPeriode, idTrimestre) VALUES (".
 			"'".db_connect::escape_string($this->getLibellePeriode())."', ".
-			"'".$this->getDateDebutPeriode()."', ".
-			"'".$this->getDateFinPeriode()."', ".
+			"'".$this->SQLdateDebutPeriode()."', ".
+			"'".$this->SQLdateFinPeriode()."', ".
 			"".$this->getIdTrimestre()."".
 			")";
 		if (db_connect::query($query)){
 			$select = "SELECT idPeriode FROM PERIODE WHERE ".
 				"libellePeriode = '".db_connect::escape_string($this->getLibellePeriode())."' AND ".
-				"dateDebutPeriode = '".$this->getDateDebutPeriode()."' AND, ".
-				"dateFinPeriode = '".$this->getDateFinPeriode()."' AND ".
+				"dateDebutPeriode = '".$this->SQLdateDebutperiode()."' AND ".
+				"dateFinPeriode = '".$this->SQLdateFinPeriode()."' AND ".
 				"idTrimestre = ".$this->getIdTrimestre()."";
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){
@@ -139,9 +166,9 @@ class Periode {
 	public function update(){
 		$query = "UPDATE PERIODE SET ".
 			"libellePeriode = '".db_connect::escape_string($this->getLibellePeriode())."', ".
-			"dateDebutPeriode = '".$this->getDateDebutPeriode()."', ".
-			"dateFinPeriode = '".$this->getDateFinPeriode()."', ".
-			"idTrimestre = ".$this->getIdTrimestre()."".
+			"dateDebutPeriode = '".$this->SQLdateDebutperiode()."', ".
+			"dateFinPeriode = '".$this->SQLdateFinPeriode()."', ".
+			"idTrimestre = ".$this->getIdTrimestre()." ".
 			"WHERE idPeriode = ".$this->getIdPeriode();
 		if (db_connect::query($query))
 			return true;

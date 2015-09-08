@@ -8,33 +8,36 @@
 header('content-type: text/html; charset=utf-8');
 session_start();
 require_once('../Require/Objects.php');
+
+//echo json_encode($_GET['action']::getById($_GET['id'.$_GET['action']])->toArray());
+
+
 switch ($_GET['action']) {
 	case 'CarnetLiaison' :
-		$carnetLiaison = CarnetLiaison::getById($_GET['idCarnetLiaison']);
-		echo json_encode($carnetLiaison->toArray());
+		echo json_encode(CarnetLiaison::getById($_GET['idCarnetLiaison'])->toArray());
 		break;
 	case 'Evaluation':
-		$evaluation = Evaluation::getById($_GET['idEvaluation']);
-		echo json_encode($evaluation->toArray());
+		echo json_encode(Evaluation::getById($_GET['idEvaluation'])->toArray());
 		break;
     case 'Matiere' :
-        $matiere = Matiere::getById($_GET['idMatiere']);
-        echo json_encode($matiere->toArray());
+        echo json_encode(Matiere::getById($_GET['idMatiere'])->toArray());
         break;
     case 'Module' :
-        $module = Module::getById($_GET['idModule']);
-        echo json_encode($module->toArray());
+        echo json_encode(Module::getById($_GET['idModule'])->toArray());
         break;
     case 'Niveau' :
-        $niveau = Niveau::getById($_GET['idNiveau']);
-        echo json_encode($niveau->toArray());
+        echo json_encode(Niveau::getById($_GET['idNiveau'])->toArray());
         break;
     case 'NiveauCpt' :
-        $niveauCpt = NiveauCpt::getById($_GET['idNiveauCpt']);
-        echo json_encode($niveauCpt->toArray());
+        echo json_encode(NiveauCpt::getById($_GET['idNiveauCpt'])->toArray());
         break;
+	case 'Periode':
+		echo json_encode(Periode::getById($_GET['idPeriode'])->toArray());
+		break;
+	case 'Trimestre':
+		echo json_encode(Trimestre::getById($_GET['idTrimestre'])->toArray());
+		break;
     case 'Utilisateur' :
-        $utilisateur = Utilisateur::getById($_GET['idUtilisateur']);
-        echo json_encode($utilisateur->toArray());
+        echo json_encode(Utilisateur::getById($_GET['idUtilisateur'])->toArray());
         break;
 }

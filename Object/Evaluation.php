@@ -6,7 +6,7 @@
  * Date: 16/07/2015
  * Time: 11:14
  */
-class Evaluation {
+class Evaluation extends FormatDate{
 	protected $idEvaluation;
 	protected $idTypeEvaluation;
 	protected $idMatiereNiveau;
@@ -196,53 +196,17 @@ class Evaluation {
 	}
 
 	public function afficheDateEvaluation () {
-		if (!empty($this->getDateEvaluation())) {
-			if (strpos($this->getDateEvaluation(), '-')) {
-				$explode = '-';
-				$date = explode($explode, $this->getDateEvaluation());
-				if (strpos($date[2], ' ')) {
-					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
-				}
-				return $date[2] . '/' . $date[1] . '/' . $date[0];
-			}
-			else {
-				$explode = '/';
-				$date = explode($explode, $this->getDateEvaluation());
-				if (strpos($date[2], ' ')) {
-					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
-				}
-				return $date[0] . '/' . $date[1] . '/' . $date[2];
-			}
-		}
-		return '';
+		return $this->affiche($this->getDateEvaluation());
 	}
 
 	public function sqlDateEvaluation () {
-		if (!empty($this->getDateEvaluation())) {
-			if (strpos($this->getDateEvaluation(), '/')) {
-				$explode = '/';
-				$date = explode($explode, $this->getDateEvaluation());
-				if (strpos($date[2], ' ')) {
-					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
-				}
-				return $date[2] . '-' . $date[1] . '-' . $date[0];
-			}
-			else {
-				$explode = '-';
-				$date = explode($explode, $this->getDateEvaluation());
-				if (strpos($date[2], ' ')) {
-					$date[2] = substr($date[2], 0, strpos($date[2], ' '));
-				}
-				return $date[0] . '-' . $date[1] . '-' . $date[2];
-			}
-		}
-		return '';
+		return $this->SQL($this->getDateEvaluation());
 	}
 
 	public function insert () {
 		$query = "INSERT INTO EVALUATION (idTypeEvaluation, idMatiereNiveau, dateEvaluation, titreEvaluation, autreEvaluation, maxEvaluation)" . "VALUES (" . "" . $this->getIdTypeEvaluation() . ", " . "" . $this->getIdMatiereNiveau() . ", " . "'" . $this->sqlDateEvaluation() . "', " . "'" . $this->getTitreEvaluation() . "', " . "" . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . ", " . "" . $this->getMaxEvaluation() . ")";
 		if (db_connect::query($query)) {
-			$query2 = "SELECT idEvaluation FROM EVALUATION WHERE " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . " AND " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . " AND " . "dateEvaluation = '" . $this->getDateEvaluation() . "' AND " . "titreEvaluation = '" . $this->getTitreEvaluation() . "' AND " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . " AND " . "maxEvaluation = " . $this->getMaxEvaluation();
+			$query2 = "SELECT idEvaluation FROM EVALUATION WHERE " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . " AND " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . " AND " . "dateEvaluation = '" . $this->sqlDateEvaluation() . "' AND " . "titreEvaluation = '" . $this->getTitreEvaluation() . "' AND " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . " AND " . "maxEvaluation = " . $this->getMaxEvaluation();
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1) {
 				$info = $result->fetch_assoc();

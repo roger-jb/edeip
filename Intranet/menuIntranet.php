@@ -59,10 +59,10 @@
 					<li><a href="../Intranet/NiveauCpt.php">niveaux de compétences</a></li>
 				</ul>
 			</li>
-			<li id="adminPlanningReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer la plannification
+			<li id="adminPlanningReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer la planification
 				<ul id="adminPlanningMenu">
 					<li><a href="">Emploi du temps</a></li>
-					<li><a href="../Intranet/Periodes.php">Définir les Périodes</a></li>
+					<li><a href="../Intranet/Periode.php">Définir les Périodes</a></li>
 					<li><a href="../Intranet/Trimestre.php">Définir les trimestres</a></li>
 				</ul>
 			</li>
@@ -80,7 +80,7 @@
 			<?php
 			if ($utilisateur->estAdministrateur()) {
 				?>
-				<li><a href="">Gérer les type d'évaluation</a></li>
+				<li><a href="">Gérer les types d'évaluation</a></li>
 			<?php
 			}
 			?>
@@ -94,7 +94,14 @@
 		<ul id="publiMenu">
 			<li><a href="../Intranet/CarnetLiaison.php">Carnet de Liaison</a></li>
 			<li><a href="">Cahier de Texte</a></li>
-			<li><a href="">Plan de travail</a></li>
+			<?php
+			if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()){
+				?>
+				<li><a href="addPlanTravail.php">Ajouter un Plan de Travail</a></li>
+			<?php
+			}
+			?>
+			<li><a href="PlanTravail.php">Plan de travail</a></li>
 			<li><a href="">Communication</a></li>
 			<li><a href="">Absences</a></li>
 		</ul>

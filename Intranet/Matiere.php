@@ -64,7 +64,7 @@ if (isset($_POST['btSubmit'])) {
             <table id="selectAction" style="width: 100%">
                 <tr>
                     <td>
-                        <span id="newMatiere"><i class="fa fa-plus-square-o" style="font-size: 20px;"></i> Nouvelle Mati&egrave;res</span>
+                        <span id="newMatiere"><i class="fa fa-plus-square-o" style="font-size: 20px;"></i> Nouvelle Mati&egrave;re</span>
                     </td>
                     <td>
                         <div>

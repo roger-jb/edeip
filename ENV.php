@@ -23,7 +23,9 @@ else {
 }
 */
 
-
+$__FTP_SRV = 'ftp.edeip-lyon.fr';
+$__FTP_USR = 'ecoleepl';
+$__FTP_MDP = 'jeanne5242';
 if (!$ENV) {
 //en prod
 	//$__DB_SRV = "mysql5-15.perso";
@@ -31,6 +33,10 @@ if (!$ENV) {
 	$__DB_NAME = 'ecoleepledepl';
 	$__DB_USER = 'ecoleepledepl';
 	$__DB_MDP = 'xpN7z7xX';
+
+	$__FTP_SRV = 'ftp/edeip-lyon.fr/www/';
+	$__FTP_USR = 'ecoleepl';
+	$__FTP_MDP = 'jeanne5242';
 }
 else {
 	if ($ENV == 'dev') {

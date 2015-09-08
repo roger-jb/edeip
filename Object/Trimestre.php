@@ -6,14 +6,24 @@
  * Date: 16/07/2015
  * Time: 11:30
  */
-class Trimestre {
+class Trimestre extends FormatDate{
 	protected $idTrimestre;
 	protected $libelleTrimestre;
-	protected $dateDebutTrimeste;
+	protected $dateDebutTrimestre;
 	protected $dateFinTrimestre;
 	protected $dateFinCommentaire;
 
-    public function getAll(){
+	public function toArray(){
+		$return = array();
+		$return['idTrimestre'] = $this->getIdTrimestre();
+		$return['libelleTrimestre'] = $this->getLibelleTrimestre();
+		$return['dateDebutTrimestre'] = $this->afficheDateDebut();
+		$return['dateFinTrimestre'] = $this->afficheDateFin();
+		$return['dateFinCommentaire'] = $this->afficheDateFinCommentaire();
+		return $return;
+	}
+
+    public static function getAll(){
         $query = "SELECT * FROM TRIMESTRE";
         $result = db_connect::query($query);
         $return = array();
@@ -24,7 +34,7 @@ class Trimestre {
         return $return;
     }
 
-    public function getById($idTrimestre){
+    public static function getById($idTrimestre){
         $query = "SELECT * FROM TRIMESTRE WHERE idTrimestre = $idTrimestre";
         $result = db_connect::query($query);
         $return = new Trimestre();
@@ -32,8 +42,20 @@ class Trimestre {
             $return = $result->fetch_object('Trimestre');
         }
         $result->close();
-        return $return;
+	    return $return;
     }
+
+	public function afficheDateDebut(){
+		return $this->affiche($this->getDateDebutTrimestre());
+	}
+
+	public function afficheDateFin(){
+		return $this->affiche($this->getDateFinTrimestre());
+	}
+
+	public function afficheDateFinCommentaire(){
+		return $this->affiche($this->getDateFinCommentaire());
+	}
 
 	/**
 	 * @return mixed
@@ -66,15 +88,15 @@ class Trimestre {
 	/**
 	 * @return mixed
 	 */
-	public function getDateDebutTrimeste () {
-		return $this->dateDebutTrimeste;
+	public function getDateDebutTrimestre () {
+		return $this->dateDebutTrimestre;
 	}
 
 	/**
 	 * @param mixed $dateDebutTrimeste
 	 */
-	public function setDateDebutTrimeste ($dateDebutTrimeste) {
-		$this->dateDebutTrimeste = $dateDebutTrimeste;
+	public function setDateDebutTrimestre ($dateDebutTrimestre) {
+		$this->dateDebutTrimestre = $dateDebutTrimestre;
 	}
 
 	/**
@@ -106,18 +128,18 @@ class Trimestre {
 	}
 
 	public function insert(){
-		$query = "INSERT INTO TRIMESTRE (libelleTrimestre, dateDebutTrimestre, dateFinTrimestre, dateFinCommentaires) VALUES (".
+		$query = "INSERT INTO TRIMESTRE (libelleTrimestre, dateDebutTrimestre, dateFinTrimestre, dateFinCommentaire) VALUES (".
 			"'".db_connect::escape_string($this->getLibelleTrimestre())."', ".
-			"'".$this->getDateDebutTrimeste()."', ".
-			"'".$this->getDateFinTrimestre()."', ".
-			"'".$this->getDateFinCommentaire()."'".
+			"'".$this->SQLdateDebutTrimestre()."', ".
+			"'".$this->SQLdateFinTrimestre()."', ".
+			"'".$this->SQLdateFinCommentaire()."'".
 			")";
 		if (db_connect::query($query)){
 			$select = "SELECT idTrimestre FROM TRIMESTRE WHERE ".
 				"libelleTrimestre = '".db_connect::escape_string($this->getLibelleTrimestre())."' AND ".
-				"datDebutTrimestre = '".$this->getDateDebutTrimeste()."' AND ".
-				"dateFinTrimestre = '".$this->getDateFinTrimestre()."' AND ".
-				"datFinCommentaire = '".$this->getDateFinCommentaire()."'";
+				"dateDebutTrimestre = '".$this->SQLdateDebutTrimestre()."' AND ".
+				"dateFinTrimestre = '".$this->SQLdateFinTrimestre()."' AND ".
+				"dateFinCommentaire = '".$this->SQLdateFinCommentaire()."'";
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
@@ -132,9 +154,9 @@ class Trimestre {
 	public function update(){
 		$query = "UPDATE TRIMESTRE SET ".
 			"libelleTrimestre = '".db_connect::escape_string($this->getLibelleTrimestre())."', ".
-			"datDebutTrimestre = '".$this->getDateDebutTrimeste()."', ".
-			"dateFinTrimestre = '".$this->getDateFinTrimestre()."', ".
-			"datFinCommentaire = '".$this->getDateFinCommentaire()."'".
+			"dateDebutTrimestre = '".$this->SQLdateDebutTrimestre()."', ".
+			"dateFinTrimestre = '".$this->SQLdateFinTrimestre()."', ".
+			"dateFinCommentaire = '".$this->SQLdateFinCommentaire()."'".
 			"WHERE idTrimestre = ".$this->getIdTrimestre();
 		if (db_connect::query($query))
 			return true;
@@ -146,5 +168,15 @@ class Trimestre {
 		if (db_connect::query($query))
 			return true;
 		return false;
+	}
+
+	public function SQLdateDebutTrimestre(){
+		return $this->SQL($this->getDateDebutTrimestre());
+	}
+	public function SQLdateFinTrimestre(){
+		return $this->SQL($this->getDateFinTrimestre());
+	}
+	public function SQLdateFinCommentaire(){
+		return $this->SQL($this->getDateFinCommentaire());
 	}
 }

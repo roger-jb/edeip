@@ -12,6 +12,16 @@ class PlanTravail {
 	protected $idMatiereNiveau;
 	protected $idPeriode;
 
+	public function toArray(){
+		$return = array();
+		$return['idPlanTravail'] = $this->getIdMatiereNiveau();
+		$return['libellePlanTravail'] = $this->getLibellePlanTravail();
+		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
+		$return['idPeriode'] = $this->getIdPeriode();
+		$return['libellePeriode'] = $this->getPeriode()->getLibellePeriode();
+		return $return;
+	}
+
     public static function getAll(){
         $query = "SELECT * FROM PLAN_TRAVAIL";
         $result = db_connect::query($query);
@@ -22,6 +32,17 @@ class PlanTravail {
         $result->close();
         return $return;
     }
+
+	public static function getbyMatiereNiveau($idMatiereNiveau){
+		$query = "SELECT PL.* FROM PLAN_TRAVAIL PL, PERIODE P WHERE PL.idMatiereNiveau = $idMatiereNiveau AND PL.idPeriode = P.idPeriode ORDER BY P.dateDebutPeriode DESC";
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('PlanTravail')){
+			$return[] = $info;
+		}
+		$result->close();
+		return $return;
+	}
 
     public static function getById($idPlanTravail){
         $query = "SELECT * FROM PLAN_TRAVAIL WHERE idPlanTravail = $idPlanTravail";

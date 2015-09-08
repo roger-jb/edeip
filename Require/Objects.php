@@ -6,6 +6,8 @@
  * Time: 15:05
  */
 require_once('../Require/db_connect.php');
+require_once('../Require/FormatDate.php');
+require_once('../Require/ftp_link.php');
 require_once('../Object/Utilisateur.php');
 require_once('../Object/Absence.php');
 require_once('../Object/Administrateur.php');

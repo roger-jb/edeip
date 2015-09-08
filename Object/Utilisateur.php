@@ -16,7 +16,7 @@
  *
  */
 
-class Utilisateur {
+class Utilisateur extends FormatDate{
 	protected $idUtilisateur;
 	protected $nomUtilisateur;
 	protected $prenomUtilisateur;

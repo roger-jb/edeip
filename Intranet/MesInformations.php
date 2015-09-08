@@ -43,7 +43,10 @@ if (isset($_POST['update'])) {
         if ((isset($_POST['mdpUtilisateur']) && !empty($_POST['mdpUtilisateur'])) && (isset($_POST['mdpUtilisateurConfirm']) && !empty($_POST['mdpUtilisateurConfirm'])) && ($_POST['mdpUtilisateur'] == $_POST['mdpUtilisateurConfirm'])) {
             $connexion->setMdpUtilisateur($_POST['mdpUtilisateur']);
             if (!$connexion->update()) {
-                $msg .= "Le mot de Passe n'a pas pu �tre chang�";
+                $msg .= "Le mot de Passe n'a pas pu &ecirc;tre chang&eacute;";
+            }
+            else {
+                $msg .= "Modification du mot de passe &eacute;ffectu&eacute;e.";
             }
         }
     }
