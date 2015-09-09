@@ -18,7 +18,6 @@ if (isset($_SESSION['id'])) {
     header('location: ../Intranet/connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
-    var_dump($_POST);
     /*$niveau = new Niveau();
     if (!empty($_POST['idNiveau']))
         $niveau = Niveau::getById($_POST['idNiveau']);
@@ -31,6 +30,19 @@ if (isset($_POST['btSubmit'])) {
                 $niveau->insert();
         } else
             $niveau->update();*/
+	if (isset($_POST['Assigner']) && isset($_POST['idNiveau']) && !empty($_POST['idNiveau'])){
+		$idNiveau = $_POST['idNiveau'];
+		foreach ($_POST['Assigner'] as $idMatiere){
+			$matiere = Matiere::getById($idMatiere);
+			$idProfesseur = $_POST['idProf'.$idMatiere];
+			if (isset($_POST['idProf'.$idMatiere]) && !empty($_POST['idProf'.$idMatiere])){
+				$professeur = Professeur::getById($_POST['idProf'.$idMatiere]);
+				$matiereNiveau = MatiereNiveau::getByMatiereNiveau($matiere->getIdMatiere(), $idNiveau);
+				$profMatiereNiveau = ProfesseurMatiereNiveau::getByProfesseurMatiereNiveau($professeur->getIdProfesseur(), $matiereNiveau->getIdMatiereNiveau());
+
+			}
+		}
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -61,7 +73,6 @@ if (isset($_POST['btSubmit'])) {
             <div class="titre_corps">
                 <h3 class="centrer">Assignation des Mati&egrave;res</h3>
             </div>
-
             <table id="selectAction" style="width: 100%">
                 <tr>
                     <td>
@@ -79,11 +90,11 @@ if (isset($_POST['btSubmit'])) {
                         </div>
                     </td>
                 </tr>
-
             </table>
-            </br>
+            <br/>
             <fieldset style="width: 70%; margin: auto;">
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	                <input name="idNiveau" id="idNiveau" type="hidden">
                     <table style="width: 90%; margin: auto;">
                         <tr>
                             <td style="width: 10%;">Enseigner</td>
@@ -96,16 +107,16 @@ if (isset($_POST['btSubmit'])) {
                             ?>
                             <tr>
                                 <td style="width: 0%; text-align: center;">
-                                    <input id="inputFonctionAdministrateur" type="checkbox" multiple name="Assigner[]"
+                                    <input id="inputAssigner" type="checkbox" multiple name="Assigner[]"
                                            value="<?php echo $matiere->getIdMatiere(); ?>"/>
                                 </td>
-                                <td style="width: 50%;"><?php echo $matiere->getLibelleMatiere(); ?></td>
+                                <td style="width: 50%;"><input type="hidden" name="idMatiereNiveau<?php echo $matiere->getLibelleMatiere(); ?>" id="idMatiereNiveau<?php echo $matiere->getLibelleMatiere(); ?>" class="idMatiereNiveau"><?php echo $matiere->getLibelleMatiere(); ?></td>
                                 <td style="width: 50%;"><select>
                                         <option value=""></option>
                                         <?php
                                         $professeurs = Professeur::getAllActif();
                                         foreach($professeurs as $prof){
-                                            echo '<option value="'.$prof->getIdUtilisateur().'">'.$prof->getNomUtilisateur().' '.$prof->getPrenomUtilisateur().'</option>';
+                                            echo '<option value="'.$prof->getIdUtilisateur().'" class="ProfesseurSelected" name="idProf'. $matiere->getIdMatiere().'">'.$prof->getNomUtilisateur().' '.$prof->getPrenomUtilisateur().'</option>';
                                         }
                                         ?>
                                     </select>
@@ -129,6 +140,6 @@ if (isset($_POST['btSubmit'])) {
     db_connect::close();
     ?>
 </div>
-<script src="Niveau.js"></script>
+<script src="MatiereProf.js"></script>
 </body>
 </html>

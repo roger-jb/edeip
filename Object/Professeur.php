@@ -42,21 +42,21 @@ class Professeur extends Utilisateur {
 	/**
 	 * @return mixed
 	 */
-	public function getIdPrfesseur () {
+	public function getIdProfesseur () {
 		return $this->getIdUtilisateur();
 	}
 
 	/**
 	 * @param mixed $idPrfesseur
 	 */
-	public function setIdPrfesseur ($idPrfesseur) {
+	public function setIdProfesseur ($idPrfesseur) {
 		$this->setIdUtilisateur($idPrfesseur);
 	}
 
 	public function insert(){
 		if (parent::insert()){
 			$query = "INSERT INTO PROFESSEUR (idProfesseur) VALUES (".
-				$this->getIdPrfesseur().
+				$this->getIdProfesseur().
 				")";
 			return db_connect::query($query);
 		}
@@ -65,7 +65,7 @@ class Professeur extends Utilisateur {
 
     public function insertOnly(){
         $query = "INSERT INTO PROFESSEUR (idProfesseur) VALUES (".
-            $this->getIdPrfesseur().
+            $this->getIdProfesseur().
             ")";
         return db_connect::query($query);
     }

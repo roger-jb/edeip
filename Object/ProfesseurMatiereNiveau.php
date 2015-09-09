@@ -22,6 +22,17 @@ class ProfesseurMatiereNiveau {
 		return $return;
 	}
 
+	public static function getByProfesseurMatiereNiveau($idProfesseur, $idMatiereNiveau){
+		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU WHERE idProfesseur = $idProfesseur AND idMatiereNiveau = $idMatiereNiveau";
+		$result = db_connect::query($query);
+		$return = new ProfesseurMatiereNiveau();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('ProfesseurMatiereNiveau');
+		}
+		$result->close();
+		return $return;
+	}
+
 	public static function getById($idProfesseurMatiereNiveau){
 		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU WHERE idProfesseurMatiereNiveau = $idProfesseurMatiereNiveau";
 		$result = db_connect::query($query);
