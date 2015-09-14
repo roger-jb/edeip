@@ -71,7 +71,7 @@
 	<?php
 	}
 
-	if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()) {
+	/*if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()) {
 		?>
 		<h3 id="evalReduc"><i class="fa fa-arrow-circle-o-up"></i> Evaluation</h3>
 		<ul id="evalMenu">
@@ -86,14 +86,14 @@
 			?>
 		</ul>
 	<?php
-	}
+	}*/
 
 	if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur() || $utilisateur->estResponsable() || $utilisateur->estEleve()) {
 		?>
 		<h3 id="publiReduc"><i class="fa fa-arrow-circle-o-up"></i> Publication</h3>
 		<ul id="publiMenu">
 			<li><a href="../Intranet/CarnetLiaison.php">Carnet de Liaison</a></li>
-			<!--<li><a href="">Cahier de Texte</a></li>-->
+			<!--<li><a href="../Intranet/CahierTexte.php">Cahier de Texte</a></li>-->
 			<li><a id="EmploiTempsEleve" href="../Intranet/EmploiTemps.php">Emploi du temps</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()){
@@ -109,10 +109,10 @@
 	<?php
 	}
 
-	if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()) {
+	/*if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()) {
 		?>
 		<h3 id="bulletinReduc"><i class="fa fa-arrow-circle-o-up"></i> Bulletin</h3>
-		<?php /*<ul id="bulletinMenu">
+		<ul id="bulletinMenu">
 			<li><a href="">Remplir Bulletin</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur()) {
@@ -121,9 +121,9 @@
 			<?php
 			}
 			?>
-		</ul>*/?>
+		</ul>
 	<?php
-	}
+	}*/
 	?>
 
 
