@@ -14,7 +14,7 @@ class PlanTravail {
 
 	public function toArray(){
 		$return = array();
-		$return['idPlanTravail'] = $this->getIdMatiereNiveau();
+		$return['idPlanTravail'] = $this->getIdPlanTravail();
 		$return['libellePlanTravail'] = $this->getLibellePlanTravail();
 		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
 		$return['idPeriode'] = $this->getIdPeriode();

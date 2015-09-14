@@ -89,47 +89,47 @@ if (isset($_POST['btSubmit'])) {
                             </select>
                         </div>
                     </td>
+                    <td>
+                        Matiere
+                        <select id="selectMatiere" size="1">
+                            <option value=""></option>
+                            <?php
+                            $matieres = Matiere::getAll();
+                            foreach ($matieres as $matiere){
+                                echo '<option value="' . $matiere->getIdMatiere() . '">' . $matiere->getLibelleMatiere() . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Professeur
+                        <select id="selectProf" size="1">
+                            <option value=""></option>
+                            <?php
+                            $profs = Professeur::getAll();
+                            foreach ($profs as $prof){
+                                echo '<option value="' . $prof->getIdProfesseur() . '">' . $prof->getLibelleUtilisatur() . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </td>
+                    <td>
+						<span id="addCouple">Ajouter</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="delCouple">Supprimer</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="updateCouple">Changer professeur</span>
+                    </td>
                 </tr>
             </table>
             <br/>
             <fieldset style="width: 70%; margin: auto;">
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	                <input name="idNiveau" id="idNiveau" type="hidden">
-                    <table style="width: 90%; margin: auto;">
-                        <tr>
-                            <td style="width: 10%;">Enseigner</td>
-                            <td style="width: 45%;">Mati&egrave;re</td>
-                            <td style="width: 45%;">Professeur</td>
-                        </tr>
-                        <?php
-                        $matieres = Matiere::getAll();
-                        foreach ($matieres as $matiere){
-                            ?>
-                            <tr>
-                                <td style="width: 0%; text-align: center;">
-                                    <input id="inputAssigner" type="checkbox" multiple name="Assigner[]"
-                                           value="<?php echo $matiere->getIdMatiere(); ?>"/>
-                                </td>
-                                <td style="width: 50%;"><input type="hidden" name="idMatiereNiveau<?php echo $matiere->getLibelleMatiere(); ?>" id="idMatiereNiveau<?php echo $matiere->getLibelleMatiere(); ?>" class="idMatiereNiveau"><?php echo $matiere->getLibelleMatiere(); ?></td>
-                                <td style="width: 50%;"><select>
-                                        <option value=""></option>
-                                        <?php
-                                        $professeurs = Professeur::getAllActif();
-                                        foreach($professeurs as $prof){
-                                            echo '<option value="'.$prof->getIdUtilisateur().'" class="ProfesseurSelected" name="idProf'. $matiere->getIdMatiere().'">'.$prof->getNomUtilisateur().' '.$prof->getPrenomUtilisateur().'</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
-                        <tr>
-                            <td><input type="submit" id="submitButton" name="btSubmit" value="Valider"></td>
-                        </tr>
-                    </table>
-                </form>
+				<legend>Liste des matieres assign&eacute;es au Niveau et leur professeur</legend>
+                <table>
+					<thead>
+					<tr><td>Matiere</td><td>Professeur</td></tr>
+					</thead>
+					<tbody id="listeCouple">
+					</tbody>
+				</table>
             </fieldset>
             <br/>
         </div>

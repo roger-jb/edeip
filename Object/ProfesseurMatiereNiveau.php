@@ -11,6 +11,16 @@ class ProfesseurMatiereNiveau {
 	protected $idProfesseur;
 	protected $idMatiereNiveau;
 
+	public function toArray(){
+		$return = array();
+		$return['idProfesseurMatiereNiveau'] = $this->getIdProfesseurMatiereNiveau();
+		$return['idProfesseur'] = $this->getIdProfesseur();
+		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
+		$return['Professeur'] = $this->getProfesseur()->toArray();
+		$return['MatiereNiveau'] = $this->getMatiereNiveau()->toArray();
+		return $return;
+	}
+
 	public static function getAll(){
 		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU";
 		$result = db_connect::query($query);
@@ -24,6 +34,17 @@ class ProfesseurMatiereNiveau {
 
 	public static function getByProfesseurMatiereNiveau($idProfesseur, $idMatiereNiveau){
 		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU WHERE idProfesseur = $idProfesseur AND idMatiereNiveau = $idMatiereNiveau";
+		$result = db_connect::query($query);
+		$return = new ProfesseurMatiereNiveau();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('ProfesseurMatiereNiveau');
+		}
+		$result->close();
+		return $return;
+	}
+
+	public static function getByMatiereNiveau($idMatiereNiveau){
+		$query = "SELECT * FROM PROFESSEUR_MATIERE_NIVEAU WHERE idMatiereNiveau = $idMatiereNiveau";
 		$result = db_connect::query($query);
 		$return = new ProfesseurMatiereNiveau();
 		if ($result->num_rows == 1){
@@ -116,7 +137,9 @@ class ProfesseurMatiereNiveau {
 	}
 
 	public function update(){
-		// table de jointure, pas d'update
+		$query = "UPDATE PROFESSEUR_MATIERE_NIVEAU SET idProfesseur=".$this->getIdProfesseur().", idMatiereNiveau=".$this->getIdMatiereNiveau()." WHERE idProfesseurMatiereNiveau = ".$this->getIdProfesseurMatiereNiveau();
+		if (db_connect::query($query))
+			return true;
 		return false;
 	}
 

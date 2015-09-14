@@ -40,7 +40,7 @@ $("#selectUtilisateur").change(function () {
             console.log(xhr.status);
             console.log(thrownError);
             console.log('Erreur dans la r�cup�ration des info de l\'utilisateur.');
-        })
+        });
 
         $.ajax({
             url: '../WebService/adminUtilisateur.php',

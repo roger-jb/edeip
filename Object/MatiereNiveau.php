@@ -11,8 +11,29 @@ class MatiereNiveau {
 	protected $idMatiere;
 	protected $idNiveau;
 
+	public function toArray(){
+		$return = array();
+		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
+		$return['idMatiere'] = $this->getIdMatiere();
+		$return['idNiveau'] = $this->getIdNiveau();
+		$return['Matiere'] = $this->getMatiere()->toArray();
+		$return['Niveau'] = $this->getNiveau()->toArray();
+
+		return $return;
+	}
+
 	public static function getAll(){
 		$query = "SELECT * FROM MATIERE_NIVEAU";
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('MatiereNiveau')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public static function getByNiveau($idNiveau){
+		$query = "SELECT * FROM MATIERE_NIVEAU WHERE idNiveau = $idNiveau";
 		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('MatiereNiveau')){

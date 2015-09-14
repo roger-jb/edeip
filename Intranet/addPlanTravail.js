@@ -84,6 +84,11 @@ $("#newSelectNiveau").click(function(){
 });
 
 $("#newPlanTravail").click(function () {
-    $("#inputId").val("");
+    $("#selectNiveau").val("");
+    $("#selectMatiere").val("");
     $("#inputLibelle").val("");
+    $("#newSelectNiveau").val("");
+    $("#newSelectMatiere").val("");
+    $("#newSelectPeriode").val("");
+    $("#inputFichier").val("");
 });

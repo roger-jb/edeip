@@ -49,8 +49,8 @@ class Professeur extends Utilisateur {
 	/**
 	 * @param mixed $idPrfesseur
 	 */
-	public function setIdProfesseur ($idPrfesseur) {
-		$this->setIdUtilisateur($idPrfesseur);
+	public function setIdProfesseur ($idProfesseur) {
+		$this->setIdUtilisateur($idProfesseur);
 	}
 
 	public function insert(){

@@ -52,16 +52,16 @@
 			</ul>
 			<li><a href="../Intranet/Niveau.php">gérer les niveaux</a></li>
 			<li><a href="../Intranet/Module.php">gérer les modules</a></li>
-			<li id="adminCptReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les compétences
+			<!--<li id="adminCptReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les compétences
 				<ul id="adminCptMenu">
 					<li><a href="../Intranet/DomaineCpt.php">domaines de compétences</a></li>
 					<li><a href="../Intranet/PointCpt.php">points de compétences</a></li>
 					<li><a href="../Intranet/NiveauCpt.php">niveaux de compétences</a></li>
 				</ul>
-			</li>
+			</li>-->
 			<li id="adminPlanningReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer la planification
 				<ul id="adminPlanningMenu">
-					<li><a href="">Emploi du temps</a></li>
+					<!-- <li><a href="">Modifier Emploi du temps</a></li> -->
 					<li><a href="../Intranet/Periode.php">Définir les Périodes</a></li>
 					<li><a href="../Intranet/Trimestre.php">Définir les trimestres</a></li>
 				</ul>
@@ -93,7 +93,8 @@
 		<h3 id="publiReduc"><i class="fa fa-arrow-circle-o-up"></i> Publication</h3>
 		<ul id="publiMenu">
 			<li><a href="../Intranet/CarnetLiaison.php">Carnet de Liaison</a></li>
-			<li><a href="">Cahier de Texte</a></li>
+			<!--<li><a href="">Cahier de Texte</a></li>-->
+			<li><a id="EmploiTempsEleve" href="../Intranet/EmploiTemps.php">Emploi du temps</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()){
 				?>
@@ -101,9 +102,9 @@
 			<?php
 			}
 			?>
-			<li><a href="PlanTravail.php">Plan de travail</a></li>
-			<li><a href="">Communication</a></li>
-			<li><a href="">Absences</a></li>
+			<li><a href="../Intranet/PlanTravail.php">Plan de travail</a></li>
+			<!--<li><a href="">Communication</a></li>-->
+			<!--<li><a href="">Absences</a></li>-->
 		</ul>
 	<?php
 	}
@@ -111,7 +112,7 @@
 	if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()) {
 		?>
 		<h3 id="bulletinReduc"><i class="fa fa-arrow-circle-o-up"></i> Bulletin</h3>
-		<ul id="bulletinMenu">
+		<?php /*<ul id="bulletinMenu">
 			<li><a href="">Remplir Bulletin</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur()) {
@@ -120,7 +121,7 @@
 			<?php
 			}
 			?>
-		</ul>
+		</ul>*/?>
 	<?php
 	}
 	?>

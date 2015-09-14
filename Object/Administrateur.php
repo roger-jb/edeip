@@ -30,7 +30,10 @@ class Administrateur extends Utilisateur
         return $return;
     }
 
-    public static function getAllActif()
+	/**
+	 * @return array
+	 */
+	public static function getAllActif()
     {
         $parents = parent::getAllActif();
         $return = array();

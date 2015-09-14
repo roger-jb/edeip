@@ -59,5 +59,6 @@ function start(){
 $( "#choixEnfant" ).change(function() {
     $("#idEnfant").html($( "#choixEnfant option:selected" ).val());
     $("#enfantURL").attr('href', "../Intranet/MesInformations.php?id="+$( "#choixEnfant option:selected" ).val());
+    $("#EmploiTempsEleve").attr('href', "../Intranet/EmploiTemps.php?id="+$( "#choixEnfant option:selected" ).val());
 });
 
