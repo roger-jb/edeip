@@ -1,15 +1,15 @@
 /**
- * Created by Jean-Baptiste on 07/09/2015.
+ * Created by Jean-Baptiste on 14/09/2015.
  */
-$("#selectNiveau").change(function () {
+
+$("#selectNiveau").change(function(){
     var idNiveau = $("#selectNiveau option:selected").val();
-    var idUtilisateur = $("#idUtilisateur").val();
     if (!idNiveau == '') {
         $.ajax({
             url: '../WebService/getMatiere.php',
             type: 'GET',
             dataType: 'json',
-            data: {idNiveau: idNiveau,idUtilisateur: idUtilisateur , action: 'getByNiveauUtilisateur'}
+            data: {idNiveau: idNiveau, action: 'getByNiveau'}
         }).success(function (data) {
             var html = "";
             if (data.length) {
@@ -54,40 +54,4 @@ $("#selectMatiere").change(function(){
             console.log('Erreur dans la recuperation des matieres.');
         })
     }
-});
-
-$("#newSelectNiveau").click(function(){
-    var idNiveau = $("#newSelectNiveau option:selected").val();
-    var idUtilisateur = $("#idUtilisateur").val();
-    if (!idNiveau == '') {
-        $.ajax({
-            url: '../WebService/getMatiere.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {idNiveau: idNiveau,idUtilisateur: idUtilisateur , action: 'getByNiveauUtilisateur'}
-        }).success(function (data) {
-            var html = "";
-            if (data.length) {
-                var html = '<option value=""></option>';
-                $.each(data, function (i, item) {
-                    html += '<option value="' + item['idMatiere'] + '">' + item['libelleMatiere'] + '</option>';
-                });
-            }
-            $("#newSelectMatiere").html(html);
-        }).error(function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-            console.log('Erreur dans la recuperation des matieres.');
-        })
-    }
-});
-
-$("#newPlanTravail").click(function () {
-    $("#selectNiveau").val("");
-    $("#selectMatiere").val("");
-    $("#inputLibelle").val("");
-    $("#newSelectNiveau").val("");
-    $("#newSelectMatiere").val("");
-    $("#newSelectPeriode").val("");
-    $("#inputFichier").val("");
 });

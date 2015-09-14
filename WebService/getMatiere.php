@@ -21,5 +21,14 @@ if (isset ($_GET['action'])) {
 			}
 			echo json_encode($return);
 			break;
+		case 'getByNiveau' :
+			$Matieres = Matiere::getByNiveau($_GET['idNiveau']);
+			$Matieres = Matiere::getByNiveau($_GET['idNiveau']);
+			$return = array ();
+			foreach ($Matieres as $mat) {
+				$return[] = $mat->toArray();
+			}
+			echo json_encode($return);
+			break;
 	}
 }
