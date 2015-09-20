@@ -18,15 +18,9 @@ class ftp_link {
 	private static $ftp_connect;
 
 	private function __construct () {
-		global $__FTP_SRV;
-		global $__FTP_USR;
-		global $__FTP_MDP;
 		global $__ENV;
 
 		self::$ENV = $__ENV;
-		self::$FTP_USER = $__FTP_USR;
-		self::$FTP_MDP = $__FTP_MDP;
-		self::$FTP_SRV = $__FTP_SRV;
 		self::$FTP_DIR_PlanTravail = 'PlanTravail/';
 		self::$FTP_DIR_Base = 'www/';
 

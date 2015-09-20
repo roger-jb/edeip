@@ -40,19 +40,13 @@ if (isset($_POST['btSubmit'])) {
 	// tansfert du fichier Plan de Travail associé.
 	if (!empty($_FILES['fichierPlanTravail'])) {
 		if (ftp_link::estPDFfile($_FILES['fichierPlanTravail']['name'], $_FILES['fichierPlanTravail']['type'])) {
-			/*
-			 * Dump du $_FILES
-			'fichierPlanTravail' =>
-			    array (size=5)
-			      'name' => string 'ContratTravailCDDGardeSimpleGEDform.pdf' (length=39)
-			      'type' => string 'application/pdf' (length=15)
-			      'tmp_name' => string 'D:\wamp\tmp\php1A1B.tmp' (length=23)
-			      'error' => int 0
-			      'size' => int 192600
-			 */
 			if ($_FILES['fichierPlanTravail']['error'] == 0)
-				if (!ftp_link::putPlanTravail('planTravail' . $planTravail->getIdPlanTravail() . '.pdf', $_FILES['fichierPlanTravail']['tmp_name']))
-					echo 'PB lors du transfert de fichier';
+				if(move_uploaded_file ($_FILES['fichierPlanTravail']['tmp_name'], '../PlanTravail/planTravail' . $planTravail->getIdPlanTravail() . '.pdf')){
+					echo 'reussi';
+				}
+				else {
+					echo 'Fail!!!';
+				}
 			ftp_link::close();
 		}
 	}

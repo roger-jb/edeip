@@ -6,16 +6,37 @@
  * Date: 16/07/2015
  * Time: 10:58
  */
-class CahierTexte {
+class CahierTexte extends FormatDate{
 	protected $idCahierTexte;
-	protected $idNiveau;
+	protected $idMatiereNiveau;
 	protected $dateRealisation;
 	protected $contenuCahierTexte;
 	protected $idRedacteur;
 	protected $dateRedaction;
 
-	public function getNiveau(){
-		return Niveau::getById($this->getIdNiveau());
+	public static function getByMaiereNiveauDateCritere($IdMatiereNiveau, $dateChoisi, $critereDate){
+		$tmp = new CahierTexte();
+		$tmp->setDateRealisation($dateChoisi);
+		switch ($critereDate){
+			case 'PourLe':
+				$query = "SELECT * FROM CAHIER_TEXTE WHERE idMatiereNiveau = $IdMatiereNiveau AND dateRealisation LIKE '".$tmp->SQLdateRealisation()."%' ORDER BY dateRealisation DESC";
+				break;
+			case 'aPartirDu':
+				$query = "SELECT * FROM CAHIER_TEXTE WHERE idMatiereNiveau = $IdMatiereNiveau AND dateRealisation > ".$tmp->SQLdateRealisation()." ORDER BY dateRealisation DESC";
+				break;
+			default:
+				$query = "SELECT * FROM CAHIER_TEXTE ORDER BY dateRealisation DESC";
+		}
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('CahierTexte')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public function getMatiereNiveau(){
+		return MatiereNiveau::getById($this->getIdMatiereNiveau());
 	}
 
 	public function getRedacteur(){
@@ -61,15 +82,15 @@ class CahierTexte {
 	/**
 	 * @return mixed
 	 */
-	public function getIdNiveau () {
-		return $this->idNiveau;
+	public function getIdMatiereNiveau () {
+		return $this->idMatiereNiveau;
 	}
 
 	/**
-	 * @param mixed $idNiveau
+	 * @param $idMatiereNiveau
 	 */
-	public function setIdNiveau ($idNiveau) {
-		$this->idNiveau = $idNiveau;
+	public function setIdMatiereNiveau ($idMatiereNiveau) {
+		$this->idMatiereNiveau = $idMatiereNiveau;
 	}
 
 	/**
@@ -84,6 +105,14 @@ class CahierTexte {
 	 */
 	public function setDateRealisation ($dateRealisation) {
 		$this->dateRealisation = $dateRealisation;
+	}
+
+	public function afficheDateRealisation(){
+		return $this->affiche($this->getDateRealisation());
+	}
+
+	public function SQLdateRealisation(){
+		return $this->SQL($this->getDateRealisation());
 	}
 
 	/**
@@ -128,27 +157,35 @@ class CahierTexte {
 		$this->dateRedaction = $dateRedaction;
 	}
 
+	public function afficheDateRedaction(){
+		return $this->affiche($this->getDateRedaction());
+	}
+
+	public function SQLdateRedaction(){
+		return $this->SQL($this->getDateRedaction());
+	}
+
 	public function insert(){
 		$query = "INSERT INTO CAHIER_TEXTE (".
-			"idNiveau, dateRealisation, contenuCahierTexte, idRedacteur, dateRedaction".
+			"idMatiereNiveau, dateRealisation, contenuCahierTexte, idRedacteur, dateRedaction".
 			") VALUES (".
-			$this->getIdNiveau().", ".
-			"'".$this->dateRealisation."', ".
+			$this->getIdMatiereNiveau().", ".
+			"'".$this->SQLdateRealisation()."', ".
 			"'".db_connect::escape_string($this->getContenuCahierTexte())."', ".
 			$this->getIdRedacteur().", ".
-			"'".$this->getDateRedaction()."'".
+			"'".$this->SQLdateRedaction()."'".
 			")";
 		if (db_connect::query($query)){
 			$query2 = "SELECT idCahierTexte FROM CAHIER_TEXTE WHERE ".
-				"idNiveau = ".$this->getIdNiveau()." AND ".
-				"idRedacteur = ".$this->idRedacteur." AND ".
-				"dateRedaction = '".$this->getDateRedaction()."' AND ".
-				"dateRealisation = '".$this->getDateRealisation()."' AND ".
+				"idMatiereNiveau = ".$this->getIdMatiereNiveau()." AND ".
+				"idRedacteur = ".$this->getIdRedacteur()." AND ".
+				"dateRedaction = '".$this->SQLdateRedaction()."' AND ".
+				"dateRealisation = '".$this->SQLdateRealisation()."' AND ".
 				"contenuCahierTexte = '".db_connect::escape_string($this->getContenuCahierTexte())."'";
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
-				$this->setIdCahierTexte($info['idahierTexte']);
+				$this->setIdCahierTexte($info['idCahierTexte']);
 				$result->close();
 				return true;
 			}
@@ -158,10 +195,10 @@ class CahierTexte {
 
 	public function update(){
 		$query = "UPDATE CAHIER_TEXTE SET ".
-			"idNiveau = ".$this->getIdNiveau()." , ".
+			"idMatiereNiveau = ".$this->getIdMatiereNiveau()." , ".
 			"idRedacteur = ".$this->idRedacteur." , ".
-			"dateRedaction = '".$this->getDateRedaction()."' , ".
-			"dateRealisation = '".$this->getDateRealisation()."' , ".
+			"dateRedaction = '".$this->SQLdateRedaction()."' , ".
+			"dateRealisation = '".$this->SQLdateRealisation()."' , ".
 			"contenuCahierTexte = '".db_connect::escape_string($this->getContenuCahierTexte())."' ".
 			"WHERE idCahierTexte = ".$this->getIdCahierTexte();
 		if (db_connect::query($query))

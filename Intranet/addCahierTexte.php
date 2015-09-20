@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Jean-Baptiste
- * Date: 14/09/2015
- * Time: 18:48
+ * Date: 20/09/2015
+ * Time: 16:26
  */
 
 header('content-type: text/html; charset=utf-8');
@@ -12,14 +12,22 @@ require_once '../Require/Objects.php';
 $utilisateur = new Utilisateur();
 if (isset($_SESSION['id'])) {
 	$utilisateur = Utilisateur::getById($_SESSION['id']);
-	if (empty($utilisateur->getIdUtilisateur())) {
+	if (!($utilisateur->estAdministrateur() || $utilisateur->estProfesseur())) {
 		header('location: ../Intranet/mesInformations.php');
 	}
-} else {
+}
+else {
 	header('location: ../Intranet/connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
-
+	$cahierTexte = new CahierTexte();
+	$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_POST['selectMatiere'], $_POST['selectNiveau']);
+	$cahierTexte->setIdMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
+	$cahierTexte->setDateRealisation($_POST['selectDate']);
+	$cahierTexte->setDateRedaction(date("Y-m-d"));
+	$cahierTexte->setIdRedacteur($utilisateur->getIdUtilisateur());
+	$cahierTexte->setContenuCahierTexte($_POST['contenuCahierTexte']);
+	$cahierTexte->insert();
 }
 ?>
 <!DOCTYPE html>
@@ -57,11 +65,11 @@ if (isset($_POST['btSubmit'])) {
 					<legend>Choix du jour, du niveau et de la matiere</legend>
 					<table width="100%">
 						<tr>
-							<td><input type="radio" name="dateSelect" value="PourLe"> Pour le : <br><input type="radio"
+							<!--<td><input type="radio" name="dateSelect" value="PourLe"> Pour le : <br><input type="radio"
 																										   name="dateSelect"
 																										   value="aPartirDu">
 								A partir du :
-							</td>
+							</td>-->
 							<td><label for="selectDate"> travail  pour le : </label></td>
 							<td colspan="3"><input type="text" id="selectDate" name="selectDate"></td>
 						</tr>
@@ -88,26 +96,14 @@ if (isset($_POST['btSubmit'])) {
 							</td>
 						</tr>
 					</table>
-					<input type="submit" id="submitButton" name="btSubmit" value="Rechercher">
+					<label for="contenu"> Travail &agrave; faire : </label>
+					<div id="listeTravail">
+						<textarea id="contenu" rows="10" cols="60" name="contenuCahierTexte" required></textarea>
+					</div>
+					<br>
+					<input type="submit" id="submitButton" name="btSubmit" value="Ajouter">
 				</fieldset>
 			</form>
-			<?php
-			if (isset($_POST['btSubmit'])){
-				$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_POST['selectMatiere'], $_POST['selectNiveau']);
-				$dateChoisi = $_POST['selectDate'];
-				$critereDate = $_POST['dateSelect'];
-				$cahiersTextes = CahierTexte::getByMaiereNiveauDateCritere($matiereNiveau->getIdMatiereNiveau(), $dateChoisi, $critereDate);
-
-				foreach ($cahiersTextes as $CT){
-					?>
-					<fieldset>
-						<legend>Pour le : <?php echo $CT->afficheDateRealisation() ?> en <?php echo $CT->getMatiereNiveau()->getMatiere()->getLibelleMatiere() ?></legend>
-						<?php echo $CT->getContenuCahierTexte() ?>
-					</fieldset>
-			<?php
-				}
-			}
-			?>
 		</div>
 		<div style="clear: both"></div>
 	</div>

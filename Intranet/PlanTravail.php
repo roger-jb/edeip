@@ -11,9 +11,6 @@ require_once '../Require/Objects.php';
 $utilisateur = new Utilisateur();
 if (isset($_SESSION['id'])) {
 	$utilisateur = Utilisateur::getById($_SESSION['id']);
-	if (!$utilisateur->estAdministrateur()) {
-		header('location: ../Intranet/mesInformations.php');
-	}
 }
 else {
 	header('location: ../Intranet/connexion.php');
