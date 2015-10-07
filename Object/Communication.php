@@ -99,7 +99,7 @@ class Communication {
 			"contenuCommunication, idRedacteur, dateRedaction"
 			.") VALUES (".
 			"'".db_connect::escape_string($this->getContenuCommunication())."', ".
-			"".$this->getIdRedacteur().", ".
+			$this->getIdRedacteur().", ".
 			"'".$this->getDateRedaction()."'"
 			.")";
 		if (db_connect::query($query)){

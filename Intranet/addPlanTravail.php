@@ -11,8 +11,8 @@ require_once '../Require/Objects.php';
 $utilisateur = new Utilisateur();
 if (isset($_SESSION['id'])) {
 	$utilisateur = Utilisateur::getById($_SESSION['id']);
-	if (!$utilisateur->estAdministrateur()) {
-		header('location: ../Intranet/mesInformations.php');
+	if (!($utilisateur->estAdministrateur() || $utilisateur->estProfesseur() )) {
+		header('location: ../Intranet/MesInformations.php');
 	}
 }
 else {
@@ -41,11 +41,8 @@ if (isset($_POST['btSubmit'])) {
 	if (!empty($_FILES['fichierPlanTravail'])) {
 		if (ftp_link::estPDFfile($_FILES['fichierPlanTravail']['name'], $_FILES['fichierPlanTravail']['type'])) {
 			if ($_FILES['fichierPlanTravail']['error'] == 0)
-				if(move_uploaded_file ($_FILES['fichierPlanTravail']['tmp_name'], '../PlanTravail/planTravail' . $planTravail->getIdPlanTravail() . '.pdf')){
-					echo 'reussi';
-				}
-				else {
-					echo 'Fail!!!';
+				if(!move_uploaded_file ($_FILES['fichierPlanTravail']['tmp_name'], '../PlanTravail/planTravail' . $planTravail->getIdPlanTravail() . '.pdf')){
+					echo "Un problème est survenu sur l'envoi du fichier. Merci de contacter le support.";
 				}
 			ftp_link::close();
 		}

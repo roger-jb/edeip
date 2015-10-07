@@ -22,18 +22,12 @@ if (isset ($_GET['action'])) {
 			break;
 
 		case 'changeProfesseur':
-			//idNiveau: idNiveau, idMatiere: idMatiere, idProfesseur:idProf, action: 'changeProfesseur';
 			$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_GET['idMatiere'], $_GET['idNiveau']);
 			$PMN = ProfesseurMatiereNiveau::getByMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
 			if ($PMN->getIdProfesseurMatiereNiveau()){
 				$PMN->setIdProfesseur($_GET['idProfesseur']);
 				$PMN->update();
 			}
-
-			/*echo '<pre>';
-			var_dump($PMN);
-			echo '</pre>';*/
-
 			echo json_encode('ok');
 			break;
 	}

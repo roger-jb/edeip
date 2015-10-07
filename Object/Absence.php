@@ -184,12 +184,12 @@ class Absence {
 	public function update(){
 		$query = "UPDATE ABSENCE SET ".
 			" idEleve = ".$this->getIdEleve().
-			" dateDebutAbsence = '".$this->getDateDebutAbsence()."' ".
-			" dateFinAbsence = '".$this->getDateFinAbsence()."' ".
-			" etatAbsence = ".($this->getEtatAbsence()?'TRUE':'FALSE').
-			" motifAbsence = '".db_connect::escape_string($this->getMotifAbsence())."' ".
-			" dateRedaction = '".$this->getDateRedaction()."' ".
-			" idRedacteur = ".$this->getIdRedacteur().
+			", dateDebutAbsence = '".$this->getDateDebutAbsence()."' ".
+			", dateFinAbsence = '".$this->getDateFinAbsence()."' ".
+			", etatAbsence = ".($this->getEtatAbsence()?'TRUE':'FALSE').
+			", motifAbsence = '".db_connect::escape_string($this->getMotifAbsence())."' ".
+			", dateRedaction = '".$this->getDateRedaction()."' ".
+			", idRedacteur = ".$this->getIdRedacteur().
 			" WHERE idAbsence = ".$this->getIdAbsence();
 		return db_connect::query($query);
 
@@ -197,12 +197,12 @@ class Absence {
 
 	public function insert(){
 		$query = "INSERT INTO ABSENCE (idEleve, dateDebutAbsence, dateFinAbsence, etatAbsence, motifAbsence, dateRedaction, idRedacteur) VALUES (".
-			$this->getIdEleve().", '".$this->getDateDebutAbsence()."', ".$this->getDateFinAbsence()."', ".
+			$this->getIdEleve().", '".$this->getDateDebutAbsence()."', '".$this->getDateFinAbsence()."', ".
 			($this->getEtatAbsence()?'TRUE':'FALSE').", '".db_connect::escape_string($this->getMotifAbsence())."', '".$this->getDateRedaction()."', ".$this->getIdRedacteur().
 			")";
 		if( db_connect::query($query)){
-			$query2 = "SELECT * FROM ABSENCE WHERE idEleve = ".$this->getIdEleve()." AND dateDebutAbsence = '".$this->getDateDebutAbsence()."' AND dateFinAbsence '".$this->getDateFinAbsence()."' ".
-				"AND etatAbsence = ". ($this->getEtatAbsence()?'TRUE':'FALSE')." and motifAbsence = '".db_connect::escape_string($this->getMotifAbsence())."' AND dateRedaction = '".$this->getDateRedaction()."' AND idRedacteur".$this->getIdRedacteur();
+			$query2 = "SELECT * FROM ABSENCE WHERE idEleve = ".$this->getIdEleve()." AND dateDebutAbsence = '".$this->getDateDebutAbsence()."' AND dateFinAbsence = '".$this->getDateFinAbsence()."' ".
+				"AND etatAbsence = ". ($this->getEtatAbsence()?'TRUE':'FALSE')." and motifAbsence = '".db_connect::escape_string($this->getMotifAbsence())."' AND dateRedaction = '".$this->getDateRedaction()."' AND idRedacteur = ".$this->getIdRedacteur();
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$return = $result->fetch_object('Absence');
@@ -211,6 +211,7 @@ class Absence {
 			}
 			return false;
 		}
+		return false;
 	}
 
 	public function delete(){

@@ -78,7 +78,7 @@ class Eleve extends Utilisateur {
 	}
 
 	public function getNiveau () {
-		$query = "SELECT n.* FROM NIVEAU n, ELEVE e WHERE n.idNiveau = e.idNiveau AND e.idEleve " . $this->getIdEleve();
+		$query = "SELECT n.* FROM NIVEAU n, ELEVE e WHERE n.idNiveau = e.idNiveau AND e.idEleve =" . $this->getIdEleve();
 		$result = db_connect::query($query);
 		return $result->fetch_object('Niveau');
 	}
@@ -115,8 +115,8 @@ class Eleve extends Utilisateur {
 	public function insert(){
 		if (parent::insert()){
 			$query = "INSERT INTO ELEVE (idEleve, idNiveau) VALUES (".
-				"".$this->getIdEleve().", ".
-				"".$this->getIdNiveau()." ".
+				$this->getIdEleve().", ".
+				$this->getIdNiveau().
 				")";
 			return db_connect::query($query);
 		}
@@ -125,8 +125,8 @@ class Eleve extends Utilisateur {
 
     public function insertOnly(){
         $query = "INSERT INTO ELEVE (idEleve, idNiveau) VALUES (".
-            "".$this->getIdEleve().", ".
-            "".$this->getIdNiveau()." ".
+            $this->getIdEleve().", ".
+            $this->getIdNiveau().
             ")";
         return db_connect::query($query);
     }

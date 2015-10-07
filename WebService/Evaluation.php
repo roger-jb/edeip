@@ -40,7 +40,7 @@ if (isset ($_GET['action'])) {
 			$return = new DomaineCpt();
 			$return->setLibelleDomaineCpt($_GET['libDomaineCpt']);
 			$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_GET['idMatiere'], $_GET['idNiveau']);
-			$return->setIdMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
+			$return->setIdMatiere($matiereNiveau->getIdMatiereNiveau());
 			if(!$return->exist())
 				$return->insert();
 			echo json_encode($return->toArray());
@@ -53,6 +53,13 @@ if (isset ($_GET['action'])) {
 				$return->insert();
 			echo json_encode($return->toArray());
 			break;
+
+		case 'delCorrige':
+			echo json_encode(unlink('../Evaluation/Corrige'.$_GET['idEval'].'.pdf'));
+			break;
+		case 'delSujet':
+			echo json_encode(unlink('../Evaluation/Sujet'.$_GET['idEval'].'.pdf'));
+			break;
 	}
 }elseif ($_POST['action']) {
 	switch ($_POST['action']){
@@ -60,7 +67,7 @@ if (isset ($_GET['action'])) {
 			$return = new DomaineCpt();
 			$return->setLibelleDomaineCpt($_POST['libDomaineCpt']);
 			$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_POST['idMatiere'], $_POST['idNiveau']);
-			$return->setIdMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
+			$return->setIdMatiere($matiereNiveau->getIdMatiereNiveau());
 			if(!$return->exist())
 				$return->insert();
 			echo json_encode($return->toArray());

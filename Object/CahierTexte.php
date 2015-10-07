@@ -14,7 +14,7 @@ class CahierTexte extends FormatDate{
 	protected $idRedacteur;
 	protected $dateRedaction;
 
-	public static function getByMaiereNiveauDateCritere($IdMatiereNiveau, $dateChoisi, $critereDate){
+	public static function getByMatiereNiveauDateCritere($IdMatiereNiveau, $dateChoisi, $critereDate){
 		$tmp = new CahierTexte();
 		$tmp->setDateRealisation($dateChoisi);
 		switch ($critereDate){
@@ -23,6 +23,27 @@ class CahierTexte extends FormatDate{
 				break;
 			case 'aPartirDu':
 				$query = "SELECT * FROM CAHIER_TEXTE WHERE idMatiereNiveau = $IdMatiereNiveau AND dateRealisation > ".$tmp->SQLdateRealisation()." ORDER BY dateRealisation DESC";
+				break;
+			default:
+				$query = "SELECT * FROM CAHIER_TEXTE ORDER BY dateRealisation DESC";
+		}
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('CahierTexte')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
+	public static function getByNiveauDateCritere($idNiveau, $dateChoisi, $critereDate){
+		$tmp = new CahierTexte();
+		$tmp->setDateRealisation($dateChoisi);
+		switch ($critereDate){
+			case 'PourLe':
+				$query = "SELECT * FROM CAHIER_TEXTE WHERE idMatiereNiveau IN (SELECT idMatiereNiveau FROM MATIERE_NIVEAU WHERE idNiveau = $idNiveau) AND dateRealisation LIKE '".$tmp->SQLdateRealisation()."%' ORDER BY dateRealisation DESC";
+				break;
+			case 'aPartirDu':
+				$query = "SELECT * FROM CAHIER_TEXTE WHERE idMatiereNiveau IN (SELECT idMatiereNiveau FROM MATIERE_NIVEAU WHERE idNiveau = $idNiveau) AND dateRealisation > ".$tmp->SQLdateRealisation()." ORDER BY dateRealisation DESC";
 				break;
 			default:
 				$query = "SELECT * FROM CAHIER_TEXTE ORDER BY dateRealisation DESC";

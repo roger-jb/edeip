@@ -94,7 +94,7 @@ class EvaluationPointCpt {
 			$query2 = "SELECT idEvaluationPointCpt FROM EVALUATION_POINT_CPT WHERE ".
 				"idEvaluation = ".$this->getIdEvaluation()." AND ".
 				"idPointCpt = ".$this->getIdPointCpt();
-			$result = db_connect::query($query);
+			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
 				$this->setIdEvaluationPointCpt($info['idEvaluaionPointCpt']);

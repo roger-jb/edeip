@@ -114,8 +114,8 @@ class MatiereNiveau {
 
 	public function insert(){
 		$query = "INSERT INTO MATIERE_NIVEAU (idMatiere, idNiveau) VALUES (".
-			"".$this->getIdMatiere().", ".
-			"".$this->getIdNiveau()."".
+			$this->getIdMatiere().", ".
+			$this->getIdNiveau().
 			")";
 		if (db_connect::query($query)){
 			$select = "SELECT idMatiereNiveau FROM MATIERE_NIVEAU WHERE ".

@@ -20,7 +20,7 @@ else {
 	header('location: ../Intranet/connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
-	$cahierTexte = new CahierTexte();
+	$cahierTexte   = new CahierTexte();
 	$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_POST['selectMatiere'], $_POST['selectNiveau']);
 	$cahierTexte->setIdMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
 	$cahierTexte->setDateRealisation($_POST['selectDate']);
@@ -28,6 +28,16 @@ if (isset($_POST['btSubmit'])) {
 	$cahierTexte->setIdRedacteur($utilisateur->getIdUtilisateur());
 	$cahierTexte->setContenuCahierTexte($_POST['contenuCahierTexte']);
 	$cahierTexte->insert();
+
+	// tansfert du fichier Plan de Travail associé.
+	if (!empty($_FILES['fichierCahierTexte'])) {
+		if (ftp_link::estPDFfile($_FILES['fichierCahierTexte']['name'], $_FILES['fichierCahierTexte']['type'])) {
+			if ($_FILES['fichierCahierTexte']['error'] == 0)
+				if (!move_uploaded_file($_FILES['fichierCahierTexte']['tmp_name'], '../CahierTexte/CahierTexte' . $cahierTexte->getIdCahierTexte() . '.pdf')) {
+					echo "Un problème est survenu sur l'envoi du fichier. Merci de contacter le support.";
+				}
+		}
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -60,7 +70,7 @@ if (isset($_POST['btSubmit'])) {
 			<div class="titre_corps">
 				<h3 class="centrer">Cahier de Texte</h3>
 			</div>
-			<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Choix du jour, du niveau et de la matiere</legend>
 					<table width="100%">
@@ -70,7 +80,7 @@ if (isset($_POST['btSubmit'])) {
 																										   value="aPartirDu">
 								A partir du :
 							</td>-->
-							<td><label for="selectDate"> travail  pour le : </label></td>
+							<td><label for="selectDate"> travail pour le : </label></td>
 							<td colspan="3"><input type="text" id="selectDate" name="selectDate"></td>
 						</tr>
 						<tr>
@@ -96,10 +106,23 @@ if (isset($_POST['btSubmit'])) {
 							</td>
 						</tr>
 					</table>
-					<label for="contenu"> Travail &agrave; faire : </label>
-					<div id="listeTravail">
-						<textarea id="contenu" rows="10" cols="60" name="contenuCahierTexte" required></textarea>
-					</div>
+					<table>
+						<tr>
+							<td><label for="contenu"> Travail &agrave; faire : </label></td>
+							<td>
+								<div id="listeTravail">
+									<textarea id="contenu" rows="10" cols="60" name="contenuCahierTexte"
+											  required></textarea>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td><label for="inputFichier"> Fichier PDF (5Mo Max) * :</label></td>
+							<td><input id="inputFichier" type="file" required name="fichierCahierTexte"
+									   value="" style="width: 100%;"></td>
+						</tr>
+					</table>
 					<br>
 					<input type="submit" id="submitButton" name="btSubmit" value="Ajouter">
 				</fieldset>

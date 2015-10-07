@@ -9,13 +9,13 @@
 class DomaineCpt {
 	protected $idDomaineCpt;
 	protected $libelleDomaineCpt;
-	protected $idMatiereNiveau;
+	protected $idMatiere;
 
 	public function toArray(){
 		$return = array();
 		$return['idDomaineCpt'] = $this->getIdDomaineCpt();
 		$return['libelleDomaineCpt'] = $this->getLibelleDomaineCpt();
-		$return['idMatiereNiveau'] = $this->getIdMatiereNiveau();
+		$return['idMatiereNiveau'] = $this->getIdMatiere();
 		return $return;
 	}
 
@@ -26,7 +26,7 @@ class DomaineCpt {
 			return false;
 		$info = $result->fetch_object('DomaineCpt');
 		$this->setIdDomaineCpt($info->getIdDomaineCpt());
-		$this->setIdMatiereNiveau($info->getIdMatiereNiveau());
+		$this->setIdMatiere($info->getIdMatiereNiveau());
 		$this->setLibelleDomaineCpt($info->getLibelleDomaineCpt());
 		return true;
 	}
@@ -54,8 +54,8 @@ class DomaineCpt {
         return new DomaineCpt();
     }
 
-    public function getMatiereNiveau(){
-        return MatiereNiveau::getById($this->getIdMatiereNiveau());
+    public function getMatiere(){
+        return Matiere::getById($this->getIdMatiere());
     }
 
 	/**
@@ -89,28 +89,28 @@ class DomaineCpt {
 	/**
 	 * @return mixed
 	 */
-	public function getIdMatiereNiveau () {
-		return $this->idMatiereNiveau;
+	public function getIdMatiere () {
+		return $this->idMatiere;
 	}
 
 	/**
-	 * @param mixed $idMatiereNiveau
+	 * @param mixed $idMatiere
 	 */
-	public function setIdMatiereNiveau ($idMatiereNiveau) {
-		$this->idMatiereNiveau = $idMatiereNiveau;
+	public function setIdMatiere ($idMatiere) {
+		$this->idMatiere = $idMatiere;
 	}
 
 	public function insert(){
 		$query = "INSERT INTO DOMAINE_CPT (".
-			"libelleDomaineCpt, idMatiereNiveau".
+			"libelleDomaineCpt, idMatiere".
 			") VALUES (".
 			"'".db_connect::escape_string($this->getLibelleDomaineCpt())."', ".
-			"".$this->getIdMatiereNiveau().
+			$this->getIdMatiere().
 			")";
 		if (db_connect::query($query)){
 			$query2 = "SELECT * FROM DOMAINE_CPT WHERE ".
 				"libelleDomaineCpt = '".db_connect::escape_string($this->getLibelleDomaineCpt())."' AND ".
-				"idMatiereNiveau = ".$this->getIdMatiereNiveau();
+				"idMatiere = ".$this->getIdMatiere();
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
@@ -125,7 +125,7 @@ class DomaineCpt {
 	public function update(){
 		$query = "UPDATE DOMAINE_CPT SET ".
 			"libelleDomaineCpt = '".db_connect::escape_string($this->getLibelleDomaineCpt())."', ".
-			"idMatiereNiveau = ".$this->getIdMatiereNiveau().
+			"idMatiere = ".$this->getIdMatiere().
 			"WHERE idDomaineCpt = ".$this->getIdDomaineCpt();
 		if (db_connect::query($query))
 			return true;

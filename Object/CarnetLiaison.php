@@ -185,18 +185,18 @@ class CarnetLiaison {
 			"contenuCarnetLiaison, idReponse, idRedacteur, dateRedaction, idEleve
 			) VALUES (".
 			"'".db_connect::escape_string($this->getContenuCarnetLiaison())."', ".
-			"".($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
-			"".$this->getIdRedacteur().", ".
+			($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
+			$this->getIdRedacteur().", ".
 			"'".$this->sqlDateRedaction()."', ".
-			"".$this->getIdEleve().""
-			.")";
+			$this->getIdEleve().
+			")";
 		if (db_connect::query($query)){
 			$query2 = "SELECT idCarnetLiaison FROM CARNET_LIAISON WHERE ".
 				"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiaison())."' AND ".
 				"idReponse = ".($this->getIdReponse()?$this->getIdReponse():'NULL')." AND ".
 				"idRedacteur = ".$this->getIdRedacteur()." AND ".
 				"dateRedaction = '".$this->sqlDateRedaction()."' AND ".
-				"idEleve = ".$this->getIdEleve()."";
+				"idEleve = ".$this->getIdEleve();
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
@@ -212,8 +212,8 @@ class CarnetLiaison {
 			"contenuCarnetLiaison = '".db_connect::escape_string($this->getContenuCarnetLiaison())."', ".
 			"idReponse = ".($this->getIdReponse()?$this->getIdReponse():'NULL').", ".
 			"idRedacteur = ".$this->getIdRedacteur().", ".
-			"dateRedacation = '".$this->sqlDateRedaction()."', ".
-			"idEleve = ".$this->getIdEleve()."".
+			"dateRedaction = '".$this->sqlDateRedaction()."', ".
+			"idEleve = ".$this->getIdEleve().
 			"WHERE idCarnetLiaison = ".$this->getIdCarnetLiaison();
 		if (db_connect::query($query))
 			return true;

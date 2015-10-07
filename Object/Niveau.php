@@ -94,7 +94,7 @@ class Niveau {
 		if (db_connect::query($query)){
 			$select = "SELECT idNiveau FROM NIVEAU WHERE ".
 				"libelleNiveau = '".db_connect::escape_string($this->getLibelleNiveau())."' AND ".
-				"idModule = ".$this->getIdModule()."";
+				"idModule = ".$this->getIdModule();
 			$result = db_connect::query($select);
 			if ($result->num_rows){
 				$info = $result->fetch_assoc();
@@ -110,7 +110,7 @@ class Niveau {
 	public function update(){
 		$query = "UPDATE NIVEAU SET ".
 			"libelleNiveau = '".db_connect::escape_string($this->getLibelleNiveau())."', ".
-			"idModule = ".$this->getIdModule()."".
+			"idModule = ".$this->getIdModule().
 			"WHERE idNiveau = ".$this->getIdNiveau();
 		if (db_connect::query($query))
 			return true;

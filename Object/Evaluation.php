@@ -190,6 +190,7 @@ class Evaluation extends FormatDate{
 		if (strtoupper($typeEval->getLibelleTypeEvaluation()) == 'AUTRE') $return .= $this->getAutreEvaluation();
 		else
 			$return .= $typeEval->getLibelleTypeEvaluation();
+		$return .= ($this->getTitreEvaluation()?' '.$this->getTitreEvaluation().' ':'');
 		$return .= ' du : ' . $this->afficheDateEvaluation();
 		if (!empty($this->getTitreEvaluation())) ' (' . $this->getTitreEvaluation() . ')';
 		return $return;
@@ -204,7 +205,7 @@ class Evaluation extends FormatDate{
 	}
 
 	public function insert () {
-		$query = "INSERT INTO EVALUATION (idTypeEvaluation, idMatiereNiveau, dateEvaluation, titreEvaluation, autreEvaluation, maxEvaluation)" . "VALUES (" . "" . $this->getIdTypeEvaluation() . ", " . "" . $this->getIdMatiereNiveau() . ", " . "'" . $this->sqlDateEvaluation() . "', " . "'" . $this->getTitreEvaluation() . "', " . "" . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . ", " . "" . $this->getMaxEvaluation() . ")";
+		$query = "INSERT INTO EVALUATION (idTypeEvaluation, idMatiereNiveau, dateEvaluation, titreEvaluation, autreEvaluation, maxEvaluation)" . "VALUES (" . "" . $this->getIdTypeEvaluation() . ", "  . $this->getIdMatiereNiveau() . ", '" . $this->sqlDateEvaluation() . "', '" . $this->getTitreEvaluation() . "', " .  (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . ", " .  $this->getMaxEvaluation() . ")";
 		if (db_connect::query($query)) {
 			$query2 = "SELECT idEvaluation FROM EVALUATION WHERE " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . " AND " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . " AND " . "dateEvaluation = '" . $this->sqlDateEvaluation() . "' AND " . "titreEvaluation = '" . $this->getTitreEvaluation() . "' AND " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . " AND " . "maxEvaluation = " . $this->getMaxEvaluation();
 			$result = db_connect::query($query2);

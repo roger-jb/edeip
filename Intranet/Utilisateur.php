@@ -59,7 +59,7 @@ if (isset($_POST['btSubmit'])) {
         }
         if ($fonction['Professeur'] && !$personne->estProfesseur()){
             $prof = new Professeur();
-            $prof->setIdPrfesseur($personne->getIdUtilisateur());
+            $prof->setIdProfesseur($personne->getIdUtilisateur());
             $prof->insertOnly();
         }
         if ($fonction['Responsable'] && !$personne->estResponsable()){
@@ -123,7 +123,7 @@ if (isset($_POST['btActive'])) {
                     </td>
                     <td>
                         <div>
-                            nom Utilisateur :
+                            <label for="selectUtilisateur" >nom Utilisateur :</label>
                             <select id="selectUtilisateur" size="1" style="min-width: 200px">
                                 <option value=""></option>
                                 <optgroup label="Utilisateur Actif"></optgroup>
@@ -148,7 +148,7 @@ if (isset($_POST['btActive'])) {
                 </tr>
 
             </table>
-            </br>
+            <br>
             <fieldset style="width: 70%; margin: auto;">
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <table>
@@ -161,37 +161,37 @@ if (isset($_POST['btActive'])) {
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>Nom * :</td>
+                            <td><label for="inputNom">Nom * :</label</td>
                             <td><input id="inputNom" type="text" required name="nomUtilisateur"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>Pr&eacute;nom * :</td>
+                            <td><label for="inputPrenom">Pr&eacute;nom * :</label></td>
                             <td><input id="inputPrenom" type="text" required name="prenomUtilisateur"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>Adresse :</td>
+                            <td><label for="inputAdr1">Adresse :</label></td>
                             <td><input id="inputAdr1" type="text" name="adr1Utilisateur"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>compl&eacute;ment d'adresse :</td>
+                            <td><label for="inputAdr2">compl&eacute;ment d'adresse :</label></td>
                             <td><input id="inputAdr2" type="text" name="adr2Utilisateur"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>Code postal :</td>
+                            <td><label for="inputCp">Code postal :</label></td>
                             <td><input id="inputCp" type="text" name="cpUtilisateur"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>Ville :</td>
+                            <td><label for="inputVille">Ville :</label></td>
                             <td><input id="inputVille" type="text" name="villeUtilisateur"
                                        value=""></td>
                         </tr>
                         <tr>
-                            <td>Mail :</td>
+                            <td><label for="inputMail" >Mail :</label></td>
                             <td><input id="inputMail" type="text" name="mailUtilisateur"
                                        value=""></td>
                         </tr>

@@ -49,7 +49,7 @@ class Note {
 	}
 
 	/**
-	 * @param mixed $idNote
+	 * @param mixed $idEleve
 	 */
 	public function setIdEleve ($idEleve) {
 		$this->idEleve = $idEleve;
@@ -85,9 +85,9 @@ class Note {
 
 	public function insert () {
 		$query = "INSERT INTO NOTE (idEleve, idEvaluation, note) VALUES (".
-			"".$this->getIdEleve().", ".
-			"".$this->getIdEvaluation().", ".
-			"".(is_null($this->getNote())?'NULL':$this->getNote())."".
+			$this->getIdEleve().", ".
+			$this->getIdEvaluation().", ".
+			(is_null($this->getNote())?'NULL':$this->getNote()).
 			")";
 		if (db_connect::query($query))
 			return true;
@@ -96,7 +96,7 @@ class Note {
 
 	public function update () {
 		$query = "UPDATE NOTE SET note = ".(is_null($this->getNote())?'NULL':$this->getNote()).
-			" WHERE idEleve = ".$this->getIdEleve().", ".
+			" WHERE idEleve = ".$this->getIdEleve()." ".
 			" AND idEvaluation = ".$this->getIdEvaluation();
 		if (db_connect::query($query))
 			return true;

@@ -93,7 +93,7 @@ class Trimestre extends FormatDate{
 	}
 
 	/**
-	 * @param mixed $dateDebutTrimeste
+	 * @param mixed $dateDebutTrimestre
 	 */
 	public function setDateDebutTrimestre ($dateDebutTrimestre) {
 		$this->dateDebutTrimestre = $dateDebutTrimestre;

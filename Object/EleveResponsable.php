@@ -32,6 +32,19 @@ class EleveResponsable {
 		return $return;
 	}
 
+	public static function getByEleveResponsable($idEleve, $idResponsable){
+		$query = "SELECT * FROM ELEVE_RESPONSABLE
+			WHERE idEleve = $idEleve
+			AND idResponsable = $idResponsable";
+		$result = db_connect::query($query);
+		$return = new EleveResponsable();
+		if ($result->num_rows == 1){
+			$return = $result->fetch_object('EleveResponsable');
+		}
+		$result->close();
+		return $return;
+	}
+
 	public function getEleve(){
 		return Eleve::getById($this->getIdEleve());
 	}
@@ -68,8 +81,8 @@ class EleveResponsable {
 	}
 
 	public function insert(){
-		$query = "INSERT INTO ELEVE_RESPONSABLE (idEleve, idResponsable) VALUES ".
-			$this->getIdEleve()."', ".
+		$query = "INSERT INTO ELEVE_RESPONSABLE (idEleve, idResponsable) VALUES (".
+			$this->getIdEleve().", ".
 			$this->getIdResponsable().")";
 		if (db_connect::query($query))
 			return true;

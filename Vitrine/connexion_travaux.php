@@ -17,7 +17,7 @@ session_start();
 	include '../Include/include_header.php';
 	?>
 	<div class="corps">
-		</br>
+		<br>
 		<h1>L'intranet est actuellement en maintenance.</h1>
 
 		<h2>Vous serez informés par mail de sa réouverture</h2>

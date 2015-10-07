@@ -15,7 +15,8 @@ if (isset($_SESSION['id'])) {
 	if (empty($utilisateur->getIdUtilisateur())) {
 		header('location: ../Intranet/mesInformations.php');
 	}
-} else {
+}
+else {
 	header('location: ../Intranet/connexion.php');
 }
 if (isset($_POST['btSubmit'])) {
@@ -62,7 +63,7 @@ if (isset($_POST['btSubmit'])) {
 																										   value="aPartirDu">
 								A partir du :
 							</td>
-							<td><label for="selectDate"> travail  pour le : </label></td>
+
 							<td colspan="3"><input type="text" id="selectDate" name="selectDate"></td>
 						</tr>
 						<tr>
@@ -92,19 +93,45 @@ if (isset($_POST['btSubmit'])) {
 				</fieldset>
 			</form>
 			<?php
-			if (isset($_POST['btSubmit'])){
-				$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_POST['selectMatiere'], $_POST['selectNiveau']);
-				$dateChoisi = $_POST['selectDate'];
-				$critereDate = $_POST['dateSelect'];
-				$cahiersTextes = CahierTexte::getByMaiereNiveauDateCritere($matiereNiveau->getIdMatiereNiveau(), $dateChoisi, $critereDate);
+			if (isset($_POST['btSubmit'])) {
+				if (isset($_POST['selectNiveau']) && !empty($_POST['selectNiveau']) && isset($_POST['selectDate']) && !empty($_POST['selectDate'])&& isset($_POST['dateSelect']) && !empty($_POST['dateSelect'])) {
 
-				foreach ($cahiersTextes as $CT){
-					?>
-					<fieldset>
-						<legend>Pour le : <?php echo $CT->afficheDateRealisation() ?> en <?php echo $CT->getMatiereNiveau()->getMatiere()->getLibelleMatiere() ?></legend>
-						<?php echo $CT->getContenuCahierTexte() ?>
-					</fieldset>
-			<?php
+					$dateChoisi    = $_POST['selectDate'];
+					$critereDate   = $_POST['dateSelect'];
+					if (isset($_POST['selectMatiere']) && !empty($POST['selectMatiere'])) {
+						$matiereNiveau = MatiereNiveau::getByMatiereNiveau($_POST['selectMatiere'], $_POST['selectNiveau']);
+						$cahiersTextes = CahierTexte::getByMatiereNiveauDateCritere($matiereNiveau->getIdMatiereNiveau(), $dateChoisi, $critereDate);
+					}
+					else
+						$cahiersTextes = CahierTexte::getByNiveauDateCritere($_POST['selectNiveau'], $dateChoisi, $critereDate);
+					if (count($cahiersTextes) >= 1) {
+						foreach ($cahiersTextes as $CT) {
+							?>
+							<fieldset>
+								<legend>Pour le : <?php echo $CT->afficheDateRealisation() ?>
+									en <?php echo $CT->getMatiereNiveau()->getMatiere()->getLibelleMatiere() ?></legend>
+								<?php echo $CT->getContenuCahierTexte() ?>
+
+								<br>
+								<br>
+								<div>
+									<?php
+									if (file_exists("../CahierTexte/CahierTexte".$CT->getIdCahierTexte().".pdf")){
+										?>
+										<a href="../CahierTexte/CahierTexte<?php echo $CT->getIdCahierTexte();?>.pdf">Un document est joint au travail, cliquer ici pour le r&eacute;cup&eacute;rer</a>
+										<?php
+									}
+									?>
+								</div>
+							</fieldset>
+							<?php
+						}
+					}
+					else
+						echo 'Pas de travail pour les crit&egrave;res saisis.';
+				}
+				else {
+					echo "Un des crit&egrave;re n'a pas &eacute;t&eacute; correctement saisi";
 				}
 			}
 			?>

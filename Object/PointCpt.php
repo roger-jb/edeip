@@ -20,7 +20,7 @@ class PointCpt {
 	}
 
 	public function exist(){
-		$query = "SELECT * FROM POINT_CPT WHERE libellePointCpt LIKE '".$this->getLibelleDomaineCpt()."' AND idDomaineCpt = ".$this->getIdDomaineCpt();
+		$query = "SELECT * FROM POINT_CPT WHERE libellePointCpt LIKE '".$this->getDomaineCpt()->getLibelleDomaineCpt()."' AND idDomaineCpt = ".$this->getIdDomaineCpt();
 		$result = db_connect::query($query);
 		if ($result->num_rows != 1)
 			return false;
@@ -108,7 +108,7 @@ class PointCpt {
 		if (db_connect::query($query)){
 			$select = "SELECT idPointCpt FROM POINT_CPT WHERE ".
 				"libellePointCpt = '".db_connect::escape_string($this->getLibellePointCpt())."' AND ".
-				"idDomaineCpt = ".$this->getIdDomaineCpt()."";
+				"idDomaineCpt = ".$this->getIdDomaineCpt();
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();

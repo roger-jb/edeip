@@ -33,6 +33,7 @@ class Utilisateur extends FormatDate {
 		$return['idUtilisateur']              = $this->getIdUtilisateur();
 		$return['nomUtilisateur']             = $this->getNomUtilisateur();
 		$return['prenomUtilisateur']          = $this->getPrenomUtilisateur();
+		$return['libelleUtilisateur']		  = $this->getLibelleUtilisatur();
 		$return['adr1Utilisateur']            = $this->getAdr1Utilisateur();
 		$return['adr2Utilisateur']            = $this->getAdr2Utilisateur();
 		$return['cpUtilisateur']              = $this->getCpUtilisateur();

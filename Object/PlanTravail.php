@@ -122,14 +122,14 @@ class PlanTravail {
 	public function insert(){
 		$query = "INSERT INTO PLAN_TRAVAIL (libellePlanTravail, idMatiereNiveau, idPeriode) VALUES (".
 			"'".db_connect::escape_string($this->getLibellePlanTravail())."', ".
-			"".$this->getIdMatiereNiveau().", ".
-			"".$this->getIdPeriode()."".
+			$this->getIdMatiereNiveau().", ".
+			$this->getIdPeriode().
 			")";
 		if (db_connect::query($query)){
 			$select = "SELECT idPlanTravail FROM PLAN_TRAVAIL WHERE ".
 				"libellePlanTravail = '".db_connect::escape_string($this->getLibellePlanTravail())."' AND ".
 				"idMatiereNiveau = ".$this->getIdMatiereNiveau()." AND ".
-				"idPeriode = ".$this->getIdPeriode()."";
+				"idPeriode = ".$this->getIdPeriode();
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();

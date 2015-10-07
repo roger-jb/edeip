@@ -68,6 +68,5 @@ class Administrateur extends Utilisateur
     {
         $query = "INSERT INTO ADMINISTRATION (idAdministration) VALUES (" . $this->getIdAdministrateur() . ")";
         return db_connect::query($query);
-        return FALSE;
     }
 }

@@ -117,6 +117,9 @@ if (isset($_POST['btSubmit'])) {
 			if ($utilisateur->estProfesseur() || $utilisateur->estResponsable()) {
 				$CarnetLiaisonAll = CarnetLiaison::getByIdRedacteur($utilisateur->getIdUtilisateur());
 			}
+			if ($utilisateur->estResponsable()){
+				$CarnetLiaisonAll = CarnetLiaison::getByEleves(Responsable::getById($utilisateur->getIdUtilisateur())->getEleves());
+			}
 			if ($utilisateur->estAdministrateur()) {
 				$CarnetLiaisonAll = CarnetLiaison::getAll();
 			}

@@ -84,7 +84,7 @@ if (isset($_POST['btSubmit'])) {
                 </tr>
 
             </table>
-            </br>
+            <br>
             <fieldset style="width: 70%; margin: auto;">
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <table>

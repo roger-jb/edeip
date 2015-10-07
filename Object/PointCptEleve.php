@@ -88,9 +88,9 @@ class PointCptEleve {
 
 	public function insert(){
 		$query = "INSERT INTO POINT_CPT_ELEVE (idPointCpt, idEleve, idNiveauCpt) VALUES (".
-			"".$this->getIdPointCpt().", ".
-			"".$this->getIdEleve().", ".
-			"".$this->getIdNiveauCpt()."".
+			$this->getIdPointCpt().", ".
+			$this->getIdEleve().", ".
+			$this->getIdNiveauCpt().
 			")";
 		if (db_connect::query($query))
 			return true;

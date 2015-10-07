@@ -150,7 +150,7 @@ class Periode extends FormatDate{
 				"libellePeriode = '".db_connect::escape_string($this->getLibellePeriode())."' AND ".
 				"dateDebutPeriode = '".$this->SQLdateDebutperiode()."' AND ".
 				"dateFinPeriode = '".$this->SQLdateFinPeriode()."' AND ".
-				"idTrimestre = ".$this->getIdTrimestre()."";
+				"idTrimestre = ".$this->getIdTrimestre();
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();

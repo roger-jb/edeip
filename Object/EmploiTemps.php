@@ -132,14 +132,14 @@ class EmploiTemps {
 		$query = "INSERT INTO EMPLOI_TEMPS (".
 			"idPeriode, idMatiereNiveau, jourEdT, heureDebEdT, heureFinEdT".
 			") VALUES (".
-			"".$this->getIdPeriode().", ".
-			"".$this->getIdMatiereNiveau().", ".
+			$this->getIdPeriode().", ".
+			$this->getIdMatiereNiveau().", ".
 			"'".$this->getJourEdT()."', ".
 			"'".$this->getHeureDebEdT()."', ".
 			"'".$this->getHeureFinEdT()."'".
 			")";
 		if (db_connect::query($query)){
-			$query2 = "SELECT idEdT FROM EMPLOI_TEMP WHERE ".
+			$query2 = "SELECT idEdT FROM EMPLOI_TEMPS WHERE ".
 				"idPeriode = ".$this->getIdPeriode()." AND ".
 				"idMatiereNiveau = ".$this->getIdMatiereNiveau()." AND ".
 				"jourEdT = '".$this->getJourEdT()."' AND ".
@@ -158,7 +158,7 @@ class EmploiTemps {
 	}
 
 	public function update(){
-		$query = "UPDATE EMPLOI_TEMP SET ".
+		$query = "UPDATE EMPLOI_TEMPS SET ".
 			"idPeriode = ".$this->getIdPeriode().", ".
 			"idMatiereNiveau = ".$this->getIdMatiereNiveau().", ".
 			"jourEdT = '".$this->getJourEdT()."', ".
