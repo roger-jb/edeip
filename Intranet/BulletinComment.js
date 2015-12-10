@@ -101,7 +101,7 @@ $("#selectEleve").change(function () {
         }).success(function (data) {
             $("#idBulletin").html(data['idBulletin']);
             $("#txtCommentaire").val(data['contenuBulletin']);
-            loadCpt();
+            //loadCpt();
             majListeCompetence();
         }).error(function (xhr, ajaxOptions, thrownError) {
             $("#idBulletin").html('');

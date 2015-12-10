@@ -146,14 +146,16 @@ else {
 						</table>
 					</div>
 					<fieldset>
-						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve lors des &eacute;valuations</legend>
+						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve pour le trimestre</legend>
 						<table id="listeCompetence" width="100%">
 						</table>
 					</fieldset>
 					<fieldset>
-						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve pour le trimestre</legend>
-						<table id="listeCompetenceEval" width="100%">
-						</table>
+						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve lors des &eacute;valuations</legend>
+						Cette partie rencontre actuellement des lenteurs majeures. Une analyse est en cours. pendant ce temps, cet portion est d&eacute;sactiv&eacute;e.<br>
+						merci de votre compr&eacute;hension.
+						<!--<table id="listeCompetenceEval" width="100%">
+						</table>-->
 					</fieldset>
 				</fieldset>
 
