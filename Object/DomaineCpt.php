@@ -55,7 +55,9 @@ class DomaineCpt {
     }
 
 	public static function getByMatiere($idMatiere){
-		$query = "SELECT * FROM DOMAINE_CPT WHERE idMatiere = $idMatiere";
+		$query = "	SELECT * FROM DOMAINE_CPT dCpt
+					WHERE dCpt.idMatiere = $idMatiere
+					ORDER BY libelleDomaineCpt ASC";
 		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('DomaineCpt')){

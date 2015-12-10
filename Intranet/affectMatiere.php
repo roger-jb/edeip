@@ -25,7 +25,7 @@ else {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>EDEIP : Affectation Matiere</title>
-    <link rel="stylesheet" href="styleIntranet.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../Require/jquery-ui.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
     <link rel="shortcut icon" href="../Images/Logo32.ico"/>

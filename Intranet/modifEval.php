@@ -33,27 +33,27 @@ if (isset($_POST['btModifier'])) {
 
 	$evaluation->update();
 
-	// tansfert du fichier Sujet associï¿½.
+	// tansfert du fichier Sujet associé.
 	if (!empty($_FILES['fichierSujet'])) {
 		if (ftp_link::estPDFfile($_FILES['fichierSujet']['name'], $_FILES['fichierSujet']['type'])) {
 			if ($_FILES['fichierSujet']['error'] == 0) {
 				if (file_exists('../Evaluation/Sujet' . $evaluation->getIdEvaluation() . '.pdf'))
 					unlink('../Evaluation/Sujet' . $evaluation->getIdEvaluation() . '.pdf');
 				if (!move_uploaded_file($_FILES['fichierSujet']['tmp_name'], '../Evaluation/Sujet' . $evaluation->getIdEvaluation() . '.pdf')) {
-					echo "Un problï¿½me est survenu sur l'envoi du fichier SUJET. Merci de contacter le support.";
+					echo "Un problème est survenu sur l'envoi du fichier SUJET. Merci de contacter le support.";
 				}
 			}
 		}
 	}
 
-	// tansfert du fichier Corrige associï¿½.
+	// tansfert du fichier Corrige associé.
 	if (!empty($_FILES['fichierCorrection'])) {
 		if (ftp_link::estPDFfile($_FILES['fichierCorrection']['name'], $_FILES['fichierCorrection']['type'])) {
 			if ($_FILES['fichierCorrection']['error'] == 0) {
 				if (file_exists('../Evaluation/Corrige' . $evaluation->getIdEvaluation() . '.pdf'))
 					unlink('../Evaluation/Corrige' . $evaluation->getIdEvaluation() . '.pdf');
 				if (!move_uploaded_file($_FILES['fichierCorrection']['tmp_name'], '../Evaluation/Corrige' . $evaluation->getIdEvaluation() . '.pdf')) {
-					echo "Un problï¿½me est survenu sur l'envoi du fichier CORRIGE. Merci de contacter le support.";
+					echo "Un problème est survenu sur l'envoi du fichier CORRIGE. Merci de contacter le support.";
 				}
 			}
 		}
@@ -69,7 +69,7 @@ else
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>EDEIP : Evaluation</title>
-	<link rel="stylesheet" href="et.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="../Intranet/styleIntranet.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="../Require/jquery-ui.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="../font-awesome-4.4.0/css/font-awesome.min.css" type="text/css" media="screen"/>
 	<link rel="shortcut icon" href="../Images/Logo32.ico"/>
@@ -94,7 +94,7 @@ else
 			<div class="titre_corps">
 				<h3 class="centrer">Evaluation</h3>
 			</div>
-			<a href="on.php">Retour au choix d'&eacute;valuation</a>
+			<a href="../Intranet/addEvaluation.php">Retour au choix d'&eacute;valuation</a>
 			<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Modifier &Eacute;valuation</legend>

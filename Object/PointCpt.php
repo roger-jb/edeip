@@ -71,9 +71,12 @@ class PointCpt {
 		$query  = "SELECT pCpt.*
 					FROM
 					  POINT_CPT pCpt,
-					  EVALUATION_POINT_CPT epCpt
+					  EVALUATION_POINT_CPT epCpt,
+					  DOMAINE_CPT dCpt
 					WHERE pCpt.idPointCpt = epCpt.idPointCpt
-					AND epCpt.idEvaluation =$idEvaluation ORDER BY libellePointCpt ASC";
+					AND pCpt.idDomaineCpt = dCpt.idDomaineCpt
+					AND epCpt.idEvaluation =$idEvaluation
+					ORDER BY idDomaineCpt ASC, libellePointCpt ASC";
 		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('PointCpt')) {
@@ -86,11 +89,14 @@ class PointCpt {
 	public static function getByMatiereNiveauTrimestre($idMatiereNiveau, $idTrimestre){
 		$query = "	SELECT distinct pc.idPointCpt, pc.idDomaineCpt, pc.libellePointCpt FROM POINT_CPT pc, EVALUATION_POINT_CPT epc
 					WHERE pc.idPointCpt = epc.idPointCpt
-					AND epc.idEvaluation IN (	SELECT ev.idEvaluation FROM EVALUATION ev
-												WHERE ev.idMatiereNiveau = $idMatiereNiveau
-												AND ev.dateEvaluation >= (SELECT T.dateDebutTrimestre FROM TRIMESTRE T WHERE T.idTrimestre = $idTrimestre)
-												AND ev.dateEvaluation <= (SELECT T.dateFinTrimestre FROM TRIMESTRE T WHERE T.idTrimestre = $idTrimestre))
-					GROUP BY pc.idPointCpt";
+					AND epc.idEvaluation IN (
+						SELECT ev.idEvaluation FROM EVALUATION ev
+						WHERE ev.idMatiereNiveau = $idMatiereNiveau
+						AND ev.dateEvaluation >= (SELECT T.dateDebutTrimestre FROM TRIMESTRE T WHERE T.idTrimestre = $idTrimestre)
+						AND ev.dateEvaluation <= (SELECT T.dateFinTrimestre FROM TRIMESTRE T WHERE T.idTrimestre = $idTrimestre)
+					)
+					GROUP BY pc.idPointCpt
+					ORDER BY pc.libellePointCpt ASC ";
 		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('PointCpt')) {

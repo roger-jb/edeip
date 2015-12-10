@@ -9,7 +9,7 @@
 ?>
 <i id="reduction" class="fa fa-arrow-circle-o-left"></i>
 <div id="menuContent">
-	<a href="MesInformations.php">Modifier mes informations</a><br/><br/>
+	<a href="../Intranet/MesInformations.php">Modifier mes informations</a><br/><br/>
 	<?php
 	if ($utilisateur->estResponsable()) {
 		$utilisateur = Responsable::getById($utilisateur->getIdUtilisateur());
@@ -34,7 +34,7 @@
 			}
 			?>
 			<br/><a id="enfantURL"
-			        href="MesInformations.php?id=<?php echo $eleves[0]->getIdUtilisateur(); ?>"
+			        href="../Intranet/MesInformations.php?id=<?php echo $eleves[0]->getIdUtilisateur(); ?>"
 			        style="font-size: 12px">Modifier Information de l'enfant</a>
 		<?php
 		}
@@ -44,15 +44,15 @@
 		?>
 		<h3 id="adminReduc"><i class="fa fa-arrow-circle-o-up"></i> Administration</h3>
 		<ul id="adminMenu">
-			<li><a href="Utilisateur.php">gérer les utilisateurs</a></li>
-			<li><a href="EleveResponsable.php">g&eacute;rer les liens parent/enfant</a> </li>
+			<li><a href="../Intranet/Utilisateur.php">gérer les utilisateurs</a></li>
+			<li><a href="../Intranet/EleveResponsable.php">g&eacute;rer les liens parent/enfant</a> </li>
 			<li id="adminMatiereReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les matières</li>
 			<ul id="adminMatiere">
-				<li><a href="Matiere.php">gérer les matières</a></li>
-				<li><a href="MatiereProf.php">assigner les matières</a></li>
+				<li><a href="../Intranet/Matiere.php">gérer les matières</a></li>
+				<li><a href="../Intranet/MatiereProf.php">assigner les matières</a></li>
 			</ul>
-			<li><a href="Niveau.php">gérer les niveaux</a></li>
-			<li><a href="Module.php">gérer les modules</a></li>
+			<li><a href="../Intranet/Niveau.php">gérer les niveaux</a></li>
+			<li><a href="../Intranet/Module.php">gérer les modules</a></li>
 			<!--<li id="adminCptReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer les compétences
 				<ul id="adminCptMenu">
 					<li><a href="../Intranet/DomaineCpt.php">domaines de compétences</a></li>
@@ -63,8 +63,8 @@
 			<li id="adminPlanningReduc"><i class="fa fa-arrow-circle-o-up"></i> gérer la planification
 				<ul id="adminPlanningMenu">
 					<!-- <li><a href="">Modifier Emploi du temps</a></li> -->
-					<li><a href="">Définir les Périodes</a></li>
-					<li><a href="hp">Définir les trimestres</a></li>
+					<li><a href="../Intranet/Periode.php">Définir les Périodes</a></li>
+					<li><a href="../Intranet/Trimestre.php">Définir les trimestres</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -76,8 +76,8 @@
 		?>
 		<h3 id="evalReduc"><i class="fa fa-arrow-circle-o-up"></i> Evaluation</h3>
 		<ul id="evalMenu">
-			<li><a href="re.php">G&eacute;rer les mati&egrave;res des &eacute;l&egrave;ves</a></li>
-			<li><a href="on.php">Gérer Evaluation</a></li>
+			<li><a href="../Intranet/affectMatiere.php">G&eacute;rer les mati&egrave;res des &eacute;l&egrave;ves</a></li>
+			<li><a href="../Intranet/addEvaluation.php">Gérer Evaluation</a></li>
 			<?php
 /*
 			if ($utilisateur->estAdministrateur()) {
@@ -94,7 +94,7 @@
 		?>
 		<h3 id="publiReduc"><i class="fa fa-arrow-circle-o-up"></i> Publication</h3>
 		<ul id="publiMenu">
-			<li><a href="on.php">Carnet de Liaison</a></li>
+			<li><a href="../Intranet/CarnetLiaison.php">Carnet de Liaison</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()){
 				?>
@@ -102,8 +102,8 @@
 				<?php
 			}
 			?>
-			<li><a href=".php">Cahier de Texte</a></li>
-			<li><a id="EmploiTempsEleve" href=".php">Emploi du temps</a></li>
+			<li><a href="../Intranet/CahierTexte.php">Cahier de Texte</a></li>
+			<li><a id="EmploiTempsEleve" href="../Intranet/EmploiTemps.php">Emploi du temps</a></li>
 			<?php
 			if ($utilisateur->estAdministrateur() || $utilisateur->estProfesseur()){
 				?>
@@ -111,7 +111,7 @@
 			<?php
 			}
 			?>
-			<li><a href=".php">Plan de travail</a></li>
+			<li><a href="../Intranet/PlanTravail.php">Plan de travail</a></li>
 			<!--<li><a href="">Communication</a></li>-->
 			<!--<li><a href="">Absences</a></li>-->
 		</ul>
@@ -137,4 +137,4 @@
 
 
 </div>
-<script src="t.js"></script>
+<script src="../Intranet/menuIntranet.js"></script>
