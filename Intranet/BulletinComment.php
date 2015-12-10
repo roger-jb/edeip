@@ -20,12 +20,6 @@ if (isset($_SESSION['id'])) {
 else {
 	header('location: ../Intranet/connexion.php');
 }
-
-if (isset($_POST['submit'])){
-	echo '<pre>';
-	var_dump($_POST);
-	echo '</pre>';
-}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -138,7 +132,8 @@ if (isset($_POST['submit'])){
 										<?php
 										$niveauCpts = NiveauCpt::getAll();
 										foreach ($niveauCpts as $nc){
-											echo '<option value="'.$nc->getIdNiveauCpt().'">'.$nc->getLibelleNiveauCpt().'</option>';
+										//$nc = new NiveauCpt();
+											echo '<option value="'.$nc->getIdNiveauCpt().'">'.$nc->getCodeNiveauCpt().'</option>';
 										}
 										?>
 									</select>
@@ -151,12 +146,12 @@ if (isset($_POST['submit'])){
 						</table>
 					</div>
 					<fieldset>
-						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve pour le trimestre</legend>
+						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve lors des &eacute;valuations</legend>
 						<table id="listeCompetence" width="100%">
 						</table>
 					</fieldset>
 					<fieldset>
-						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve lors des &eacute;valuations</legend>
+						<legend>liste des comp&eacute;tences &eacute;valu&eacute;es pour l'&eacute;l&egrave;ve pour le trimestre</legend>
 						<table id="listeCompetenceEval" width="100%">
 						</table>
 					</fieldset>

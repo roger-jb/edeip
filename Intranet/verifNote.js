@@ -45,7 +45,7 @@ $("#detRappelCpt").click(function(){
 });
 
 $(".evalCpt").click(function(){
-    var nb = this.id.substr(7);
+    var nb = this.id.substr(9);
     var idPointCpt = $("#idCpt"+nb).val();
     var nivCpt = $("#evalCpt"+nb+" option:selected").val();
     var idEleve = $("#idEleveNote option:selected").val();
@@ -59,8 +59,8 @@ $(".evalCpt").click(function(){
             data: {idEval: idEval, idEleve: idEleve, idPointCpt: idPointCpt, nivCpt: nivCpt, action: 'modifCpt'}
         }).success(function () {
             console.log('reussite Competence');
-            majListeEleveNote();
             alert('Modification de la competence reussie.');
+            majListeEleveNote();
         }).error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
             console.log(thrownError);
@@ -86,8 +86,8 @@ $("#modifNote").click(function(){
             data: {idEval: idEval, idEleve: idEleve, note: note, action: 'modifNote'}
         }).success(function () {
             console.log('reussite Competence');
-            majListeEleveNote();
             alert('Modification de la note reussie.');
+            majListeEleveNote();
         }).error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
             console.log(thrownError);
@@ -103,6 +103,7 @@ $("#modifNote").click(function(){
 $("#idEleveNote").change(function(){
     var idEleve = $("#idEleveNote option:selected").val();
     var idEval = $("#idEval").html();
+    $(".lesEvalCpt").val('');
     // recuperation de la note
     if (idEleve != '') {
         $.ajax({
@@ -112,6 +113,34 @@ $("#idEleveNote").change(function(){
             data: {idEval: idEval, idEleve: idEleve, action: 'getByEleveEvaluation'}
         }).success(function (data) {
             $("#noteEleve").val(data['note']);
+            $.ajax({
+                url: '../WebService/getCompetence.php',
+                type: 'GET',
+                dataType: 'json',
+                data: {idEval: idEval, idEleve: idEleve, action: 'getByEleveEvaluation'}
+            }).success(function (data) {
+                var nb = 1;
+                $.each(data, function (i, item) {
+                    if (item == ''){
+                        console.log('item Vide');
+                    }
+                    else {
+                        console.log(i);
+                        console.log(item);
+                        var ii = i+1;
+                        if (item['NiveauCpt'] != null){
+                            console.log(item['NiveauCpt']['idNiveauCpt']);
+                            $("#evalCpt"+(ii)).val(item['NiveauCpt']['idNiveauCpt']);
+                        }
+                    }
+                    nb++;
+                });
+            }).error(function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+                console.log('Erreur dans la recuperation des competences.');
+                alert('problème lors de la recuperation des competences.');
+            })
         }).error(function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
             console.log(thrownError);
@@ -119,32 +148,7 @@ $("#idEleveNote").change(function(){
             alert('problème lors de la recuperation de la note.');
         });
 
-        $.ajax({
-            url: '../WebService/getCompetence.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {idEval: idEval, idEleve: idEleve, action: 'getByEleveEvaluation'}
-        }).success(function (data) {
-            var nb = 1;
-            $.each(data, function (i, item) {
-                if (item == ''){
-                    console.log('item Vide');
-                }
-                else {
-                    console.log(i);
-                    console.log(item);
-                    var ii = i+1;
-                    console.log(item['NiveauCpt']['idNiveauCpt']);
-                    $("#evalCpt"+(ii)).val(item['NiveauCpt']['idNiveauCpt']);
-                }
-                nb++;
-            });
-        }).error(function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr.status);
-            console.log(thrownError);
-            console.log('Erreur dans la recuperation des competences.');
-            alert('problème lors de la recuperation des competences.');
-        })
+
     }
 });
 

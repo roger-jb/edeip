@@ -170,17 +170,22 @@ if (isset ($_GET['action'])) {
 			$return = array();
 			$evaluation = Evaluation::getById($_GET['idEval']);
 			$evalCpt = EvaluationPointCpt::getByEvaluation($evaluation->getIdEvaluation());
-			$eleves = Eleve::getByNoteEvaluation($evaluation->getIdEvaluation());
+			$eleves = Eleve::getByEvaluation($evaluation->getIdEvaluation());
+			/*echo '<pre>';
+			var_dump($evaluation);
+			var_dump($evalCpt);
+			var_dump($eleves);
+			echo '</pre>';*/
 			foreach ($eleves as $eleve){
 				$ligne = '';
 				$ligne .= '<tr>';
 				// nom de l'eleve
 				$ligne .=  '<td>'.$eleve->getLibelleUtilisatur().'</td>';
-				// recpération affichage de la note
+				// recpï¿½ration affichage de la note
 				$note = Note::getById($eleve->getIdEleve(),$evaluation->getIdEvaluation());
 				$ligne .=  '<td>'.$note->getNote().'</td>';
 
-				//recuperation de affichage de points de compétence
+				//recuperation de affichage de points de compï¿½tence
 				$nbCpt      = 1;
 				foreach ($evalCpt as $eCpt) {
 					//$eCpt = new EvaluationPointCpt();

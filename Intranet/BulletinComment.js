@@ -2,7 +2,7 @@
  * Created by Jean-Baptiste on 28/11/2015.
  */
 
-$("#selectNiveau").change(function(){
+$("#selectNiveau").change(function () {
     var idNiveau = $("#selectNiveau option:selected").val();
     $('#listeCompetenceEval').html('');
     $("#selectMatiere").change();
@@ -29,7 +29,7 @@ $("#selectNiveau").change(function(){
     }
 });
 
-$("#selectMatiere").change(function(){
+$("#selectMatiere").change(function () {
     var idMatiere = $("#selectMatiere option:selected").val();
     var idNiveau = $("#selectNiveau option:selected").val();
     $('#listeCompetenceEval').html('');
@@ -77,7 +77,7 @@ $("#selectMatiere").change(function(){
     }
 });
 
-$("#selectEleve").change(function(){
+$("#selectEleve").change(function () {
     var idTrimestre = $("#selectTrimestre option:selected").val();
     var idMatiere = $("#selectMatiere option:selected").val();
     var idNiveau = $("#selectNiveau option:selected").val();
@@ -91,10 +91,17 @@ $("#selectEleve").change(function(){
             url: '../WebService/Bulletin.php',
             type: 'GET',
             dataType: 'json',
-            data: {idEleve: idEleve, idMatiere: idMatiere, idNiveau: idNiveau, idTrimestre:idTrimestre, action: 'getByEleveMatiereNiveauTrimestre'}
+            data: {
+                idEleve: idEleve,
+                idMatiere: idMatiere,
+                idNiveau: idNiveau,
+                idTrimestre: idTrimestre,
+                action: 'getByEleveMatiereNiveauTrimestre'
+            }
         }).success(function (data) {
             $("#idBulletin").html(data['idBulletin']);
             $("#txtCommentaire").val(data['contenuBulletin']);
+            loadCpt();
             majListeCompetence();
         }).error(function (xhr, ajaxOptions, thrownError) {
             $("#idBulletin").html('');
@@ -106,7 +113,7 @@ $("#selectEleve").change(function(){
     }
 });
 
-$("#btComm").click(function(){
+$("#btComm").click(function () {
     var idTrimestre = $("#selectTrimestre option:selected").val();
     var idMatiere = $("#selectMatiere option:selected").val();
     var idNiveau = $("#selectNiveau option:selected").val();
@@ -121,7 +128,15 @@ $("#btComm").click(function(){
             url: '../WebService/Bulletin.php',
             type: 'GET',
             dataType: 'json',
-            data: {idEleve: idEleve, idMatiere: idMatiere, idNiveau: idNiveau, idTrimestre:idTrimestre, idBulletin: idBulletin, commBulletin: commBulletin, action: 'addCommentaire'}
+            data: {
+                idEleve: idEleve,
+                idMatiere: idMatiere,
+                idNiveau: idNiveau,
+                idTrimestre: idTrimestre,
+                idBulletin: idBulletin,
+                commBulletin: commBulletin,
+                action: 'addCommentaire'
+            }
         }).success(function (data) {
             $("#idBulletin").html(data['idBulletin']);
             alert('Le commentaire a ete ajoute');
@@ -133,20 +148,26 @@ $("#btComm").click(function(){
     }
 });
 
-$("#btNivCpt").click(function(){
+$("#btNivCpt").click(function () {
     var idTrimestre = $("#selectTrimestre option:selected").val();
     var idEleve = $("#selectEleve option:selected").val();
     var idPtCpt = $("#idPtCpt option:selected").val();
     var idNivCpt = $("#idNivCpt option:selected").val();
-    if (!idTrimestre == '' && !idEleve == '' && !idPtCpt == ''){
-        if (idNivCpt == ''){
+    if (!idTrimestre == '' && !idEleve == '' && !idPtCpt == '') {
+        if (idNivCpt == '') {
             idNivCpt = 0;
         }
         $.ajax({
             url: '../WebService/Bulletin.php',
             type: 'GET',
             dataType: 'json',
-            data: {idEleve: idEleve, idTrimestre:idTrimestre, idPtCpt: idPtCpt, idNivCpt: idNivCpt, action: 'addNivCpt'}
+            data: {
+                idEleve: idEleve,
+                idTrimestre: idTrimestre,
+                idPtCpt: idPtCpt,
+                idNivCpt: idNivCpt,
+                action: 'addNivCpt'
+            }
         }).success(function (data) {
             $("#idBulletin").html(data['idBulletin']);
             majListeCompetence();
@@ -159,26 +180,31 @@ $("#btNivCpt").click(function(){
     }
 });
 
-$('#idPtCpt').change(function (){
+function loadCpt() {
     var idTrimestre = $("#selectTrimestre option:selected").val();
     var idEleve = $("#selectEleve option:selected").val();
     var idPtCpt = $("#idPtCpt option:selected").val();
 
-    if (!idEleve == '' && !idTrimestre == '' && !idPtCpt == ''){
+    if (!idEleve == '' && !idTrimestre == '' && !idPtCpt == '') {
         var htmlCptEval = '<tr><td>&Eacute;valuation</td><td>Niveau de Comp&eacute;tence</td></tr>';
         $('#listeCompetenceEval').html('');
         $.ajax({
             url: '../WebService/getCompetence.php',
             type: 'GET',
             dataType: 'json',
-            data: {idEleve: idEleve, idPtCpt: idPtCpt, idTrimestre:idTrimestre, action: 'getByElevePointCptTrimestreForCpt'}
+            data: {
+                idEleve: idEleve,
+                idPtCpt: idPtCpt,
+                idTrimestre: idTrimestre,
+                action: 'getByElevePointCptTrimestreForCpt'
+            }
         }).success(function (data) {
             if (data.length) {
                 $.each(data, function (i, item) {
-                    htmlCptEval += '<tr><td>'+item['libCpt']+'</td><td>'+item['noteCpt']+'</td></tr>';
+                    htmlCptEval += '<tr><td>' + item['libCpt'] + '</td><td>' + item['noteCpt'] + '</td></tr>';
                 });
             }
-            $('#listeCompetenceEval').html(htmlCptEval);
+            $("#listeCompetenceEval").html(htmlCptEval);
         }).error(function (xhr, ajaxOptions, thrownError) {
             $("#idBulletin").html('');
             $("#txtCommentaire").html('');
@@ -187,48 +213,48 @@ $('#idPtCpt').change(function (){
             console.log('Erreur dans la recuperation des commentaires.');
         })
     }
-// à reprendre.
+}
+// ï¿½ reprendre.
 /*
-    if (!idMatiere == '' && !idNiveau == '' && !idEleve == '' && !idTrimestre == '') {
-        var htmlCptEval = '<tr><td>&Eacute;valuation</td><td>Niveau de Comp&eacute;tence</td></tr>';
-        $('#listeCompetenceEval').html('');
-        $.ajax({
-            url: '../WebService/getCompetence.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {idEleve: idEleve, idMatiere: idMatiere, idNiveau: idNiveau, idTrimestre:idTrimestre, action: 'getByEleveMatiereTrimestre'}
-        }).success(function (data) {
-            if (data.length) {
-                $.each(data, function (i, item) {
-                    htmlCptEval += '<tr><td>'+item['libCpt']+'</td><td>'+item['noteCpt']+'</td></tr>';
-                });
-            }
-            $('#listeCompetenceEval').html(htmlCptEval);
-        }).error(function (xhr, ajaxOptions, thrownError) {
-            $("#idBulletin").html('');
-            $("#txtCommentaire").html('');
-            console.log(xhr.status);
-            console.log(thrownError);
-            console.log('Erreur dans la recuperation des commentaires.');
-        })
-    }
-*/
+ if (!idMatiere == '' && !idNiveau == '' && !idEleve == '' && !idTrimestre == '') {
+ var htmlCptEval = '<tr><td>&Eacute;valuation</td><td>Niveau de Comp&eacute;tence</td></tr>';
+ $('#listeCompetenceEval').html('');
+ $.ajax({
+ url: '../WebService/getCompetence.php',
+ type: 'GET',
+ dataType: 'json',
+ data: {idEleve: idEleve, idMatiere: idMatiere, idNiveau: idNiveau, idTrimestre:idTrimestre, action: 'getByEleveMatiereTrimestre'}
+ }).success(function (data) {
+ if (data.length) {
+ $.each(data, function (i, item) {
+ htmlCptEval += '<tr><td>'+item['libCpt']+'</td><td>'+item['noteCpt']+'</td></tr>';
+ });
+ }
+ $('#listeCompetenceEval').html(htmlCptEval);
+ }).error(function (xhr, ajaxOptions, thrownError) {
+ $("#idBulletin").html('');
+ $("#txtCommentaire").html('');
+ console.log(xhr.status);
+ console.log(thrownError);
+ console.log('Erreur dans la recuperation des commentaires.');
+ })
+ }
+ */
 
 
-});
-
-
-function majListeCompetence(){
+function majListeCompetence() {
     var html = '';
     var idTrimestre = $("#selectTrimestre option:selected").val();
     var idEleve = $("#selectEleve option:selected").val();
+    var idMatiere = $("#selectMatiere option:selected").val();
+
     $("#listeCompetence").html('');
-    if (!idTrimestre == '' && !idEleve == ''){
+    if (!idTrimestre == '' && !idEleve == '') {
         $.ajax({
             url: '../WebService/Bulletin.php',
             type: 'GET',
             dataType: 'json',
-            data: {idEleve: idEleve, idTrimestre:idTrimestre, action: 'getListeCompetence'}
+            data: {idEleve: idEleve, idMatiere: idMatiere, idTrimestre: idTrimestre, action: 'getListeCompetence'}
         }).success(function (data) {
             if (data.length) {
                 $.each(data, function (i, item) {

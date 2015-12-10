@@ -6,133 +6,184 @@
  * Date: 16/07/2015
  * Time: 11:59
  */
-class PointCptEleve {
+class PointCptEleve
+{
 	protected $idPointCpt;
 	protected $idEleve;
 	protected $idTrimestre;
 	protected $idNiveauCpt;
 
-    public static function getAll(){
-        $query = "SELECT * FROM POINT_CPT_ELEVE";
-        $result = db_connect::query($query);
-        $return = array();
-        while ($info = $result->fetch_object('PointCptEleve')){
-            $return [] = $info;
-        }
+	public function toArray()
+	{
+		$return = array();
+		$return['idPointCpt'] = $this->idPointCpt;
+		$return['idEleve'] = $this->idEleve;
+		$return['idTrimestre'] = $this->idTrimestre;
+		$return['idNiveauCpt'] = $this->idNiveauCpt;
 		return $return;
-    }
+	}
 
-    public static function getById($idPointCpt, $idEleve, $idTrimestre){
-        $query = "SELECT * FROM POINT_CPT_ELEVE WHERE idPointCpt = $idPointCpt AND idEleve = $idEleve AND idTrimestre = $idTrimestre";
-        $result = db_connect::query($query);
-        if ($result->num_rows == 1){
-            $return = $result->fetch_object('PointCptEleve');
-            $result->close();
-            return $return;
-        }
-        $result->close();
-        return new PointCptEleve();
-    }
-
-	public static function getByEleveTrimestre($idEleve, $idTrimestre){
-		$query = "	SELECT * FROM POINT_CPT_ELEVE pce
-					WHERE pce.idEleve = $idEleve
-					AND pce.idTrimestre = $idTrimestre";
+	public static function getAll()
+	{
+		$query = "SELECT * FROM POINT_CPT_ELEVE";
 		$result = db_connect::query($query);
 		$return = array();
-		while ($info = $result->fetch_object('PointCptEleve')){
+		while ($info = $result->fetch_object('PointCptEleve')) {
 			$return [] = $info;
 		}
 		return $return;
 	}
 
-    public function getEleve(){
-        return Eleve::getById($this->getIdEleve());
-    }
+	public static function getById($idPointCpt, $idEleve, $idTrimestre)
+	{
+		$query = "	SELECT * FROM POINT_CPT_ELEVE
+					WHERE idPointCpt = $idPointCpt
+					AND idEleve = $idEleve
+					AND idTrimestre = $idTrimestre";
+		$result = db_connect::query($query);
+		if ($result->num_rows == 1) {
+			$return = $result->fetch_object('PointCptEleve');
+			$result->close();
+			return $return;
+		}
+		$result->close();
+		return new PointCptEleve();
+	}
 
-    public function getPointCpt(){
-        return PointCpt::getById($this->getIdPointCpt());
-    }
+	public static function getByEleveTrimestre($idEleve, $idTrimestre)
+	{
+		$query = "	SELECT pce.* FROM POINT_CPT_ELEVE pce, POINT_CPT pCpt, DOMAINE_CPT dCpt
+					WHERE pce.idEleve = $idEleve
+					AND pce.idTrimestre = $idTrimestre
+					AND pCPt.idPointCpt = pce.idPointCpt
+					AND pCpt.idDomaineCpt = dCpt.idDomaineCpt
+					ORDER BY pCpt.idDomaineCpt";
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('PointCptEleve')) {
+			$return [] = $info;
+		}
+		return $return;
+	}
 
-    public function getNiveauCpt(){
-        return NiveauCpt::getByid($this->getIdNiveauCpt());
-    }
+	public static function getByEleveMatiereTrimestre($idEleve, $idMatiere, $idTrimestre)
+	{
+		$query = "	SELECT pce.* FROM POINT_CPT_ELEVE pce, POINT_CPT pCpt, DOMAINE_CPT dCpt
+					WHERE pce.idEleve = $idEleve
+					AND pce.idTrimestre = $idTrimestre
+					AND pCpt.idPointCpt = pce.idPointCpt
+					AND pCpt.idDomaineCpt = dCpt.idDomaineCpt
+					AND dCpt.idMatiere = $idMatiere
+					ORDER BY dCpt.idDomaineCpt";
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('PointCptEleve')) {
+			$return [] = $info;
+		}
+		return $return;
+	}
+
+	public function getEleve()
+	{
+		return Eleve::getById($this->getIdEleve());
+	}
+
+	public function getPointCpt()
+	{
+		return PointCpt::getById($this->getIdPointCpt());
+	}
+
+	public function getNiveauCpt()
+	{
+		return NiveauCpt::getByid($this->getIdNiveauCpt());
+	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIdPointCpt () {
+	public function getIdPointCpt()
+	{
 		return $this->idPointCpt;
 	}
 
 	/**
 	 * @param mixed $idPointCpt
 	 */
-	public function setIdPointCpt ($idPointCpt) {
+	public function setIdPointCpt($idPointCpt)
+	{
 		$this->idPointCpt = $idPointCpt;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIdEleve () {
+	public function getIdEleve()
+	{
 		return $this->idEleve;
 	}
 
 	/**
 	 * @param mixed $idEleve
 	 */
-	public function setIdEleve ($idEleve) {
+	public function setIdEleve($idEleve)
+	{
 		$this->idEleve = $idEleve;
 	}
 
-	public function getIdTrimestre(){
+	public function getIdTrimestre()
+	{
 		return $this->idTrimestre;
 	}
 
-	public function setIdTrimestre($idTrimestre){
+	public function setIdTrimestre($idTrimestre)
+	{
 		$this->idTrimestre = $idTrimestre;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getIdNiveauCpt () {
+	public function getIdNiveauCpt()
+	{
 		return $this->idNiveauCpt;
 	}
 
 	/**
 	 * @param mixed $idNiveauCpt
 	 */
-	public function setIdNiveauCpt ($idNiveauCpt) {
+	public function setIdNiveauCpt($idNiveauCpt)
+	{
 		$this->idNiveauCpt = $idNiveauCpt;
 	}
 
-	public function insert(){
-		$query = "INSERT INTO POINT_CPT_ELEVE (idPointCpt, idEleve, idTrimestre, idNiveauCpt) VALUES (".
-			$this->getIdPointCpt().", ".
-			$this->getIdEleve().", ".
-			$this->getIdTrimestre().', '.
-			$this->getIdNiveauCpt().
+	public function insert()
+	{
+		$query = "INSERT INTO POINT_CPT_ELEVE (idPointCpt, idEleve, idTrimestre, idNiveauCpt) VALUES (" .
+			$this->getIdPointCpt() . ", " .
+			$this->getIdEleve() . ", " .
+			$this->getIdTrimestre() . ', ' .
+			$this->getIdNiveauCpt() .
 			")";
 		if (db_connect::query($query))
 			return true;
 		return false;
 	}
 
-	public function update(){
+	public function update()
+	{
 		$query = "	UPDATE POINT_CPT_ELEVE SET
-					idNiveauCpt = ".$this->getIdNiveauCpt()."
-					WHERE idPointCpt = ".$this->getIdPointCpt()." AND
-					idEleve = ".$this->getIdEleve()." AND
-					idTrimestre = ".$this->getIdTrimestre();
+					idNiveauCpt = " . $this->getIdNiveauCpt() . "
+					WHERE idPointCpt = " . $this->getIdPointCpt() . " AND
+					idEleve = " . $this->getIdEleve() . " AND
+					idTrimestre = " . $this->getIdTrimestre();
 		if (db_connect::query($query))
 			return true;
 		return false;
 	}
 
-	public function delete(){
-		$query = "DELETE FROM POINT_CPT_ELEVE WHERE idPointCpt = ".$this->getIdPointCpt(). " AND idEleve = ".$this->getIdEleve()." AND idTrimestre = ".$this->getIdTrimestre();
+	public function delete()
+	{
+		$query = "DELETE FROM POINT_CPT_ELEVE WHERE idPointCpt = " . $this->getIdPointCpt() . " AND idEleve = " . $this->getIdEleve() . " AND idTrimestre = " . $this->getIdTrimestre();
 		if (db_connect::query($query))
 			return true;
 		return false;

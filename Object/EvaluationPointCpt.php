@@ -16,8 +16,10 @@ class EvaluationPointCpt {
 		$return['idEvaluationPointCpt'] = $this->getIdEvaluationPointCpt();
 		$return['idEvaluation'] = $this->getIdEvaluation();
 		$return['idPointCpt'] = $this->getIdPointCpt();
+		if (!empty($this->getIdEvaluation()))
 		$return['evaluation'] = $this->getEvaluation()->toArray();
-		$return['pointCpt'] = $this->getPointCpt()->toArray();
+		if (!empty($this->getIdPointCpt()))
+			$return['pointCpt'] = $this->getPointCpt()->toArray();
 
 		return $return;
 	}
@@ -56,8 +58,10 @@ class EvaluationPointCpt {
 	}
 
 	public static function getByEvaluation($idEvaluation){
-		$query = "	SELECT * FROM EVALUATION_POINT_CPT
-					WHERE idEvaluation = $idEvaluation";
+		$query = "	SELECT epCpt.* FROM EVALUATION_POINT_CPT epCpt, POINT_CPT pCpt
+					WHERE epCpt.idEvaluation = $idEvaluation
+					AND epCpt.idPointCpt = pCpt.idPointCpt
+					ORDER BY pCpt.idDomaineCpt";
 		$result = db_connect::query($query);
 		$return = array();
 		while ($info = $result->fetch_object('EvaluationPointCpt')){

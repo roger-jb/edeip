@@ -13,17 +13,16 @@ if (isset ($_GET['action'])) {
 		case 'getByEleveEvaluation' :
 			//idEval: idEval, idEleve: idEleve, action: 'getByEleveEvaluation'
 			$return = array();
+
 			$eval = Evaluation::getById($_GET['idEval']);
 			$eleve = Eleve::getById($_GET['idEleve']);
-
 			$evalPointCpts = EvaluationPointCpt::getByEvaluation($eval->getIdEvaluation());
-
 			foreach($evalPointCpts as $epc){
 				$eleveEvalPointCpt = EleveEvaluationPointCpt::getById($eleve->getIdUtilisateur(), $epc->getIdEvaluationPointCpt());
 				if ($eleveEvalPointCpt->getIdEvaluationPointCpt() != '')
 					$return[] = $eleveEvalPointCpt->toArray();
 				else
-					$return[] = new EvaluationPointCpt();
+					$return[] = (new EvaluationPointCpt())->toArray();
 			}
 			echo json_encode($return);
 			break;

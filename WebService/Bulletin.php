@@ -51,7 +51,8 @@ if (isset ($_GET['action'])) {
 		case 'addNivCpt' :
 			//idEleve: idEleve, idTrimestre:idTrimestre, idPtCpt: idPtCpt, idNivCpt: idNivCpt, action: 'addNivCpt'
 			$pointCptEleve = PointCptEleve::getById($_GET['idPtCpt'], $_GET['idEleve'], $_GET['idTrimestre']);
-			// il n'existe pas, on le crée
+
+			// il n'existe pas, on le crï¿½e
 			if (is_null($pointCptEleve->getIdPointCpt())){
 				$pointCptEleve->setIdEleve($_GET['idEleve']);
 				$pointCptEleve->setIdPointCpt($_GET['idPtCpt']);
@@ -62,7 +63,7 @@ if (isset ($_GET['action'])) {
 				}
 			}
 			else {
-				// sinon, soit on le met à jour
+				// sinon, soit on le met ï¿½ jour
 				if ($_GET['idNivCpt'] != 0){
 					$pointCptEleve->setIdNiveauCpt($_GET['idNivCpt']);
 					$pointCptEleve->update();
@@ -72,7 +73,7 @@ if (isset ($_GET['action'])) {
 					$pointCptEleve->delete();
 				}
 			}
-			echo json_encode(Eleve::getById($_GET['idEleve'])->toArray());
+			echo json_encode($pointCptEleve->toArray());
 			break;
 		case 'getListeCompetence' :
 			//idEleve: idEleve, idTrimestre:idTrimestre, action: 'getListeCompetence'
@@ -80,10 +81,11 @@ if (isset ($_GET['action'])) {
 			$return = array();
 			$idEleve = $_GET['idEleve'];
 			$idTrimestre = $_GET['idTrimestre'];
-			$pointCptEleves = PointCptEleve::getByEleveTrimestre($idEleve, $idTrimestre);
+			$idMatiere  = $_GET['idMatiere'];
+			$pointCptEleves = PointCptEleve::getByEleveMatiereTrimestre($idEleve, $idMatiere, $idTrimestre);
 			foreach($pointCptEleves as $pce){
 				//$pce = new PointCptEleve();
-				$return[] = "<tr><td width='70%'>(".$pce->getPointCpt()->getDomaineCpt()->getLibelleDomaineCpt().") ".$pce->getPointCpt()->getLibellePointCpt()."</td><td>".$pce->getNiveauCpt()->getLibelleNiveauCpt()."</td></tr>";
+				$return[] = "<tr><td width='70%' style='text-align: left'>(".$pce->getPointCpt()->getDomaineCpt()->getLibelleDomaineCpt().") ".$pce->getPointCpt()->getLibellePointCpt()."</td><td style='text-align: center'>".$pce->getNiveauCpt()->getCodeNiveauCpt()."</td></tr>";
 			}
 			echo json_encode($return);
 			break;

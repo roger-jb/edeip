@@ -71,6 +71,30 @@ class Eleve extends Utilisateur {
 		return $return;
 	}
 
+	public static function getByEvaluation($idEvaluation){
+		$query = "SELECT DISTINCT U.*, E.idNiveau FROM ELEVE E, NOTE N, UTILISATEUR U, ELEVE_EVALUATION_POINT_CPT EEPT
+					WHERE
+						U.idUtilisateur = E.idEleve
+						AND ((
+							N.idEleve = E.idEleve
+							AND N.idEvaluation = $idEvaluation
+						)
+						OR
+						(
+							E.idEleve = EEPT.idEleve
+							AND EEPT.idEvaluationPointCpt IN (
+								SELECT idEvaluationPointCpt FROM EVALUATION_POINT_CPT
+								WHERE idEvaluation = $idEvaluation
+							)
+						))";
+		$result = db_connect::query($query);
+		$return = array();
+		while ($info = $result->fetch_object('Eleve')){
+			$return[] = $info;
+		}
+		return $return;
+	}
+
 	public static function getByMatiereNiveau($idMatiereNiveau){
 		$query = "	SELECT E.idNiveau, U.* FROM ELEVE E, UTILISATEUR U, ELEVE_MATIERE_NIVEAU EMN
 					WHERE U.idUtilisateur = E.idEleve
