@@ -27,11 +27,11 @@ header('content-type: text/html; charset=utf-8');
         <table id="tarif">
             <tr>
                 <td></td>
-                <td>CP &agrave; CE2</td>
-                <td>CM1 &agrave; 6<sup>ieme</sup></td>
-                <td>5<sup>ieme</sup> &agrave; 3<sup>ieme</sup></td>
-                <td>2<sup>nde</sup></td>
-                <td>1<sup>ieme</sup> et Term.</td>
+                <td style="width: 15%;">CP &agrave; CE2</td>
+                <td style="width: 15%;">CM1 &agrave; 6<sup>ieme</sup></td>
+                <td style="width: 15%;">5<sup>ieme</sup> &agrave; 3<sup>ieme</sup></td>
+                <td style="width: 15%;">2<sup>nde</sup></td>
+                <td style="width: 15%;">1<sup>ieme</sup> et Term.</td>
             </tr>
             <tr>
                 <td>Adhésion <!--à l'association--> "Diamant Brut"</td>
