@@ -21,42 +21,44 @@ header('content-type: text/html; charset=utf-8');
         <div class="titre_corps">
             <h3 class="centrer">Tarifs et inscription</h3>
         </div>
-        <p><strong>Les inscriptions pour l’année 2015-2016 sont ouvertes.</strong></p>
+        <p><strong>Les inscriptions pour l’année 2016-2017 sont ouvertes.</strong></p>
 
         <p><strong>Coût annuel de la scolarité :</strong></p>
         <table id="tarif">
             <tr>
                 <td></td>
                 <td>CP &agrave; CE2</td>
-                <td>CM1 &agrave; 6ieme</td>
-                <td>5ieme &agrave; 3ieme</td>
-                <td>2nde &agrave; 1iere</td>
+                <td>CM1 &agrave; 6<sup>ieme</sup></td>
+                <td>5<sup>ieme</sup> &agrave; 3<sup>ieme</sup></td>
+                <td>2<sup>nde</sup></td>
+                <td>1<sup>ieme</sup> et Term.</td>
+            </tr>
+            <tr>
+                <td>Adhésion <!--à l'association--> "Diamant Brut"</td>
+                <td>60 €</td>
+                <td>60 €</td>
+                <td>60 €</td>
+                <td>60 €</td>
+                <td>60 €</td>
             </tr>
             <tr>
                 <td>Frais de dossier</td>
-                <td>150 €</td>
-                <td>150 €</td>
-                <td>150 €</td>
-                <td>150 €</td>
-            </tr>
-            <tr>
-                <td>Adhésion à l'association "Diamant Brut"</td>
-                <td>60 €</td>
-                <td>60 €</td>
-                <td>60 €</td>
-                <td>60 €</td>
+                <td>210 €</td>
+                <td>210 €</td>
+                <td>210 €</td>
+                <td>210 €</td>
+                <td>210 €</td>
             </tr>
             <tr>
                 <td>Frais de scolarité</td>
-                <td>5500 €</td>
-                <td>5800 €</td>
-                <td>6100 €</td>
+                <td>5900 €</td>
                 <td>6200 €</td>
+                <td>6500 €</td>
+                <td>6800 €</td>
+                <td>7500 €</td>
             </tr>
         </table>
-        <p>Ce tarif inclut le prêt de manuels aux élèves de primaire.</p>
-
-        <p>Les inscriptions sont prises toute l’année. L’EDEIP Lyon accueille les enfants dont le QI est supérieur à 130
+        <p>Les inscriptions sont prises toute l’année. L’EDEIP Lyon accueille les enfants reconnus EIP par un psychologue
             sans condition de dossier scolaire.</p>
 
         <p>Ce tarif ne comprend pas :</p>

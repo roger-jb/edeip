@@ -44,7 +44,6 @@ header('content-type: text/html; charset=utf-8');
 			<li>Un cadre de travail à la fois souple et impliquant : l’élève pilote ses apprentissages et participe aux
 				choix et orientations de l’école.
 			</li>
-			<li>Un tremplin pour <strong>le retour à un cursus commun.</strong></li>
 		</ul>
 		<div class="sous_titre_corps">
 			<h4>Mettre en place un dispositif global et cohérent</h4>

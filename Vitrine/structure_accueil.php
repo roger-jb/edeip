@@ -26,25 +26,24 @@ header('content-type: text/html; charset=utf-8');
 		<p>27 rue Raoul Servant 69007 LYON</p>
 
 		<div class="sous_titre_corps">
-			<h4>3 modules</h4>
+			<h4>4 modules</h4>
 		</div>
-		<p>Les élèves sont répartis en 3 modules :</p>
+		<p>A partir de septembre 2016, les élèves seront répartis en 4 modules :</p>
 		<ul>
-			<li>de CP à CM1</li>
-			<li>de CM2 à 5ème</li>
-			<li>de 4ème à 2nde</li>
+			<li>module 1 : du CP au CE2 (cycle des apprentissages fondamentaux)</li>
+			<li>module 2 : du CM1 à la 6ème (cycle de consolidation)</li>
+			<li>module 3 : de la 5ème à la 3ème (cycle d’approfondissement)</li>
+			<li>module 4 : de la 2nde à la terminale (lycée)</li>
 		</ul>
+		<p>L’EDEIP propose les séries S, ES et L. Les élèves qui sollicitent une entrée en terminale et n’ayant pas effectué l’année de 1ère à l’EDEIP seront inscrits sur liste d’attente.</p>
 		<div class="sous_titre_corps">
 			<h4>Vie à l'école</h4>
 		</div>
 		<p><strong>Vacances</strong> : Le planning est identique à celui de la zone A.</p>
 
 		<p><strong>Horaires :</strong></p>
-		<ul>
-			<li>Module 1 : LMJV 9h-11h30 / 13h-16h30</li>
-			<li>Module 2 : LMJV 9h-12h / 13h-17h</li>
-			<li>Module 3 : LMJV 9h-13h / 14h-17h + merc. 9h-11H ou 13h</li>
-		</ul>
+		<p>Les horaires des modules 1 et 2 sont répartis sur 4 jours (LMJV), de 9h à 16h30. Les élèves des modules 3 et 4 terminent la journée à 17h et ont en plus cours le mercredi matin.</p>
+		<br>
 		<p><strong>Repas de midi</strong> : apporté par chaque élève, il est pris à l’école. Les activités pendant la
 			pause sont libres : sieste, jeux, lecture, …
 

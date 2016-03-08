@@ -55,7 +55,7 @@ header('content-type: text/html; charset=utf-8');
 			dont les individus n'ont pas toujours conscience.</p>
 
 		<p>Pour accompagner ces funambules, enfants et adolescents, dans la gestion de leur particularité, l'EDEIP Lyon,
-			établissement d'enseignement privé laïc accueille les élèves du CP à la 2nde</p>
+			établissement d'enseignement privé laïc accueille les élèves du CP à la Terminale</p>
 
 		<p>La mission de la structure, dans le cadre des apprentissages, est double :<br/></p>
 		<ul>
