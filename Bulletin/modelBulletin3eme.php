@@ -9,7 +9,17 @@ require_once '../Require/Objects.php';
 
 $trimestre = Trimestre::getById($idTrimestre);
 $eleve = Eleve::getById($idEleve);
-
+$matiereEPS = "";
+switch ($trimestre->getIdTrimestre()){
+	case 1:
+		$matiereEPS = "Tennis";
+		break;
+	case 2:
+		$matiereEPS = "Trottinette";
+		break;
+	default :
+		$matiereEPS = '';
+}
 
 ?>
 <style type="text/css">
@@ -253,7 +263,7 @@ $eleve = Eleve::getById($idEleve);
 			<td colspan="3" style="border: solid 1px #000000; background: #FFD9D9;"><b>EPS</b></td>
 		</tr>
 		<tr>
-			<td>Tennis<br><br><br><br></td>
+			<td><?php echo $matiereEPS; ?><br><br><br><br></td>
 			<td style="text-align: center;">
 				<?php
 				echo Bulletin::getMoyenneByEleveTrimestreMatiere($eleve->getIdEleve(), $trimestre->getIdTrimestre(), 9);

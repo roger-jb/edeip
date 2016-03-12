@@ -12,7 +12,7 @@ require_once '../Require/Objects.php';
 $utilisateur = new Utilisateur();
 if (isset($_SESSION['id'])) {
 	$utilisateur = Utilisateur::getById($_SESSION['id']);
-	if (!($utilisateur->estAdministrateur())) {
+	if (!($utilisateur->estAdministrateur()) || !($utilisateur->estProfesseur())) {
 		header('location: ../Intranet/mesInformations.php');
 	}
 }
