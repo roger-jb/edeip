@@ -70,7 +70,9 @@ header('content-type: text/html; charset=utf-8');
         <p>Il sera par ailleurs demandé de fournir un titre de transport pour d'éventuels déplacements sur Lyon (sports,
             visites...)</p>
 
-        <p><a href="../Docs/INSCRIPTION%202015-16.pdf">Document d'inscription année courante</a><!-- - <a href="../docs/INSCRIPTION 2015-16.pdf">Document d'inscription année suivante (2015-16)</a><!-- (<a href="../docs/inscrip2015-16Verso.pdf">page 2</a>)-->
+        <p>
+			<a href="../Docs/INSCRIPTION%202015-16.pdf">Document d'inscription année courante</a>
+			<a href="../Docs/FicheInscription2016-2017.pdf">Document d'inscription année suivante (2016-17)</a><!-- (<a href="../docs/inscrip2015-16Verso.pdf">page 2</a>)-->
         </p>
     </div>
     <?php

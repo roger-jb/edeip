@@ -123,13 +123,7 @@
 		<h3 id="bulletinReduc"><i class="fa fa-arrow-circle-o-up"></i> Bulletin</h3>
 		<ul id="bulletinMenu">
 			<li><a href="BulletinComment.php">Remplir Bulletin</a></li>
-			<?php
-			if ($utilisateur->estAdministrateur()) {
-				?>
-				<li><a href="getBulletin.php">Générer Bulletin</a></li>
-			<?php
-			}
-			?>
+			<li><a href="getBulletin.php">Générer Bulletin</a></li>
 		</ul>
 	<?php
 	}
