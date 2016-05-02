@@ -28,10 +28,10 @@ header('content-type: text/html; charset=utf-8');
             <tr>
                 <td></td>
                 <td style="width: 15%;">CP &agrave; CE2</td>
-                <td style="width: 15%;">CM1 &agrave; 6<sup>ieme</sup></td>
-                <td style="width: 15%;">5<sup>ieme</sup> &agrave; 3<sup>ieme</sup></td>
+                <td style="width: 15%;">CM1 &agrave; 6<sup>&egrave;me</sup></td>
+                <td style="width: 15%;">5<sup>&egrave;me</sup> &agrave; 3<sup>&egrave;me</sup></td>
                 <td style="width: 15%;">2<sup>nde</sup></td>
-                <td style="width: 15%;">1<sup>ieme</sup> et Term.</td>
+                <td style="width: 15%;">1<sup>&egrave;re</sup> et Term.</td>
             </tr>
             <tr>
                 <td>Adhésion <!--à l'association--> "Diamant Brut"</td>
@@ -51,11 +51,11 @@ header('content-type: text/html; charset=utf-8');
             </tr>
             <tr>
                 <td>Frais de scolarité</td>
-                <td>5900 €</td>
-                <td>6200 €</td>
-                <td>6500 €</td>
-                <td>6800 €</td>
-                <td>7500 €</td>
+                <td>5 900 €</td>
+                <td>6 200 €</td>
+                <td>6 500 €</td>
+                <td>6 800 €</td>
+                <td>7 300 €</td>
             </tr>
         </table>
         <p>Les inscriptions sont prises toute l’année. L’EDEIP Lyon accueille les enfants reconnus EIP par un psychologue
@@ -71,8 +71,8 @@ header('content-type: text/html; charset=utf-8');
             visites...)</p>
 
         <p>
-			<a href="../Docs/INSCRIPTION%202015-16.pdf">Document d'inscription année courante</a>
-			<a href="../Docs/FicheInscription2016-2017.pdf">Document d'inscription année suivante (2016-17)</a><!-- (<a href="../docs/inscrip2015-16Verso.pdf">page 2</a>)-->
+			<!--<a href="../Docs/INSCRIPTION%202015-16.pdf">Document d'inscription année courante</a>-->
+			<a href="../Docs/FicheInscription2016-2017.pdf">Document d'inscription année 2016-2017</a><!-- (<a href="../docs/inscrip2015-16Verso.pdf">page 2</a>)-->
         </p>
     </div>
     <?php
