@@ -48,7 +48,7 @@ if (!empty($utilisateur->getIdUtilisateur())) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Connexion &agrave; l'Intranet</title>
-        <link rel="stylesheet" href="../Vitrine/style.css" type="text/css" media="screen"/>
+        <link rel="stylesheet" href="./style.css" type="text/css" media="screen"/>
         <link rel="shortcut icon" href="../Images/Logo32.ico"/>
         <link rel="icon" href="../Images/logo32.png" type="image/png"/>
     </head>

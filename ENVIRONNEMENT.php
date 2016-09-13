@@ -6,5 +6,5 @@
  * Time: 17:30
  */
 $ENV = '';
-//$ENV = 'dev_local';
+$ENV = 'dev_local';
 //$ENV = 'dev';
