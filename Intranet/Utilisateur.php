@@ -42,7 +42,7 @@ if (isset($_POST['btSubmit'])) {
         foreach ($_POST['fonction'] as $fct) {
             $fonction[$fct] = TRUE;
         }
-
+    
     $maj = FALSE;
     if (!empty(trim($personne->getNomUtilisateur())))
         if (empty($personne->getIdUtilisateur())) {
@@ -67,7 +67,7 @@ if (isset($_POST['btSubmit'])) {
             $resp->setIdResponsable($personne->getIdUtilisateur());
             $resp->insertOnly();
         }
-        if ($fonction['Eleve'] && !$personne->estEleve()){
+        if ($fonction['Eleve']){
             $eleve = new Eleve();
             $eleve->setIdEleve($personne->getIdUtilisateur());
             $eleve->setIdNiveau($_POST['niveauEleve']);

@@ -28,6 +28,10 @@ class Responsable extends Utilisateur {
 		return $return;
 	}
 
+	/**
+	 * @param $idResponsable
+	 * @return Responsable
+     */
 	public static function getById ($idResponsable) {
 		$parent = parent::getById($idResponsable);
 		$responsable = new Responsable();

@@ -23,8 +23,20 @@ if (isset ($_GET['action'])) {
 		case 'getListeMatiereProf':
 			$matieresNiveaux = MatiereNiveau::getByNiveau($_GET['idNiveau']);
 			$html = '';
+//			echo '<pre>';
+//			var_dump($matieresNiveaux);
+//			echo '</pre>';
 			foreach ($matieresNiveaux as $MN){
+//				echo '<pre>';
+//				var_dump($MN);
+//				var_dump($MN->getIdMatiereNiveau());
+//				echo '</pre>';
+
 				$PMN = ProfesseurMatiereNiveau::getByMatiereNiveau($MN->getIdMatiereNiveau());
+//				echo '<pre>';
+//				var_dump($PMN);
+//				echo '</pre>';
+
 				$html .= "<tr><td>".$MN->getMatiere()->getLibelleMatiere()."</td><td>".($PMN->getIdProfesseurMatiereNiveau()?$PMN->getProfesseur()->getLibelleUtilisatur():'Pas de Professeur d&eacute;fini')."</td></tr>";
 			}
 			echo json_encode($html);
@@ -34,7 +46,7 @@ if (isset ($_GET['action'])) {
 			$PMN = ProfesseurMatiereNiveau::getByMatiereNiveau($matiereNiveau->getIdMatiereNiveau());
 			if ($PMN->getIdProfesseurMatiereNiveau())
 				$PMN->delete();
-			$matiereNiveau->delete();
+//			$matiereNiveau->delete();
 			echo json_encode('OK');
 			break;
 	}
