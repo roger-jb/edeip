@@ -45,10 +45,11 @@ if (isset($_POST['btAjouter'])) {
 	$evaluation->setDateEvaluation($_POST['addDate']);
 	$evaluation->setIdMatiereNiveau(MatiereNiveau::getByMatiereNiveau($_POST['addMatiere'], $_POST['addNiveau'])->getIdMatiereNiveau());
 	$evaluation->setIdTypeEvaluation($_POST['addType']);
-	$evaluation->setTitreEvaluation($_POST['addTitre']);
+	$evaluation->setTitreEvaluation(db_connect::escape_string($_POST['addTitre']));
+//	echo $evaluation->getTitreEvaluation();
 	$evaluation->setMaxEvaluation($_POST['addMax']);
 	if ($evaluation->getIdTypeEvaluation() == 3)
-		$evaluation->setAutreEvaluation($_POST['autreEval']);
+		$evaluation->setAutreEvaluation(db_connect::escape_string($_POST['autreEval']));
 
 	if ($evaluation->insert()){
 		$msgInsert = "<h4 style='color: green'>
