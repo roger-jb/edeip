@@ -71,7 +71,7 @@ class Module {
 			")";
 		if (db_connect::query($query)){
 			$select = "SELECT idModule FROM MODULE WHERE ".
-				"libelleModule = '".$this->getLibelleModule()."'";
+				"libelleModule = '".db_connect::escape_string($this->getLibelleModule())."'";
 			$result = db_connect::query($select);
 			if ($result->num_rows == 1){
 				$info = $result->fetch_assoc();
@@ -85,7 +85,7 @@ class Module {
 	}
 
 	public function update(){
-		$query = "UPDATE MODULE SET libelleModule = '".$this->getLibelleModule()."' WHERE idModule = ".$this->getIdModule();
+		$query = "UPDATE MODULE SET libelleModule = '".db_connect::escape_string($this->getLibelleModule())."' WHERE idModule = ".$this->getIdModule();
 		if (db_connect::query($query))
 			return true;
 		return false;

@@ -266,8 +266,8 @@ class Evaluation extends FormatDate{
 						WHERE idTypeEvaluation = " . $this->getIdTypeEvaluation() . "
 						AND idMatiereNiveau = " . $this->getIdMatiereNiveau() . "
 						AND dateEvaluation = '" . $this->sqlDateEvaluation() . "'
-						AND titreEvaluation = '" . $this->getTitreEvaluation() . "'
-						AND autreEvaluation " . (empty($this->getAutreEvaluation()) ? ' IS NULL' : "= '".$this->getAutreEvaluation()."'") . "
+						AND titreEvaluation = '" . db_connect::escape_string($this->getTitreEvaluation()) . "'
+						AND autreEvaluation " . (empty($this->getAutreEvaluation()) ? ' IS NULL' : "= '".db_connect::escape_string($this->getAutreEvaluation())."'") . "
 						AND maxEvaluation = " . $this->getMaxEvaluation();
 			$result = db_connect::query($query2);
 			if ($result->num_rows == 1) {
@@ -282,7 +282,7 @@ class Evaluation extends FormatDate{
 	}
 
 	public function update () {
-		$query = "UPDATE EVALUATION SET " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . ", " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . ", " . "dateEvaluation = '" . $this->sqlDateEvaluation() . "', " . "titreEvaluation = '" . $this->getTitreEvaluation() . "', " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".$this->getAutreEvaluation()."'") . ", " . "maxEvaluation = " . $this->getMaxEvaluation() . " " . "WHERE idEvaluation = " . $this->getIdEvaluation();
+		$query = "UPDATE EVALUATION SET " . "idTypeEvaluation = " . $this->getIdTypeEvaluation() . ", " . "idMatiereNiveau = " . $this->getIdMatiereNiveau() . ", " . "dateEvaluation = '" . $this->sqlDateEvaluation() . "', " . "titreEvaluation = '" . db_connect::escape_string($this->getTitreEvaluation()) . "', " . "autreEvaluation = " . (empty($this->getAutreEvaluation()) ? 'NULL' : "'".db_connect::escape_string($this->getAutreEvaluation())."'") . ", " . "maxEvaluation = " . $this->getMaxEvaluation() . " " . "WHERE idEvaluation = " . $this->getIdEvaluation();
 		if (db_connect::query($query)) return true;
 		return false;
 	}

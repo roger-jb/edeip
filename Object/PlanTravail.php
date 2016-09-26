@@ -147,7 +147,7 @@ class PlanTravail {
 	}
 
 	public function delete(){
-		$query = "DELETE FROM PLAN_TRAVAIL WHERE idPlanTravail = ".$this->getIdPlanTravail();
+		$query = "DELETE FROM PLAN_TRAVAIL WHERE idPlanTravail = ".db_connect::escape_string($this->getIdPlanTravail());
 		if (db_connect::query($query))
 			return true;
 		return false;
